@@ -3,33 +3,34 @@
   align-items: center;
   width: fit-content;
   min-height: 28px;
-  padding: 4px 10px;
+  padding: var(--space-1) 10px;
   border: 1px solid transparent;
   border-radius: 999px;
   font-size: 0.8rem;
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .ui-badge--success {
-  color: #b7f4ca;
-  background: rgba(28, 128, 65, 0.2);
-  border-color: rgba(46, 174, 89, 0.45);
+  color: #c8f5d6;
+  background: var(--color-success-soft);
+  border-color: rgba(47, 161, 92, 0.52);
 }
 
 .ui-badge--warning {
-  color: #ffe4a3;
-  background: rgba(160, 111, 18, 0.22);
-  border-color: rgba(209, 154, 39, 0.5);
+  color: #ffe6ab;
+  background: var(--color-warning-soft);
+  border-color: rgba(199, 149, 46, 0.58);
 }
 
 .ui-badge--danger {
-  color: #ffc2c8;
-  background: rgba(157, 24, 37, 0.25);
-  border-color: rgba(207, 42, 58, 0.55);
+  color: #ffd0d5;
+  background: var(--color-danger-soft);
+  border-color: rgba(209, 42, 58, 0.6);
 }
 
 .ui-badge--neutral {
   color: var(--color-text-muted);
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--color-border);
+  background: rgba(244, 239, 232, 0.06);
+  border-color: var(--color-border-strong);
 }

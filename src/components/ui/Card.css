@@ -1,13 +1,16 @@
 .ui-card {
   width: 100%;
-  padding: 22px;
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: rgba(18, 18, 18, 0.86);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(24, 22, 22, 0.92), rgba(14, 14, 15, 0.94)),
+    var(--color-surface);
+  box-shadow: var(--shadow-soft);
 }
 
 .ui-card__header {
-  margin-bottom: 16px;
+  margin-bottom: var(--space-4);
 }
 
 .ui-card__title {
@@ -18,11 +21,22 @@
 }
 
 .ui-card__subtitle {
-  margin: 6px 0 0;
+  margin: var(--space-2) 0 0;
   color: var(--color-text-muted);
   font-size: 0.95rem;
+  line-height: 1.55;
 }
 
 .ui-card__content {
   color: var(--color-text-muted);
+}
+
+.ui-card__content p {
+  margin: 0;
+}
+
+@media (max-width: 430px) {
+  .ui-card {
+    padding: var(--space-4);
+  }
 }

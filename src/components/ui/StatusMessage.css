@@ -1,36 +1,45 @@
 .ui-status-message {
-  padding: 16px;
+  padding: var(--space-4);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  background: rgba(18, 18, 18, 0.76);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(180deg, rgba(24, 22, 22, 0.82), rgba(14, 14, 15, 0.9)),
+    var(--color-surface);
+  box-shadow: var(--shadow-soft);
 }
 
 .ui-status-message__title {
   margin: 0;
   color: var(--color-text);
   font-size: 1rem;
+  line-height: 1.35;
 }
 
 .ui-status-message__message {
-  margin: 6px 0 0;
+  margin: var(--space-2) 0 0;
   color: var(--color-text-muted);
   font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .ui-status-message--info {
-  border-color: #465466;
+  background: linear-gradient(180deg, var(--color-info-soft), rgba(18, 18, 18, 0.84));
+  border-color: rgba(97, 112, 132, 0.58);
 }
 
 .ui-status-message--success {
-  border-color: rgba(46, 174, 89, 0.55);
+  background: linear-gradient(180deg, var(--color-success-soft), rgba(18, 18, 18, 0.84));
+  border-color: rgba(47, 161, 92, 0.58);
 }
 
 .ui-status-message--warning {
-  border-color: rgba(209, 154, 39, 0.55);
+  background: linear-gradient(180deg, var(--color-warning-soft), rgba(18, 18, 18, 0.84));
+  border-color: rgba(199, 149, 46, 0.6);
 }
 
 .ui-status-message--error {
-  border-color: rgba(207, 42, 58, 0.65);
+  background: linear-gradient(180deg, var(--color-danger-soft), rgba(18, 18, 18, 0.84));
+  border-color: rgba(209, 42, 58, 0.66);
 }
 
 .ui-status-message--empty {

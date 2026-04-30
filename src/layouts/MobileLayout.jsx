@@ -3,7 +3,7 @@ function MobileLayout({ children }) {
     <div className="mobile-layout">
       <div className="mobile-layout__screen">
         {children}
-        <nav className="mobile-layout__nav" aria-label="Navegación móvil">
+        <nav className="mobile-layout__nav" aria-label="Navegacion movil">
           <span>Mapa</span>
           <span>Ruta</span>
           <span>Detalle</span>
