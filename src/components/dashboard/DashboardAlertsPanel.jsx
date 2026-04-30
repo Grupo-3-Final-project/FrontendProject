@@ -10,22 +10,22 @@ function DashboardAlertsPanel() {
       </div>
 
       <div className="dashboard-alerts-panel__list">
-        <article className="dashboard-alerts-panel__item">
+        <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--danger">
           <Badge variant="danger">Critica</Badge>
           <div>
             <h3>Alerta placeholder</h3>
             <p>Contenido temporal hasta conectar datos internos.</p>
           </div>
         </article>
-        <article className="dashboard-alerts-panel__item">
+        <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--warning">
           <Badge variant="warning">Aviso</Badge>
           <div>
             <h3>Mantenimiento programado</h3>
             <p>Bloque visual sin informacion real de backend.</p>
           </div>
         </article>
-        <article className="dashboard-alerts-panel__item">
-          <Badge variant="neutral">Estado</Badge>
+        <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--success">
+          <Badge variant="success">Estado</Badge>
           <div>
             <h3>Estado interno</h3>
             <p>Espacio reservado para estados operativos.</p>

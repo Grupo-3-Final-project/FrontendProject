@@ -1,6 +1,6 @@
 .dashboard-map-panel {
   min-width: 0;
-  padding: var(--space-5);
+  padding: var(--space-4);
   border: 1px solid rgba(74, 61, 61, 0.92);
   border-radius: var(--radius-lg);
   background:
@@ -25,14 +25,22 @@
 
 .dashboard-map-panel__canvas {
   position: relative;
-  min-height: 340px;
+  min-height: 390px;
   overflow: hidden;
   border: 1px solid rgba(167, 15, 27, 0.32);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(circle at 50% 50%, rgba(167, 15, 27, 0.26), transparent 7rem),
+    linear-gradient(rgba(244, 239, 232, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 239, 232, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(167, 15, 27, 0.28), transparent 7rem),
     radial-gradient(circle at 72% 30%, rgba(199, 149, 46, 0.12), transparent 7rem),
     linear-gradient(135deg, rgba(41, 36, 36, 0.72), rgba(5, 5, 5, 0.92));
+  background-size:
+    56px 56px,
+    56px 56px,
+    auto,
+    auto,
+    auto;
 }
 
 .dashboard-map-panel__canvas::before {
@@ -47,12 +55,20 @@
   position: absolute;
   z-index: 1;
   max-width: 180px;
+  display: grid;
+  gap: var(--space-1);
   padding: var(--space-3) var(--space-4);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-md);
   background: rgba(10, 10, 11, 0.84);
   color: var(--color-text);
   font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.dashboard-map-panel__point small {
+  color: var(--color-text-soft);
+  font-size: 0.76rem;
   font-weight: 700;
 }
 
@@ -77,10 +93,17 @@
   color: #ff6b75;
 }
 
+.dashboard-map-panel__point--neutral {
+  left: 14%;
+  bottom: 16%;
+  border-color: rgba(142, 133, 128, 0.48);
+  color: var(--color-text-muted);
+}
+
 .dashboard-map-panel__route {
   position: absolute;
-  inset: 22% 15% 20% 14%;
-  border: 1px dashed rgba(194, 20, 34, 0.5);
+  inset: 18% 12% 18% 12%;
+  border: 2px dashed rgba(194, 20, 34, 0.5);
   border-radius: 44% 56% 48% 52%;
 }
 

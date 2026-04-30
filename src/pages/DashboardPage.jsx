@@ -6,7 +6,7 @@ import DashboardLayout from '../layouts/DashboardLayout'
 function DashboardPage() {
   return (
     <DashboardLayout>
-      <main className="dashboard-page dashboard-shell">
+      <main className="dashboard-page dashboard-shell min-w-0">
         <header className="dashboard-shell__header">
           <div>
             <p className="dashboard-shell__eyebrow">Panel interno</p>
@@ -25,24 +25,28 @@ function DashboardPage() {
             value="Pendiente"
             note="Placeholder, sin datos reales"
             variant="danger"
+            tag="Sin API"
           />
           <DashboardKpiCard
             title="Ingresos hoy"
             value="Pendiente"
             note="Metrica calculada por backend"
             variant="success"
+            tag="Backend"
           />
           <DashboardKpiCard
             title="Entradas vendidas"
             value="Pendiente"
             note="Placeholder, sin datos reales"
             variant="success"
+            tag="Temporal"
           />
           <DashboardKpiCard
             title="Tiempo medio de espera"
             value="Pendiente"
             note="Placeholder operativo"
             variant="warning"
+            tag="Operativo"
           />
         </section>
 
@@ -61,9 +65,21 @@ function DashboardPage() {
               <span>Sin API</span>
             </div>
             <div className="dashboard-shell__placeholder-list">
-              <p>Reserva temporal</p>
-              <p>Contenido pendiente de conectar con backend</p>
-              <p>Estado visual no real</p>
+              <div className="dashboard-shell__row">
+                <span>Reserva placeholder</span>
+                <span>Fecha pendiente</span>
+                <strong>Sin API</strong>
+              </div>
+              <div className="dashboard-shell__row">
+                <span>Entrada temporal</span>
+                <span>Hora pendiente</span>
+                <strong>Visual</strong>
+              </div>
+              <div className="dashboard-shell__row">
+                <span>Compra mock</span>
+                <span>Dato no real</span>
+                <strong>Temporal</strong>
+              </div>
             </div>
           </article>
 
@@ -76,9 +92,21 @@ function DashboardPage() {
               <span>Sin API</span>
             </div>
             <div className="dashboard-shell__placeholder-list">
-              <p>Tarea temporal</p>
-              <p>Bloque reservado para agenda operativa</p>
-              <p>Estado visual no real</p>
+              <div className="dashboard-shell__row dashboard-shell__row--warning">
+                <span>Tarea placeholder</span>
+                <span>Agenda pendiente</span>
+                <strong>Aviso</strong>
+              </div>
+              <div className="dashboard-shell__row dashboard-shell__row--success">
+                <span>Revision temporal</span>
+                <span>Sin datos reales</span>
+                <strong>Operativo</strong>
+              </div>
+              <div className="dashboard-shell__row dashboard-shell__row--danger">
+                <span>Incidencia mock</span>
+                <span>Estado no conectado</span>
+                <strong>Alerta</strong>
+              </div>
             </div>
           </article>
         </section>

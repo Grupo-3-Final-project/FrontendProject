@@ -1,20 +1,23 @@
 .dashboard-kpi-card {
-  min-height: 138px;
+  position: relative;
+  min-height: 126px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: var(--space-4);
   align-items: start;
-  padding: var(--space-5);
+  overflow: hidden;
+  padding: var(--space-4);
   border: 1px solid rgba(74, 61, 61, 0.92);
   border-radius: var(--radius-lg);
   background:
+    radial-gradient(circle at 100% 100%, rgba(167, 15, 27, 0.18), transparent 8rem),
     linear-gradient(145deg, rgba(26, 25, 25, 0.92), rgba(10, 10, 11, 0.96)),
     var(--color-surface);
   box-shadow: var(--shadow-soft);
 }
 
 .dashboard-kpi-card__marker {
-  width: 34px;
+  width: 38px;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   background: var(--color-accent-soft);
@@ -22,18 +25,33 @@
   box-shadow: inset 0 0 18px rgba(194, 20, 34, 0.2);
 }
 
+.dashboard-kpi-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
 .dashboard-kpi-card__title {
-  margin: 0 0 var(--space-2);
+  margin: 0;
   color: var(--color-text-muted);
   font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
 }
 
+.dashboard-kpi-card__topline span {
+  color: var(--color-accent-hover);
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
 .dashboard-kpi-card__value {
   display: block;
+  margin-top: var(--space-3);
   color: var(--color-text);
-  font-size: clamp(1.55rem, 2.4vw, 2.4rem);
+  font-size: clamp(1.35rem, 2vw, 2rem);
   line-height: 1.05;
 }
 
@@ -44,8 +62,24 @@
   font-size: 0.9rem;
 }
 
+.dashboard-kpi-card__sparkline {
+  position: absolute;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  width: 74px;
+  height: 28px;
+  border-bottom: 2px solid rgba(194, 20, 34, 0.6);
+  border-radius: 50% 30% 0 0;
+  transform: skewX(-18deg);
+  opacity: 0.8;
+}
+
 .dashboard-kpi-card--success .dashboard-kpi-card__marker {
   background: var(--color-success-soft);
+  border-color: rgba(47, 161, 92, 0.62);
+}
+
+.dashboard-kpi-card--success .dashboard-kpi-card__sparkline {
   border-color: rgba(47, 161, 92, 0.62);
 }
 
@@ -54,7 +88,15 @@
   border-color: rgba(199, 149, 46, 0.66);
 }
 
+.dashboard-kpi-card--warning .dashboard-kpi-card__sparkline {
+  border-color: rgba(199, 149, 46, 0.7);
+}
+
 .dashboard-kpi-card--danger .dashboard-kpi-card__marker {
   background: var(--color-danger-soft);
   border-color: rgba(209, 42, 58, 0.68);
+}
+
+.dashboard-kpi-card--danger .dashboard-kpi-card__sparkline {
+  border-color: rgba(209, 42, 58, 0.72);
 }

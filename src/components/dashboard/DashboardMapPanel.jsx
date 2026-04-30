@@ -14,13 +14,20 @@ function DashboardMapPanel() {
 
       <div className="dashboard-map-panel__canvas" aria-label="Mapa operativo temporal">
         <span className="dashboard-map-panel__point dashboard-map-panel__point--success">
-          Zona operativa
+          <strong>Zona operativa</strong>
+          <small>Placeholder</small>
         </span>
         <span className="dashboard-map-panel__point dashboard-map-panel__point--warning">
-          Mantenimiento
+          <strong>Mantenimiento</strong>
+          <small>Sin API</small>
         </span>
         <span className="dashboard-map-panel__point dashboard-map-panel__point--danger">
-          Alerta interna
+          <strong>Alerta interna</strong>
+          <small>Temporal</small>
+        </span>
+        <span className="dashboard-map-panel__point dashboard-map-panel__point--neutral">
+          <strong>Zona cerrada</strong>
+          <small>Visual</small>
         </span>
         <span className="dashboard-map-panel__route" />
       </div>

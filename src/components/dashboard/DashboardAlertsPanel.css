@@ -1,6 +1,6 @@
 .dashboard-alerts-panel {
   min-width: 0;
-  padding: var(--space-5);
+  padding: var(--space-4);
   border: 1px solid rgba(74, 61, 61, 0.92);
   border-radius: var(--radius-lg);
   background:
@@ -30,11 +30,24 @@
 
 .dashboard-alerts-panel__item {
   display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--space-3);
   padding: var(--space-4);
   border: 1px solid rgba(167, 15, 27, 0.28);
   border-radius: var(--radius-md);
   background: rgba(10, 10, 11, 0.64);
+}
+
+.dashboard-alerts-panel__item--success {
+  border-color: rgba(47, 161, 92, 0.28);
+}
+
+.dashboard-alerts-panel__item--warning {
+  border-color: rgba(199, 149, 46, 0.34);
+}
+
+.dashboard-alerts-panel__item--danger {
+  border-color: rgba(209, 42, 58, 0.4);
 }
 
 .dashboard-alerts-panel__item h3 {
