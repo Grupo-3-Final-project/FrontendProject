@@ -16,15 +16,31 @@ Este documento aporta contexto funcional frontend para futuros trabajos. `AGENTS
 
 El cliente necesita una aplicacion para un parque de atracciones de terror.
 
-El tono visual debe transmitir una estetica oscura, misteriosa, nocturna y tipo Halloween. La palabra "Puerta" es importante para el cliente, pero el nombre definitivo del producto todavia esta pendiente.
+El tono visual debe transmitir una estetica oscura, misteriosa, nocturna y tipo Halloween. La palabra "Puerta" es clave para la marca.
+
+El nombre definitivo aprobado por el cliente el 30/04/2026 es "La Última Puerta".
+
+El slogan definitivo es "¿Te atreves a cruzarla?"
 
 El parque se situa funcionalmente en Granada. El cliente valoro mostrar el tiempo de Granada. Esta informacion puede aparecer en Home, Dashboard o Mobile si aporta valor real a la experiencia y sin sobrecargar la interfaz.
 
-Mientras no haya decision final de marca, se pueden usar placeholders neutros como "Puerta" o "Parque de terror". No se debe tratar ningun nombre provisional como nombre definitivo.
+Ya hay decision final sobre las propuestas visuales. Las imagenes seleccionadas sirven como referencia visual y de composicion, pero no todo lo visible en una imagen implica funcionalidad automatica.
 
-Se han enviado tres propuestas visuales, pero todavia no hay decision final. Esas propuestas deben entenderse como inspiracion visual, no como contrato funcional. No se deben crear funcionalidades nuevas solo porque aparezcan en una maqueta generada si el cliente no las ha pedido.
+Cualquier funcionalidad no documentada debe validarse antes de implementarse.
 
-## 3. Separacion de experiencias
+## 3. Decision final del cliente
+
+Decision aprobada el 30/04/2026:
+
+- Logo: puerta gotica roja.
+- Color principal: rojo.
+- Home definitiva: diseno 1.
+- Dashboard definitivo: diseno 1.
+- Mobile definitiva: diseno 3.
+
+Las imagenes seleccionadas son referencia visual y de composicion. No sustituyen a `docs/API_CONTRACT.md`, no definen campos JSON, no crean endpoints y no convierten automaticamente elementos visuales en funcionalidades.
+
+## 4. Separacion de experiencias
 
 El frontend se divide en tres experiencias principales:
 
@@ -36,7 +52,7 @@ Nunca deben mezclarse funcionalidades entre estas experiencias.
 
 La home publica no debe mostrar datos internos de administracion. El dashboard interno no debe convertirse en una landing comercial. La experiencia mobile no debe incluir funcionalidades de gestion interna ni login de visitante.
 
-## 4. Home publica
+## 5. Home publica
 
 La home publica debe ser una pagina comercial, visual y orientada a venta.
 
@@ -58,7 +74,7 @@ No debe incluir:
 - Metricas operativas.
 - Logica propia del dashboard.
 
-## 5. Dashboard interno
+## 6. Dashboard interno
 
 El dashboard interno debe ser operativo y estar pensado solo para administracion o trabajadores del parque.
 
@@ -76,7 +92,7 @@ Debe incluir:
 
 Las metricas de negocio no deben calcularse en React si estan definidas como responsabilidad del backend.
 
-## 6. Mobile visitante
+## 7. Mobile visitante
 
 La experiencia mobile visitante debe ser mobile-first y accesible mediante QR.
 
@@ -93,7 +109,7 @@ Debe incluir:
 
 La logica debe mantenerse simple. No se deben usar websockets ni sistemas complejos para este flujo.
 
-## 7. Compra desde taquilla
+## 8. Compra desde taquilla
 
 La compra principal se gestiona desde taquilla o administracion.
 
@@ -101,7 +117,7 @@ No debe haber pagos reales ni login de visitante. Cuando se implemente el flujo 
 
 La experiencia Mobile debe servir para acceder al recorrido dentro del parque, no para gestionar una compra compleja.
 
-## 8. Rutas principales
+## 9. Rutas principales
 
 Rutas principales previstas:
 
@@ -116,7 +132,7 @@ Rutas principales previstas:
 
 Las subrutas mobile pueden implementarse mas adelante. La existencia de estas rutas no implica que todas deban implementarse en el mismo paso.
 
-## 9. Criterios visuales
+## 10. Criterios visuales
 
 La estetica general debe ser oscura, misteriosa, premium, minimalista y profesional.
 
@@ -132,7 +148,7 @@ Criterios visuales:
 
 El objetivo es que la interfaz sea presentable y defendible, no recargada ni dificil de mantener.
 
-## 10. Que NO implementar sin validacion
+## 11. Que NO implementar sin validacion
 
 No implementar sin validacion previa del equipo o cliente:
 
@@ -153,15 +169,20 @@ No implementar sin validacion previa del equipo o cliente:
 
 La prioridad es mantener el alcance claro y evitar sobreingenieria.
 
-## 11. Relacion con backend
+## 12. Relacion con backend
 
 El frontend debe respetar siempre `docs/API_CONTRACT.md`.
+
+`docs/API_CONTRACT.md` sigue siendo la fuente de verdad para endpoints, requests, responses y campos JSON.
+
+`docs/API_NAMING_DICTIONARY.md`, si existe en la rama actual, es solo una guia rapida de naming y no sustituye al contrato API.
 
 Reglas principales:
 
 - No inventar campos.
 - No renombrar campos JSON.
 - No cambiar endpoints sin aprobacion.
+- No inventar campos ni endpoints desde las maquetaciones.
 - No hacer llamadas API dentro de componentes.
 - Centralizar llamadas en `src/api/`.
 - Mantener los nombres recibidos y enviados alineados con el contrato.
@@ -181,7 +202,7 @@ Si hay duda, se debe mandar `docs/API_CONTRACT.md` como fuente de verdad.
 
 Si un cambio afecta endpoints, DTOs, requests, responses, nombres de campos JSON, servicios API, tests de contrato, Swagger/OpenAPI o comunicacion frontend-backend, se deben revisar tambien `docs/API_CONTRACT.md` y `docs/CONTRACT_TESTING.md`.
 
-## 12. Testing y calidad
+## 13. Testing y calidad
 
 Cada paso debe validarse antes de continuar.
 
@@ -195,7 +216,7 @@ Se deben anadir tests cuando se preparen:
 
 No se debe avanzar sin validacion. Los commits deben ser pequenos, claros y con conventional commits.
 
-## 13. Flujo de trabajo obligatorio
+## 14. Flujo de trabajo obligatorio
 
 Flujo recomendado:
 
