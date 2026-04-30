@@ -40,6 +40,8 @@ Decision aprobada el 30/04/2026:
 
 Las imagenes seleccionadas son referencia visual y de composicion. No sustituyen a `docs/API_CONTRACT.md`, no definen campos JSON, no crean endpoints y no convierten automaticamente elementos visuales en funcionalidades.
 
+Para referencia visual oficial aprobada por el cliente, revisar `docs/VISUAL_REFERENCE.md`. Las imágenes incluidas sirven como referencia de composición y estilo, pero no sustituyen al contrato funcional ni al contrato API.
+
 ## 4. Separacion de experiencias
 
 El frontend se divide en tres experiencias principales:
