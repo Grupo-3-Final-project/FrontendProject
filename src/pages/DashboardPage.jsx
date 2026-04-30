@@ -1,13 +1,19 @@
+import DashboardLayout from '../layouts/DashboardLayout'
+
 function DashboardPage() {
   return (
-    <main className="page-shell page-shell--dashboard">
-      <p className="page-kicker">Dashboard interno</p>
-      <h1>La Última Puerta</h1>
-      <p className="page-description">
-        Área privada de operación. Aquí se prepararán KPIs, reservas, hoteles,
-        empleados, mantenimiento, taquilla y estado de atracciones.
-      </p>
-    </main>
+    <DashboardLayout>
+      <main className="dashboard-page">
+        <section className="page-panel">
+          <p className="page-kicker">Dashboard interno</p>
+          <h1>Panel de operación</h1>
+          <p className="page-description">
+            Base para la gestión interna. Aquí se prepararán KPIs, reservas,
+            hoteles, empleados, mantenimiento, taquilla y estado de atracciones.
+          </p>
+        </section>
+      </main>
+    </DashboardLayout>
   )
 }
 
