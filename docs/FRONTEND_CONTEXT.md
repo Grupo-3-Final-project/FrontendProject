@@ -167,6 +167,18 @@ Reglas principales:
 - Mantener los nombres recibidos y enviados alineados con el contrato.
 - Consumir las metricas de negocio desde backend cuando esten definidas en contrato.
 
+Antes de crear servicios API en frontend, se debe revisar siempre `docs/API_CONTRACT.md`. Los servicios deben usar los endpoints y campos JSON exactos del contrato, sin inventar variantes de naming.
+
+Ejemplos de errores a evitar:
+
+- Usar `clientId` o `idClient` si el contrato usa `userId`.
+- Usar `idHotel` si el contrato usa `hotelId`.
+- Usar `surname` si el contrato usa `lastName`.
+- Usar `totalSeats` o `availableSeats` para hoteles, porque hoteles usan `totalPlaces` y `availablePlaces`.
+- Usar `totalPlaces` o `availablePlaces` para atracciones, porque atracciones usan `totalSeats` y `availableSeats`.
+
+Si hay duda, se debe mandar `docs/API_CONTRACT.md` como fuente de verdad.
+
 Si un cambio afecta endpoints, DTOs, requests, responses, nombres de campos JSON, servicios API, tests de contrato, Swagger/OpenAPI o comunicacion frontend-backend, se deben revisar tambien `docs/API_CONTRACT.md` y `docs/CONTRACT_TESTING.md`.
 
 ## 12. Testing y calidad
