@@ -1,0 +1,35 @@
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ui-badge--success {
+  color: #b7f4ca;
+  background: rgba(28, 128, 65, 0.2);
+  border-color: rgba(46, 174, 89, 0.45);
+}
+
+.ui-badge--warning {
+  color: #ffe4a3;
+  background: rgba(160, 111, 18, 0.22);
+  border-color: rgba(209, 154, 39, 0.5);
+}
+
+.ui-badge--danger {
+  color: #ffc2c8;
+  background: rgba(157, 24, 37, 0.25);
+  border-color: rgba(207, 42, 58, 0.55);
+}
+
+.ui-badge--neutral {
+  color: var(--color-text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--color-border);
+}

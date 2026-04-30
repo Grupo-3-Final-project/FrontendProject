@@ -1,0 +1,38 @@
+.ui-status-message {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(18, 18, 18, 0.76);
+}
+
+.ui-status-message__title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.ui-status-message__message {
+  margin: 6px 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.ui-status-message--info {
+  border-color: #465466;
+}
+
+.ui-status-message--success {
+  border-color: rgba(46, 174, 89, 0.55);
+}
+
+.ui-status-message--warning {
+  border-color: rgba(209, 154, 39, 0.55);
+}
+
+.ui-status-message--error {
+  border-color: rgba(207, 42, 58, 0.65);
+}
+
+.ui-status-message--empty {
+  border-style: dashed;
+}
