@@ -2,7 +2,7 @@ import { Button, Card } from '../components/ui'
 
 function HomePage() {
   return (
-    <main className="home-page">
+    <main className="flex flex-1 items-center py-6 md:py-8">
       <section className="w-full rounded-2xl border border-white/15 bg-neutral-900/90 p-6 shadow-2xl">
         <p className="mb-3 text-sm font-extrabold uppercase tracking-[0.16em] text-red-500">
           Home publica

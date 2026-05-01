@@ -2,7 +2,7 @@ import { Badge, Button, Card } from '../components/ui'
 
 function MobilePage() {
   return (
-    <main className="mobile-page">
+    <main className="flex flex-1 items-center p-4 sm:p-5">
       <section className="w-full rounded-2xl border border-white/15 bg-neutral-900/90 p-6 shadow-2xl">
         <p className="mb-3 text-sm font-extrabold uppercase tracking-[0.16em] text-red-500">
           Experiencia movil
