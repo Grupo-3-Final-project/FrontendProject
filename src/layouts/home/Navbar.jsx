@@ -7,11 +7,11 @@ function Navbar() {
   const [activeId, setActiveId] = useState('inicio')
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-50 flex w-[30%] flex-col border-r-2 border-white/10 lg:w-64">
+    <aside className="fixed inset-y-0 left-0 z-50 flex w-28 flex-col border-r-2 border-white/10 bg-black sm:w-36 md:w-64">
       <NavbarIdentity />
 
       <nav className="flex-1">
-        <ul className="space-y-1">
+        <ul className="flex flex-col gap-1 px-1 sm:px-2 md:px-0">
           {navItems.map((item) => (
             <NavbarItem
               key={item.id}

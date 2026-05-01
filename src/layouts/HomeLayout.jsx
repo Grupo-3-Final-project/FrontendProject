@@ -6,7 +6,7 @@ function HomeLayout() {
     <div className="flex min-h-screen bg-black">
       <Navbar />
 
-      <main className="ml-64 min-h-screen flex-1 overflow-y-auto">
+      <main className="ml-28 min-h-screen flex-1 overflow-y-auto sm:ml-36 md:ml-64">
         <Outlet />
       </main>
     </div>
