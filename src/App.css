@@ -152,14 +152,6 @@
   font-size: 1.2rem;
 }
 
-.dashboard-shell__eyebrow {
-  margin: 0 0 var(--space-2);
-  color: var(--color-accent-hover);
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
 .dashboard-shell__description {
   max-width: 680px;
   margin: var(--space-2) 0 0;

@@ -8,7 +8,9 @@ function DashboardMapPanel() {
     >
       <div className="mb-4 flex items-start justify-between gap-4 max-[760px]:flex-col">
         <div>
-          <p className="dashboard-shell__eyebrow">Referencia visual</p>
+          <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+            Referencia visual
+          </p>
           <h2 id="dashboard-map-title" className="m-0 text-[1.3rem] font-bold text-neutral-100">
             Mapa operativo
           </h2>

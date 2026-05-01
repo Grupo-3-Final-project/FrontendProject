@@ -9,7 +9,9 @@ function DashboardPage() {
       <main className="dashboard-page dashboard-shell min-w-0">
         <header className="dashboard-shell__header">
           <div>
-            <p className="dashboard-shell__eyebrow">Panel interno</p>
+            <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+              Panel interno
+            </p>
             <h1>Dashboard interno</h1>
             <p className="dashboard-shell__description">
               Gestion operativa del parque preparada para conectar metricas y
@@ -59,7 +61,9 @@ function DashboardPage() {
           <article className="dashboard-shell__panel">
             <div className="dashboard-shell__panel-header">
               <div>
-                <p className="dashboard-shell__eyebrow">Referencia visual</p>
+                <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+                  Referencia visual
+                </p>
                 <h2>Reservas recientes</h2>
               </div>
               <span>Por conectar</span>
@@ -91,7 +95,9 @@ function DashboardPage() {
           <article className="dashboard-shell__panel">
             <div className="dashboard-shell__panel-header">
               <div>
-                <p className="dashboard-shell__eyebrow">Referencia visual</p>
+                <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+                  Referencia visual
+                </p>
                 <h2>Mantenimiento programado</h2>
               </div>
               <span>Por conectar</span>
