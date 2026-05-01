@@ -154,15 +154,24 @@ El objetivo es que la interfaz sea presentable y defendible, no recargada ni dif
 
 Tailwind CSS es el sistema principal de estilos del frontend.
 
+Si se anade nueva UI, debe hacerse con Tailwind CSS.
+
 No se deben crear nuevos archivos CSS normales para componentes, paginas o layouts.
 
-Los CSS existentes se migraran progresivamente a Tailwind CSS. No se deben borrar CSS existentes hasta que el componente, vista o layout este completamente migrado y validado.
+`src/index.css` queda reservado unicamente para:
 
-`src/index.css` queda reservado para importar Tailwind CSS y para minimos globales imprescindibles.
+- `@import "tailwindcss";`
+- Minimos globales imprescindibles.
+- Variables globales solo si siguen siendo necesarias.
+- Base global de `html`, `body` y `#root` si aplica.
 
-La migracion debe hacerse paso a paso, con build y validacion visual tras cada bloque.
+Si un componente necesita estilos repetidos, se debe resolver con componentes reutilizables o composicion de clases Tailwind, no creando CSS normal.
 
-No se deben usar estilos inline ni introducir librerias UI externas sin aprobacion.
+No se deben usar estilos inline.
+
+No se deben introducir librerias UI externas sin aprobacion.
+
+La UI debe seguir respetando la estetica oscura, el rojo como color principal, verde para estados positivos u operativos, amarillo o dorado para avisos o mantenimiento, rojo intenso para errores criticos y la prohibicion de usar morado.
 
 ## 11. Que NO implementar sin validacion
 
