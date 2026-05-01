@@ -4,22 +4,26 @@ import DashboardMapPanel from '../components/dashboard/DashboardMapPanel'
 
 function DashboardPage() {
   return (
-    <main className="dashboard-page dashboard-shell min-w-0">
-      <header className="dashboard-shell__header">
+    <main className="min-w-0 space-y-5 px-0">
+      <header className="mb-6 flex max-w-5xl flex-col gap-5 pb-1 md:flex-row md:items-start md:justify-between">
         <div>
           <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
             Panel interno
           </p>
-          <h1>Dashboard interno</h1>
-          <p className="dashboard-shell__description">
+          <h1 className="max-w-none text-[clamp(2rem,3.2vw,3rem)] leading-[1.05] text-neutral-100">
+            Dashboard interno
+          </h1>
+          <p className="mt-2 max-w-[680px] text-[0.98rem] leading-6 text-neutral-300">
             Gestion operativa del parque preparada para conectar metricas y
             estados internos desde backend.
           </p>
         </div>
-        <span className="dashboard-shell__status">Datos por conectar</span>
+        <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
+          Datos por conectar
+        </span>
       </header>
 
-      <section className="dashboard-shell__kpi-grid" aria-label="KPIs temporales">
+      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label="KPIs temporales">
         <DashboardKpiCard
           title="Visitantes hoy"
           value="Metrica backend"
@@ -50,76 +54,80 @@ function DashboardPage() {
         />
       </section>
 
-      <section className="dashboard-shell__main-grid">
+      <section className="grid items-stretch gap-4 xl:grid-cols-[minmax(0,2.1fr)_minmax(340px,0.95fr)]">
         <DashboardMapPanel />
         <DashboardAlertsPanel />
       </section>
 
-      <section className="dashboard-shell__bottom-grid">
-        <article className="dashboard-shell__panel">
-          <div className="dashboard-shell__panel-header">
+      <section className="grid gap-4 xl:grid-cols-2">
+        <article className="min-w-0 rounded-2xl border border-red-900/60 bg-neutral-950/80 p-4 shadow-[0_0_36px_rgba(127,29,29,0.18)]">
+          <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
               <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
                 Referencia visual
               </p>
-              <h2>Reservas recientes</h2>
+              <h2 className="m-0 text-[1.2rem] font-bold text-neutral-100">Reservas recientes</h2>
             </div>
-            <span>Por conectar</span>
+            <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
+              Por conectar
+            </span>
           </div>
-          <div className="dashboard-shell__placeholder-list">
-            <div className="dashboard-shell__row dashboard-shell__row--head">
-              <span>Referencia visual</span>
+          <div className="overflow-hidden rounded-xl border border-red-950/80">
+            <div className="grid min-h-[34px] grid-cols-1 items-center gap-3 border border-red-900/30 bg-red-950/35 px-4 py-3 text-xs font-extrabold tracking-[0.12em] text-neutral-200 uppercase md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Referencia visual</span>
               <span>Conexion</span>
-              <strong>Estado</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Estado</strong>
             </div>
-            <div className="dashboard-shell__row">
-              <span>Registro pendiente</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Registro pendiente</span>
               <span>Datos por conectar</span>
-              <strong>Por conectar</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Por conectar</strong>
             </div>
-            <div className="dashboard-shell__row">
-              <span>Servicio temporal</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Servicio temporal</span>
               <span>Informacion temporal</span>
-              <strong>Visual</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Visual</strong>
             </div>
-            <div className="dashboard-shell__row">
-              <span>Linea de presentacion</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Linea de presentacion</span>
               <span>Sin datos reales</span>
-              <strong>Temporal</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Temporal</strong>
             </div>
           </div>
         </article>
 
-        <article className="dashboard-shell__panel">
-          <div className="dashboard-shell__panel-header">
+        <article className="min-w-0 rounded-2xl border border-red-900/60 bg-neutral-950/80 p-4 shadow-[0_0_36px_rgba(127,29,29,0.18)]">
+          <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
             <div>
               <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
                 Referencia visual
               </p>
-              <h2>Mantenimiento programado</h2>
+              <h2 className="m-0 text-[1.2rem] font-bold text-neutral-100">Mantenimiento programado</h2>
             </div>
-            <span>Por conectar</span>
+            <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
+              Por conectar
+            </span>
           </div>
-          <div className="dashboard-shell__placeholder-list">
-            <div className="dashboard-shell__row dashboard-shell__row--head">
-              <span>Referencia visual</span>
+          <div className="overflow-hidden rounded-xl border border-red-950/80">
+            <div className="grid min-h-[34px] grid-cols-1 items-center gap-3 border border-red-900/30 bg-red-950/35 px-4 py-3 text-xs font-extrabold tracking-[0.12em] text-neutral-200 uppercase md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Referencia visual</span>
               <span>Conexion</span>
-              <strong>Estado</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Estado</strong>
             </div>
-            <div className="dashboard-shell__row dashboard-shell__row--warning">
-              <span>Tarea pendiente</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-yellow-700/50 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Tarea pendiente</span>
               <span>Datos por conectar</span>
-              <strong>Aviso</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Aviso</strong>
             </div>
-            <div className="dashboard-shell__row dashboard-shell__row--success">
-              <span>Revision visual</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-green-900/50 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Revision visual</span>
               <span>Informacion temporal</span>
-              <strong>Operativo</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Operativo</strong>
             </div>
-            <div className="dashboard-shell__row dashboard-shell__row--danger">
-              <span>Incidencia visual</span>
+            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-red-800/60 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
+              <span className="font-bold text-neutral-100">Incidencia visual</span>
               <span>Estado no conectado</span>
-              <strong>Alerta</strong>
+              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Alerta</strong>
             </div>
           </div>
         </article>
