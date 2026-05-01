@@ -1,4 +1,6 @@
-function HomeLayout({ children }) {
+import { Outlet } from 'react-router-dom'
+
+function HomeLayout() {
   return (
     <div className="home-layout">
       <header className="home-layout__header">
@@ -9,7 +11,7 @@ function HomeLayout({ children }) {
           <span>Entradas</span>
         </nav>
       </header>
-      {children}
+      <Outlet />
     </div>
   )
 }

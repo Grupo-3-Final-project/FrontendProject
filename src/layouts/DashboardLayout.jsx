@@ -1,4 +1,6 @@
-function DashboardLayout({ children }) {
+import { Outlet } from 'react-router-dom'
+
+function DashboardLayout() {
   return (
     <div className="dashboard-layout">
       <aside className="dashboard-layout__sidebar" aria-label="Navegacion interna">
@@ -10,7 +12,9 @@ function DashboardLayout({ children }) {
           <span>Equipo</span>
         </nav>
       </aside>
-      <div className="dashboard-layout__content">{children}</div>
+      <div className="dashboard-layout__content">
+        <Outlet />
+      </div>
     </div>
   )
 }
