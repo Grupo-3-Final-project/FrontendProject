@@ -1,10 +1,10 @@
 .dashboard-alerts-panel {
   min-width: 0;
   padding: var(--space-4);
-  border: 1px solid rgba(74, 61, 61, 0.92);
+  border: 1px solid rgba(167, 15, 27, 0.28);
   border-radius: var(--radius-lg);
   background:
-    linear-gradient(180deg, rgba(18, 18, 18, 0.94), rgba(8, 8, 9, 0.98)),
+    linear-gradient(180deg, rgba(18, 18, 18, 0.96), rgba(8, 8, 9, 0.99)),
     var(--color-surface);
   box-shadow: var(--shadow-soft);
 }
@@ -25,17 +25,20 @@
 
 .dashboard-alerts-panel__list {
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .dashboard-alerts-panel__item {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: var(--space-3);
+  min-height: 96px;
   padding: var(--space-4);
   border: 1px solid rgba(167, 15, 27, 0.28);
   border-radius: var(--radius-md);
-  background: rgba(10, 10, 11, 0.64);
+  background:
+    linear-gradient(90deg, rgba(167, 15, 27, 0.1), transparent 65%),
+    rgba(10, 10, 11, 0.66);
 }
 
 .dashboard-alerts-panel__item--success {

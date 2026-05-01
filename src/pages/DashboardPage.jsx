@@ -12,39 +12,39 @@ function DashboardPage() {
             <p className="dashboard-shell__eyebrow">Panel interno</p>
             <h1>Dashboard interno</h1>
             <p className="dashboard-shell__description">
-              Estructura visual temporal para operacion del parque. Los datos reales
-              se conectaran desde backend en pasos posteriores.
+              Gestion operativa del parque preparada para conectar metricas y
+              estados internos desde backend.
             </p>
           </div>
-          <span className="dashboard-shell__status">Placeholder visual</span>
+          <span className="dashboard-shell__status">Datos por conectar</span>
         </header>
 
         <section className="dashboard-shell__kpi-grid" aria-label="KPIs temporales">
           <DashboardKpiCard
             title="Visitantes hoy"
-            value="Pendiente"
-            note="Placeholder, sin datos reales"
+            value="Metrica backend"
+            note="Pendiente de conexion"
             variant="danger"
-            tag="Sin API"
+            tag="Por conectar"
           />
           <DashboardKpiCard
             title="Ingresos hoy"
-            value="Pendiente"
-            note="Metrica calculada por backend"
+            value="Metrica backend"
+            note="Calculo pendiente de backend"
             variant="success"
             tag="Backend"
           />
           <DashboardKpiCard
             title="Entradas vendidas"
-            value="Pendiente"
-            note="Placeholder, sin datos reales"
+            value="Metrica backend"
+            note="Datos por conectar"
             variant="success"
             tag="Temporal"
           />
           <DashboardKpiCard
             title="Tiempo medio de espera"
-            value="Pendiente"
-            note="Placeholder operativo"
+            value="Estado visual"
+            note="Informacion temporal"
             variant="warning"
             tag="Operativo"
           />
@@ -59,25 +59,30 @@ function DashboardPage() {
           <article className="dashboard-shell__panel">
             <div className="dashboard-shell__panel-header">
               <div>
-                <p className="dashboard-shell__eyebrow">Placeholder visual</p>
+                <p className="dashboard-shell__eyebrow">Referencia visual</p>
                 <h2>Reservas recientes</h2>
               </div>
-              <span>Sin API</span>
+              <span>Por conectar</span>
             </div>
             <div className="dashboard-shell__placeholder-list">
-              <div className="dashboard-shell__row">
-                <span>Reserva placeholder</span>
-                <span>Fecha pendiente</span>
-                <strong>Sin API</strong>
+              <div className="dashboard-shell__row dashboard-shell__row--head">
+                <span>Referencia visual</span>
+                <span>Conexion</span>
+                <strong>Estado</strong>
               </div>
               <div className="dashboard-shell__row">
-                <span>Entrada temporal</span>
-                <span>Hora pendiente</span>
+                <span>Registro pendiente</span>
+                <span>Datos por conectar</span>
+                <strong>Por conectar</strong>
+              </div>
+              <div className="dashboard-shell__row">
+                <span>Servicio temporal</span>
+                <span>Informacion temporal</span>
                 <strong>Visual</strong>
               </div>
               <div className="dashboard-shell__row">
-                <span>Compra mock</span>
-                <span>Dato no real</span>
+                <span>Linea de presentacion</span>
+                <span>Sin datos reales</span>
                 <strong>Temporal</strong>
               </div>
             </div>
@@ -86,24 +91,29 @@ function DashboardPage() {
           <article className="dashboard-shell__panel">
             <div className="dashboard-shell__panel-header">
               <div>
-                <p className="dashboard-shell__eyebrow">Placeholder visual</p>
+                <p className="dashboard-shell__eyebrow">Referencia visual</p>
                 <h2>Mantenimiento programado</h2>
               </div>
-              <span>Sin API</span>
+              <span>Por conectar</span>
             </div>
             <div className="dashboard-shell__placeholder-list">
+              <div className="dashboard-shell__row dashboard-shell__row--head">
+                <span>Referencia visual</span>
+                <span>Conexion</span>
+                <strong>Estado</strong>
+              </div>
               <div className="dashboard-shell__row dashboard-shell__row--warning">
-                <span>Tarea placeholder</span>
-                <span>Agenda pendiente</span>
+                <span>Tarea pendiente</span>
+                <span>Datos por conectar</span>
                 <strong>Aviso</strong>
               </div>
               <div className="dashboard-shell__row dashboard-shell__row--success">
-                <span>Revision temporal</span>
-                <span>Sin datos reales</span>
+                <span>Revision visual</span>
+                <span>Informacion temporal</span>
                 <strong>Operativo</strong>
               </div>
               <div className="dashboard-shell__row dashboard-shell__row--danger">
-                <span>Incidencia mock</span>
+                <span>Incidencia visual</span>
                 <span>Estado no conectado</span>
                 <strong>Alerta</strong>
               </div>

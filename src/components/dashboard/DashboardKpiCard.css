@@ -1,23 +1,23 @@
 .dashboard-kpi-card {
   position: relative;
-  min-height: 126px;
+  min-height: 136px;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-4);
+  gap: var(--space-3);
   align-items: start;
   overflow: hidden;
-  padding: var(--space-4);
-  border: 1px solid rgba(74, 61, 61, 0.92);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  border: 1px solid rgba(167, 15, 27, 0.26);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(circle at 100% 100%, rgba(167, 15, 27, 0.18), transparent 8rem),
-    linear-gradient(145deg, rgba(26, 25, 25, 0.92), rgba(10, 10, 11, 0.96)),
+    radial-gradient(circle at 100% 100%, rgba(167, 15, 27, 0.24), transparent 8rem),
+    linear-gradient(145deg, rgba(21, 24, 24, 0.92), rgba(8, 9, 10, 0.98)),
     var(--color-surface);
   box-shadow: var(--shadow-soft);
 }
 
 .dashboard-kpi-card__marker {
-  width: 38px;
+  width: 42px;
   aspect-ratio: 1;
   border-radius: var(--radius-md);
   background: var(--color-accent-soft);
@@ -35,7 +35,7 @@
 .dashboard-kpi-card__title {
   margin: 0;
   color: var(--color-text-muted);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 800;
   text-transform: uppercase;
 }
@@ -49,29 +49,41 @@
 
 .dashboard-kpi-card__value {
   display: block;
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
   color: var(--color-text);
-  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-size: clamp(1.15rem, 1.6vw, 1.55rem);
   line-height: 1.05;
 }
 
 .dashboard-kpi-card__note {
   display: block;
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   color: var(--color-text-soft);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
 }
 
 .dashboard-kpi-card__sparkline {
   position: absolute;
   right: var(--space-4);
   bottom: var(--space-4);
-  width: 74px;
-  height: 28px;
-  border-bottom: 2px solid rgba(194, 20, 34, 0.6);
-  border-radius: 50% 30% 0 0;
-  transform: skewX(-18deg);
+  width: 82px;
+  height: 32px;
+  border-bottom: 2px solid rgba(194, 20, 34, 0.72);
+  border-radius: 55% 30% 0 0;
+  transform: skewX(-16deg);
   opacity: 0.8;
+}
+
+.dashboard-kpi-card__sparkline::before {
+  content: '';
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  width: 62px;
+  height: 14px;
+  border-bottom: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.42;
 }
 
 .dashboard-kpi-card--success .dashboard-kpi-card__marker {

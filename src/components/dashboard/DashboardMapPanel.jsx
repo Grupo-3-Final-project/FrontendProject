@@ -6,28 +6,29 @@ function DashboardMapPanel() {
     <section className="dashboard-map-panel" aria-labelledby="dashboard-map-title">
       <div className="dashboard-map-panel__header">
         <div>
-          <p className="dashboard-shell__eyebrow">Placeholder visual</p>
+          <p className="dashboard-shell__eyebrow">Referencia visual</p>
           <h2 id="dashboard-map-title">Mapa operativo</h2>
         </div>
         <Badge variant="neutral">Sin datos reales</Badge>
       </div>
 
       <div className="dashboard-map-panel__canvas" aria-label="Mapa operativo temporal">
+        <span className="dashboard-map-panel__glow" aria-hidden="true" />
         <span className="dashboard-map-panel__point dashboard-map-panel__point--success">
-          <strong>Zona operativa</strong>
-          <small>Placeholder</small>
+          <strong>Sector operativo</strong>
+          <small>Estado visual</small>
         </span>
         <span className="dashboard-map-panel__point dashboard-map-panel__point--warning">
-          <strong>Mantenimiento</strong>
-          <small>Sin API</small>
+          <strong>Area en revision</strong>
+          <small>Datos por conectar</small>
         </span>
         <span className="dashboard-map-panel__point dashboard-map-panel__point--danger">
-          <strong>Alerta interna</strong>
-          <small>Temporal</small>
+          <strong>Incidencia interna</strong>
+          <small>Informacion temporal</small>
         </span>
         <span className="dashboard-map-panel__point dashboard-map-panel__point--neutral">
-          <strong>Zona cerrada</strong>
-          <small>Visual</small>
+          <strong>Zona sin conexion</strong>
+          <small>Sin datos reales</small>
         </span>
         <span className="dashboard-map-panel__route" />
       </div>

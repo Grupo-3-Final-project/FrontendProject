@@ -5,7 +5,7 @@ function DashboardAlertsPanel() {
   return (
     <section className="dashboard-alerts-panel" aria-labelledby="dashboard-alerts-title">
       <div className="dashboard-alerts-panel__header">
-        <p className="dashboard-shell__eyebrow">Placeholder visual</p>
+        <p className="dashboard-shell__eyebrow">Referencia visual</p>
         <h2 id="dashboard-alerts-title">Alertas internas</h2>
       </div>
 
@@ -13,22 +13,22 @@ function DashboardAlertsPanel() {
         <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--danger">
           <Badge variant="danger">Critica</Badge>
           <div>
-            <h3>Alerta placeholder</h3>
-            <p>Contenido temporal hasta conectar datos internos.</p>
+            <h3>Incidencia por conectar</h3>
+            <p>Espacio visual reservado para alertas internas de backend.</p>
           </div>
         </article>
         <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--warning">
           <Badge variant="warning">Aviso</Badge>
           <div>
-            <h3>Mantenimiento programado</h3>
-            <p>Bloque visual sin informacion real de backend.</p>
+            <h3>Aviso operativo</h3>
+            <p>Contenido temporal sin informacion real conectada.</p>
           </div>
         </article>
         <article className="dashboard-alerts-panel__item dashboard-alerts-panel__item--success">
           <Badge variant="success">Estado</Badge>
           <div>
-            <h3>Estado interno</h3>
-            <p>Espacio reservado para estados operativos.</p>
+            <h3>Estado visual</h3>
+            <p>Referencia de lectura para futuros estados operativos.</p>
           </div>
         </article>
       </div>
