@@ -318,21 +318,6 @@
   width: 100%;
 }
 
-.page-kicker {
-  margin: 0 0 var(--space-3);
-  color: var(--color-accent-hover);
-  font-size: 0.85rem;
-  font-weight: 800;
-  letter-spacing: 0;
-  text-transform: uppercase;
-}
-
-.page-description {
-  max-width: 640px;
-  margin: var(--space-5) 0 0;
-  color: var(--color-text-muted);
-}
-
 .page-preview-grid {
   width: min(680px, 100%);
   margin-top: var(--space-6);
@@ -342,19 +327,6 @@
 
 .page-preview-grid--dashboard {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.page-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-5);
-}
-
-.page-inline-items {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
 }
 
 @media (max-width: 900px) {

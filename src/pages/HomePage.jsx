@@ -4,9 +4,11 @@ function HomePage() {
   return (
     <main className="home-page">
       <section className="page-panel">
-        <p className="page-kicker">Home publica</p>
+        <p className="mb-3 text-sm font-extrabold uppercase tracking-[0.16em] text-red-500">
+          Home publica
+        </p>
         <h1>Parque de terror</h1>
-        <p className="page-description">
+        <p className="mt-5 max-w-2xl text-base leading-7 text-neutral-200/85">
           Base para la pagina comercial. Aqui se prepararan la experiencia
           visual, las atracciones destacadas, las ofertas y la compra.
         </p>
@@ -19,7 +21,7 @@ function HomePage() {
               La home mostrara contenido visual, ofertas y acceso a compra o
               recorrido cuando el flujo este definido.
             </p>
-            <div className="page-actions">
+            <div className="mt-5 flex flex-wrap items-center gap-3">
               <Button>Ver propuesta</Button>
               <Button variant="secondary">Explorar atracciones</Button>
             </div>
