@@ -314,21 +314,6 @@
   padding: var(--space-2) var(--space-3);
 }
 
-.page-panel {
-  width: 100%;
-}
-
-.page-preview-grid {
-  width: min(680px, 100%);
-  margin-top: var(--space-6);
-  display: grid;
-  gap: var(--space-4);
-}
-
-.page-preview-grid--dashboard {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
 @media (max-width: 900px) {
   .dashboard-layout {
     grid-template-columns: 230px minmax(0, 1fr);
@@ -413,10 +398,6 @@
 
   .dashboard-shell__row strong {
     justify-self: start;
-  }
-
-  .page-preview-grid--dashboard {
-    grid-template-columns: 1fr;
   }
 }
 

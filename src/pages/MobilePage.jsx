@@ -3,7 +3,7 @@ import { Badge, Button, Card } from '../components/ui'
 function MobilePage() {
   return (
     <main className="mobile-page">
-      <section className="page-panel">
+      <section className="w-full rounded-2xl border border-white/15 bg-neutral-900/90 p-6 shadow-2xl">
         <p className="mb-3 text-sm font-extrabold uppercase tracking-[0.16em] text-red-500">
           Experiencia movil
         </p>
@@ -12,7 +12,7 @@ function MobilePage() {
           Base para visitantes dentro del parque. Aqui se prepararan el mapa,
           la ruta optimizada y el detalle de atracciones.
         </p>
-        <div className="page-preview-grid">
+        <div className="mt-8 grid w-full max-w-[680px] gap-4">
           <Card
             title="Ruta del visitante"
             subtitle="Base visual mobile-first sin login ni compra real."
