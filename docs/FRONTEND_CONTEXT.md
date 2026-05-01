@@ -150,6 +150,20 @@ Criterios visuales:
 
 El objetivo es que la interfaz sea presentable y defendible, no recargada ni dificil de mantener.
 
+### Criterio tecnico de estilos
+
+Tailwind CSS es el sistema principal de estilos del frontend.
+
+No se deben crear nuevos archivos CSS normales para componentes, paginas o layouts.
+
+Los CSS existentes se migraran progresivamente a Tailwind CSS. No se deben borrar CSS existentes hasta que el componente, vista o layout este completamente migrado y validado.
+
+`src/index.css` queda reservado para importar Tailwind CSS y para minimos globales imprescindibles.
+
+La migracion debe hacerse paso a paso, con build y validacion visual tras cada bloque.
+
+No se deben usar estilos inline ni introducir librerias UI externas sin aprobacion.
+
 ## 11. Que NO implementar sin validacion
 
 No implementar sin validacion previa del equipo o cliente:
