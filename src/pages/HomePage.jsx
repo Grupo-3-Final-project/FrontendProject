@@ -1,4 +1,8 @@
 import heroImage from '../assets/home/publicHomeHeroGate.png'
+import bloodRiverImage from '../assets/home/attractionBloodRiver.png'
+import darkLabyrinthImage from '../assets/home/attractionDarkLabyrinth.png'
+import hauntedMansionImage from '../assets/home/attractionHauntedMansion.png'
+import terrorTowerImage from '../assets/home/attractionTerrorTower.png'
 
 function HomePage() {
   return (
@@ -93,6 +97,123 @@ function HomePage() {
               QR visual · Sin pago real
             </p>
           </aside>
+        </div>
+      </section>
+
+      <section
+        id="atracciones"
+        className="border-b border-white/10 bg-black px-5 py-12 sm:px-8 md:px-10 lg:px-12"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold tracking-[0.22em] text-red-500 uppercase">
+                Atracciones destacadas
+              </p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal text-white sm:text-4xl">
+                Elige tu próxima pesadilla
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-neutral-300">
+              Cuatro experiencias oscuras para empezar a cruzar la puerta:
+              mansiones malditas, aguas rojas, torres imposibles y laberintos
+              donde la salida no siempre aparece.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <article className="group overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={hauntedMansionImage}
+                  alt="Mansión Maldita"
+                  className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-2xl font-black tracking-normal text-white">
+                  Mansión Maldita
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">
+                  Un recorrido entre pasillos cerrados, puertas que susurran y
+                  una presencia que espera al final.
+                </p>
+                <span className="mt-5 inline-flex rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                  Extrema
+                </span>
+              </div>
+            </article>
+
+            <article className="group overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={bloodRiverImage}
+                  alt="Río de Sangre"
+                  className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-2xl font-black tracking-normal text-white">
+                  Río de Sangre
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">
+                  Una travesía nocturna por aguas rojas, curvas cerradas y
+                  gritos que llegan antes que la corriente.
+                </p>
+                <span className="mt-5 inline-flex rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                  Extrema
+                </span>
+              </div>
+            </article>
+
+            <article className="group overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={terrorTowerImage}
+                  alt="Torre del Terror"
+                  className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-2xl font-black tracking-normal text-white">
+                  Torre del Terror
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">
+                  Una caída vertical entre luces rojas, metal antiguo y el eco
+                  de quienes subieron demasiado alto.
+                </p>
+                <span className="mt-5 inline-flex rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                  Extrema
+                </span>
+              </div>
+            </article>
+
+            <article className="group overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-yellow-600/70">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={darkLabyrinthImage}
+                  alt="Laberinto Oscuro"
+                  className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-2xl font-black tracking-normal text-white">
+                  Laberinto Oscuro
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-neutral-300">
+                  Caminos estrechos, sombras móviles y señales que cambian
+                  cuando crees haber encontrado la salida.
+                </p>
+                <span className="mt-5 inline-flex rounded-md border border-yellow-500/70 bg-yellow-500/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-yellow-300 uppercase">
+                  Media
+                </span>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
     </main>
