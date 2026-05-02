@@ -368,6 +368,26 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      <section className="bg-black px-5 py-12 sm:px-8 md:px-10 lg:px-12">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_center,rgba(185,28,28,0.35),rgba(23,23,23,0.92)_48%,rgba(0,0,0,1)_100%)] px-6 py-14 text-center shadow-2xl shadow-black/60 sm:px-10">
+          <p className="text-sm font-extrabold tracking-[0.24em] text-red-400 uppercase">
+            La Última Puerta
+          </p>
+          <h2 className="mx-auto mt-4 max-w-4xl text-4xl font-black tracking-normal text-white uppercase drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] sm:text-5xl lg:text-6xl">
+            ¿Listo para cruzar La Última Puerta?
+          </h2>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-200/85 sm:text-lg">
+            La experiencia comienza antes de entrar. Atrévete a cruzarla.
+          </p>
+          <button
+            type="button"
+            className="mt-8 min-h-12 rounded-lg border border-red-500 bg-red-700 px-8 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_36px_rgba(220,38,38,0.42)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+          >
+            Comprar entradas
+          </button>
+        </div>
+      </section>
     </main>
   )
 }
