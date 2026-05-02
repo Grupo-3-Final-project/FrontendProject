@@ -6,6 +6,7 @@ import terrorTowerImage from '../assets/home/attractionTerrorTower.png'
 import offerFamilyPackImage from '../assets/home/offerFamilyPack.png'
 import offerHotelTicketImage from '../assets/home/offerHotelTicket.png'
 import offerNightWithoutEscapeImage from '../assets/home/offerNightWithoutEscape.png'
+import parkMapImage from '../assets/home/publicHomeParkMap.png'
 
 function HomePage() {
   return (
@@ -306,6 +307,64 @@ function HomePage() {
                 -20%
               </p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="mapa"
+        className="border-b border-white/10 bg-black px-5 py-12 sm:px-8 md:px-10 lg:px-12"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold tracking-[0.22em] text-red-500 uppercase">
+                Mapa del parque
+              </p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal text-white sm:text-4xl">
+                La ruta hacia tus peores miedos
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-neutral-300">
+              Una vista comercial del recinto para ubicar las grandes zonas de
+              terror antes de planificar la visita.
+            </p>
+          </div>
+
+          <div className="relative overflow-hidden rounded-3xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/60">
+            <img
+              src={parkMapImage}
+              alt="Mapa visual del parque"
+              className="h-[22rem] w-full object-cover opacity-80 brightness-75 contrast-125 sm:h-[28rem] lg:h-[32rem]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/10 to-black/45" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black via-black/35 to-transparent" />
+
+            <span className="absolute top-[28%] left-[12%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
+              Mansión Maldita
+            </span>
+            <span className="absolute bottom-[18%] left-[24%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
+              Río de Sangre
+            </span>
+            <span className="absolute top-[16%] left-[48%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
+              Torre del Terror
+            </span>
+            <span className="absolute right-[14%] bottom-[28%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
+              Laberinto Oscuro
+            </span>
+
+            <div className="absolute right-5 bottom-5 left-5 flex flex-col gap-4 sm:left-auto sm:items-end">
+              <button
+                type="button"
+                className="min-h-12 rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+              >
+                Explorar mapa
+              </button>
+              <p className="max-w-sm rounded-lg border border-white/10 bg-black/60 px-4 py-3 text-xs leading-5 text-neutral-300 backdrop-blur">
+                Mapa visual orientativo. El recorrido mobile se preparará en su
+                experiencia propia.
+              </p>
+            </div>
           </div>
         </div>
       </section>
