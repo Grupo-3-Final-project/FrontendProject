@@ -11,32 +11,32 @@ import parkMapImage from '../assets/home/publicHomeParkMap.png'
 function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
-      <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 px-4 py-8 sm:px-8 md:px-10 lg:px-12 lg:py-6">
+      <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-7 sm:px-6 md:px-8 lg:min-h-[620px] lg:px-6 lg:py-4 xl:px-8">
         <img
           src={heroImage}
           alt=""
-          className="absolute inset-0 -z-20 h-full w-full object-cover object-[center_38%] opacity-80 grayscale brightness-90 contrast-125 mix-blend-luminosity"
+          className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-100 brightness-100 contrast-100 lg:object-contain"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_56%_36%,rgba(185,28,28,0.56),transparent_18rem),radial-gradient(circle_at_68%_56%,rgba(127,29,29,0.28),transparent_24rem),linear-gradient(90deg,rgba(0,0,0,0.96)_0%,rgba(0,0,0,0.72)_34%,rgba(0,0,0,0.22)_62%,rgba(0,0,0,0.9)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.52)_28%,rgba(0,0,0,0.08)_50%,rgba(0,0,0,0.28)_78%,rgba(0,0,0,0.52)_100%),linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0)_55%,rgba(0,0,0,0.65)_100%)]" />
 
-        <div className="mx-auto grid min-h-[calc(100svh-7rem)] max-w-7xl items-center gap-8 py-4 sm:py-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_320px]">
-          <div className="max-w-3xl pt-0 lg:-mt-4">
-            <span className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-black/55 px-4 py-2 text-sm font-semibold text-neutral-200 shadow-xl shadow-black/30 backdrop-blur">
+        <div className="mr-auto ml-0 grid min-h-[calc(100svh-6.5rem)] w-full max-w-[1180px] items-center gap-7 py-3 sm:py-5 lg:min-h-[590px] lg:grid-cols-[minmax(0,1fr)_230px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_250px]">
+          <div className="max-w-[42rem] pt-0 lg:-mt-1">
+            <span className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/40 px-3.5 py-2 text-sm font-semibold text-neutral-100 backdrop-blur">
               Granada · Parque de terror
             </span>
 
-            <p className="mt-5 text-sm font-extrabold uppercase tracking-[0.28em] text-red-500">
+            <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.28em] text-red-500 sm:text-sm">
               La Última Puerta
             </p>
-            <h1 className="mt-3 max-w-4xl text-5xl leading-[0.92] font-black tracking-normal text-white uppercase drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] sm:text-6xl lg:text-7xl xl:text-8xl">
+            <h1 className="mt-3 max-w-[36rem] text-4xl leading-[1] font-black tracking-normal text-white uppercase sm:text-5xl lg:text-[3rem] xl:text-[3.25rem]">
               Cruza la puerta
               <span className="block text-red-600">si te atreves</span>
             </h1>
-            <p className="mt-4 max-w-2xl text-xl font-semibold text-neutral-100">
+            <p className="mt-3 max-w-xl text-base font-semibold text-neutral-100 sm:text-lg">
               ¿Te atreves a cruzarla?
             </p>
-            <p className="mt-3 max-w-xl text-base leading-7 text-neutral-200/85 sm:text-lg">
+            <p className="mt-3 max-w-md text-base leading-7 text-neutral-200/85 sm:max-w-lg">
               El parque de atracciones de terror más intenso te espera en
               Granada con experiencias nocturnas, sustos memorables y una
               entrada que no todos se atreven a atravesar.
@@ -45,31 +45,31 @@ function HomePage() {
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
               <button
                 type="button"
-                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-7 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.38)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
               >
                 Comprar entradas
               </button>
               <button
                 type="button"
-                className="min-h-12 w-full rounded-lg border border-white/25 bg-black/45 px-7 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
               >
                 Ver atracciones
               </button>
             </div>
           </div>
 
-          <aside className="w-full max-w-[300px] justify-self-center rounded-2xl border border-white/15 bg-neutral-950/80 p-5 shadow-2xl shadow-black/50 backdrop-blur-md lg:-mt-4 lg:justify-self-end">
+          <aside className="w-full max-w-[232px] justify-self-center rounded-2xl border border-white/20 bg-neutral-950/52 p-3.5 backdrop-blur-sm lg:-mt-1 lg:justify-self-end">
             <div className="text-center">
-              <p className="text-lg font-extrabold text-white">
+              <p className="text-base font-extrabold text-white">
                 Tu experiencia empieza aquí
               </p>
-              <p className="mt-2 text-sm leading-6 text-neutral-300">
+              <p className="mt-2 text-sm leading-5 text-neutral-300">
                 Acceso visual a la experiencia mobile para preparar el recorrido
                 dentro del parque.
               </p>
             </div>
 
-            <div className="mx-auto mt-4 grid h-28 w-28 grid-cols-5 gap-1 rounded-xl border border-white/20 bg-white p-3 shadow-inner">
+            <div className="mx-auto mt-4 grid h-20 w-20 grid-cols-5 gap-1 rounded-xl border border-white/20 bg-white p-2.5">
               <span className="rounded-sm bg-black" />
               <span className="rounded-sm bg-black" />
               <span className="rounded-sm bg-white" />
@@ -97,7 +97,7 @@ function HomePage() {
               <span className="rounded-sm bg-black" />
             </div>
 
-            <p className="mt-4 rounded-lg border border-red-900/70 bg-red-950/30 px-4 py-2.5 text-center text-xs font-semibold uppercase tracking-[0.16em] text-red-200">
+            <p className="mt-4 rounded-lg border border-red-900/70 bg-red-950/30 px-3 py-2 text-center text-xs font-semibold uppercase tracking-[0.14em] text-red-200">
               QR visual · Sin pago real
             </p>
           </aside>
