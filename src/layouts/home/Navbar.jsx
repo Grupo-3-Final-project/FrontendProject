@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { HiBars3, HiXMark } from 'react-icons/hi2'
 import { navItems } from './NavData'
 import NavbarItem from './NavbarItem'
 import NavbarIdentity from './NavbarIdentity'
@@ -7,7 +6,7 @@ import NavbarIdentity from './NavbarIdentity'
 function Navbar() {
   const [activeId, setActiveId] = useState('inicio')
   const [isOpen, setIsOpen] = useState(false)
-  const ToggleIcon = isOpen ? HiXMark : HiBars3
+  const toggleLabel = isOpen ? 'X' : '☰'
 
   const handleItemClick = (itemId) => {
     setActiveId(itemId)
@@ -18,13 +17,13 @@ function Navbar() {
     <>
       <button
         type="button"
-        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
+        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
         aria-label={isOpen ? 'Cerrar menu principal' : 'Abrir menu principal'}
         aria-expanded={isOpen}
         aria-controls="home-navbar"
         onClick={() => setIsOpen((currentValue) => !currentValue)}
       >
-        <ToggleIcon className="text-2xl" aria-hidden="true" />
+        {toggleLabel}
       </button>
 
       {isOpen && (
@@ -38,7 +37,7 @@ function Navbar() {
 
       <aside
         id="home-navbar"
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r-2 border-white/10 bg-black transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r-2 border-white/10 bg-black pt-16 transition-transform duration-300 md:translate-x-0 md:pt-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
