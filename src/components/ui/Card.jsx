@@ -9,9 +9,9 @@ const cardSubtitleClasses = 'mt-2 mb-0 text-[0.95rem] leading-relaxed text-stone
 
 const cardContentClasses = 'text-stone-400 [&_p]:m-0'
 
-function Card({ children, title, subtitle }) {
+function Card({ children, title, subtitle, className = '' }) {
   return (
-    <article className={cardClasses}>
+    <article className={`${cardClasses} ${className}`}>
       {(title || subtitle) && (
         <header className={cardHeaderClasses}>
           {title && <h2 className={cardTitleClasses}>{title}</h2>}

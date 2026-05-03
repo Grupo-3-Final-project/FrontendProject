@@ -1,0 +1,27 @@
+const labelClasses = 'mb-2 block text-sm font-bold text-stone-200'
+const textAreaBaseClasses =
+  'min-h-28 w-full rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 text-sm text-stone-100 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/30 placeholder:text-stone-500'
+const helpClasses = 'mt-2 text-xs text-stone-500'
+const errorClasses = 'mt-2 text-xs font-semibold text-red-300'
+
+function TextAreaField({
+  label,
+  error,
+  helpText,
+  className = '',
+  ...props
+}) {
+  return (
+    <label className={`block ${className}`}>
+      {label && <span className={labelClasses}>{label}</span>}
+      <textarea
+        {...props}
+        className={`${textAreaBaseClasses} ${error ? 'border-red-500/80 ring-2 ring-red-500/20' : ''}`}
+      />
+      {error ? <p className={errorClasses}>{error}</p> : null}
+      {!error && helpText ? <p className={helpClasses}>{helpText}</p> : null}
+    </label>
+  )
+}
+
+export default TextAreaField

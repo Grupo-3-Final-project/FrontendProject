@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import bloodRiverImage from '../assets/home/attractionBloodRiver.png'
 import darkLabyrinthImage from '../assets/home/attractionDarkLabyrinth.png'
@@ -43,12 +44,12 @@ function HomePage() {
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
-              <button
-                type="button"
+              <Link
+                to="/booking"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
               >
                 Comprar entradas
-              </button>
+              </Link>
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -380,12 +381,12 @@ function HomePage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-200/85 sm:text-lg">
             La experiencia comienza antes de entrar. Atrévete a cruzarla.
           </p>
-          <button
-            type="button"
+          <Link
+            to="/booking"
             className="mt-8 min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-8 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_36px_rgba(220,38,38,0.42)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
           >
             Comprar entradas
-          </button>
+          </Link>
         </div>
       </section>
     </main>
