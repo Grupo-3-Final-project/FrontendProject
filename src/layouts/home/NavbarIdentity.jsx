@@ -6,10 +6,10 @@ function NavbarIdentity() {
       <div className="text-center">
         <img className="mx-auto mb" src={logoAmusementPark} alt="Logo del Parque de Atracciones" />
         <h2 className="text-[1rem] leading-tight font-black tracking-normal text-white sm:text-sm md:text-xl md:tracking-tighter">
-          La Última <br /> <span className="text-red-600">Puerta</span>
+          La Ultima <br /> <span className="text-red-600">Puerta</span>
         </h2>
         <p className="mt-2 text-[0.56rem] leading-tight font-bold tracking-normal text-gray-500 uppercase sm:text-[0.62rem] md:text-[10px] md:tracking-[0.2em]">
-          ¿Te atreves a cruzarla?
+          Te atreves a cruzarla
         </p>
       </div>
     </div>

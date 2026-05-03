@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Menu, X } from 'lucide-react'
 import { navItems } from './NavData'
 import NavbarItem from './NavbarItem'
 import NavbarIdentity from './NavbarIdentity'
@@ -6,7 +7,6 @@ import NavbarIdentity from './NavbarIdentity'
 function Navbar() {
   const [activeId, setActiveId] = useState('inicio')
   const [isOpen, setIsOpen] = useState(false)
-  const toggleLabel = isOpen ? 'X' : '☰'
 
   const handleItemClick = (itemId) => {
     setActiveId(itemId)
@@ -17,23 +17,23 @@ function Navbar() {
     <>
       <button
         type="button"
-        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
+        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
         aria-label={isOpen ? 'Cerrar menu principal' : 'Abrir menu principal'}
         aria-expanded={isOpen}
         aria-controls="home-navbar"
         onClick={() => setIsOpen((currentValue) => !currentValue)}
       >
-        {toggleLabel}
+        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
       </button>
 
-      {isOpen && (
+      {isOpen ? (
         <button
           type="button"
           className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
           aria-label="Cerrar menu principal"
           onClick={() => setIsOpen(false)}
         />
-      )}
+      ) : null}
 
       <aside
         id="home-navbar"
