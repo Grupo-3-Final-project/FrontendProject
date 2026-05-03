@@ -1,1 +1,1 @@
-export { attractionMarkers, mapControls, statusChips } from '../../data/mapData'
+export { attractionMarkers, mapControls, statusChips } from '../../data/MapData'

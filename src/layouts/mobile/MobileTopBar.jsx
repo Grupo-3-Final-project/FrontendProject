@@ -59,7 +59,7 @@ function MobileTopBar() {
         >
           <HiOutlineBell className="text-xl" />
           <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[0.62rem] leading-none font-black text-white ring-2 ring-neutral-950">
-            2
+
           </span>
         </button>
       </header>

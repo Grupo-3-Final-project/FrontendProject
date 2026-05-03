@@ -6,7 +6,7 @@ import {
   attractionMarkers,
   mapControls,
   statusChips,
-} from '../data/mapData'
+} from '../data/MapData'
 
 function MobilePage() {
   return (
