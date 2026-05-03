@@ -5,6 +5,7 @@ import MobilePage from '../pages/MobilePage'
 import HomeLayout from '../layouts/HomeLayout'
 import DashboardLayout from '../layouts/DashboardLayout'
 import MobileLayout from '../layouts/MobileLayout'
+import BookingFlowPage from '../features/bookings/BookingFlowPage'
 
 function AppRouter() {
   return (
@@ -13,6 +14,9 @@ function AppRouter() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="/home" element={<HomeLayout />}>
           <Route index element={<HomePage />} />
+        </Route>
+        <Route path="/booking" element={<HomeLayout />}>
+          <Route index element={<BookingFlowPage />} />
         </Route>
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<DashboardPage />} />
