@@ -6,6 +6,8 @@ const buttonVariantClasses = {
     'border-white/10 bg-gradient-to-b from-red-600 to-red-800 enabled:hover:from-red-500 enabled:hover:to-red-700 enabled:hover:shadow-[0_16px_34px_rgba(167,15,27,0.28)]',
   secondary:
     'border-stone-700 bg-stone-950/85 enabled:hover:border-stone-500 enabled:hover:bg-stone-800',
+  ghost:
+    'border-white/10 bg-white/5 enabled:hover:border-red-500/70 enabled:hover:bg-red-950/30 enabled:hover:text-white',
   danger:
     'border-white/10 bg-gradient-to-b from-red-500 to-red-900 enabled:hover:from-red-400 enabled:hover:to-red-700 enabled:hover:shadow-[0_16px_34px_rgba(209,42,58,0.28)]'
 }
@@ -16,12 +18,13 @@ function Button({
   type = 'button',
   disabled = false,
   onClick,
+  className = '',
 }) {
   const variantClasses = buttonVariantClasses[variant] ?? buttonVariantClasses.primary
 
   return (
     <button
-      className={`${buttonBaseClasses} ${variantClasses}`}
+      className={`${buttonBaseClasses} ${variantClasses} ${className}`}
       type={type}
       disabled={disabled}
       onClick={onClick}

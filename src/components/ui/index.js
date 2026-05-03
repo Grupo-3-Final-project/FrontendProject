@@ -1,4 +1,7 @@
 export { default as Badge } from './Badge'
 export { default as Button } from './Button'
 export { default as Card } from './Card'
+export { default as SelectField } from './SelectField'
 export { default as StatusMessage } from './StatusMessage'
+export { default as TextAreaField } from './TextAreaField'
+export { default as TextField } from './TextField'
