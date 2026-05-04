@@ -1,33 +1,30 @@
-import { Badge, Button, Card } from '../components/ui'
-import MobileLayout from '../layouts/MobileLayout'
+import MobileMap from '../components/mobileExperience/MobileMap'
+import PrimaryCTA from '../components/mobileExperience/PrimaryCTA'
+import RouteCard from '../components/mobileExperience/RouteCard'
+import StatusChip from '../components/mobileExperience/StatusChip'
+import {
+  attractionMarkers,
+  mapControls,
+  statusChips,
+} from '../data/MapData'
 
 function MobilePage() {
   return (
-    <MobileLayout>
-      <main className="mobile-page">
-        <section className="page-panel">
-          <p className="page-kicker">Experiencia movil</p>
-          <h1>Visita al parque</h1>
-          <p className="page-description">
-            Base para visitantes dentro del parque. Aqui se prepararan el mapa,
-            la ruta optimizada y el detalle de atracciones.
-          </p>
-          <div className="page-preview-grid">
-            <Card
-              title="Ruta del visitante"
-              subtitle="Base visual mobile-first sin login ni compra real."
-            >
-              <div className="page-inline-items">
-                <Badge variant="neutral">Progreso pendiente</Badge>
-              </div>
-              <div className="page-actions">
-                <Button>Actualizar ruta</Button>
-              </div>
-            </Card>
-          </div>
-        </section>
-      </main>
-    </MobileLayout>
+    <main className="flex flex-1 bg-black px-2.5 py-3">
+      <section className="flex w-full flex-col gap-2.5">
+        <div className="flex gap-2 overflow-x-auto pb-0.5">
+          {statusChips.map((chip) => (
+            <StatusChip key={chip.id} {...chip} />
+          ))}
+        </div>
+
+        <MobileMap markers={attractionMarkers} controls={mapControls} />
+
+        <RouteCard />
+
+        <PrimaryCTA />
+      </section>
+    </main>
   )
 }
 
