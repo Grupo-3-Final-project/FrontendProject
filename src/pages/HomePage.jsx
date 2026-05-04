@@ -141,7 +141,7 @@ function HomePage() {
 
           <div className="grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[5/4] overflow-hidden">
                 <img
                   src={hauntedMansionImage}
                   alt="Mansión Maldita"
@@ -149,22 +149,18 @@ function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
               </div>
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
+              <div className="flex flex-1 flex-col items-center p-4 text-center sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white sm:text-2xl">
                   Mansión Maldita
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-300">
-                  Un recorrido entre pasillos cerrados, puertas que susurran y
-                  una presencia que espera al final.
-                </p>
-                <span className="mt-auto inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                <span className="mt-4 inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
                   Extrema
                 </span>
               </div>
             </article>
 
             <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[5/4] overflow-hidden">
                 <img
                   src={bloodRiverImage}
                   alt="Río de Sangre"
@@ -172,22 +168,18 @@ function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
               </div>
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
+              <div className="flex flex-1 flex-col items-center p-4 text-center sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white sm:text-2xl">
                   Río de Sangre
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-300">
-                  Una travesía nocturna por aguas rojas, curvas cerradas y
-                  gritos que llegan antes que la corriente.
-                </p>
-                <span className="mt-auto inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                <span className="mt-4 inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
                   Extrema
                 </span>
               </div>
             </article>
 
             <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70">
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[5/4] overflow-hidden">
                 <img
                   src={terrorTowerImage}
                   alt="Torre del Terror"
@@ -195,22 +187,18 @@ function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
               </div>
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
+              <div className="flex flex-1 flex-col items-center p-4 text-center sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white sm:text-2xl">
                   Torre del Terror
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-300">
-                  Una caída vertical entre luces rojas, metal antiguo y el eco
-                  de quienes subieron demasiado alto.
-                </p>
-                <span className="mt-auto inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
+                <span className="mt-4 inline-flex w-fit rounded-md border border-red-500/70 bg-red-600/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-red-300 uppercase">
                   Extrema
                 </span>
               </div>
             </article>
 
             <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-yellow-600/70">
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-[5/4] overflow-hidden">
                 <img
                   src={darkLabyrinthImage}
                   alt="Laberinto Oscuro"
@@ -218,15 +206,11 @@ function HomePage() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
               </div>
-              <div className="flex flex-1 flex-col p-4 sm:p-5">
+              <div className="flex flex-1 flex-col items-center p-4 text-center sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white sm:text-2xl">
                   Laberinto Oscuro
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-neutral-300">
-                  Caminos estrechos, sombras móviles y señales que cambian
-                  cuando crees haber encontrado la salida.
-                </p>
-                <span className="mt-auto inline-flex w-fit rounded-md border border-yellow-500/70 bg-yellow-500/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-yellow-300 uppercase">
+                <span className="mt-4 inline-flex w-fit rounded-md border border-yellow-500/70 bg-yellow-500/10 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-yellow-300 uppercase">
                   Media
                 </span>
               </div>
