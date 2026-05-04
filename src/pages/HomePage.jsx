@@ -9,9 +9,19 @@ import offerNightWithoutEscapeImage from '../assets/home/offerNightWithoutEscape
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
 
 function HomePage() {
+  const scrollToSection = (sectionId) => {
+    document.getElementById(sectionId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
-      <section className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-6 sm:px-6 md:px-8 lg:min-h-[580px] lg:px-6 lg:py-3 xl:px-8">
+      <section
+        id="inicio"
+        className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-6 sm:px-6 md:px-8 lg:min-h-[580px] lg:px-6 lg:py-3 xl:px-8"
+      >
         <img
           src={heroImage}
           alt=""
@@ -46,6 +56,7 @@ function HomePage() {
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={() => scrollToSection('visita')}
               >
                 Comprar entradas
               </button>
@@ -58,7 +69,10 @@ function HomePage() {
             </div>
           </div>
 
-          <aside className="w-full max-w-[216px] justify-self-center rounded-2xl border border-white/20 bg-neutral-950/58 p-3 backdrop-blur-sm lg:-mt-1 lg:justify-self-end xl:max-w-[232px]">
+          <aside
+            id="info"
+            className="w-full max-w-[216px] justify-self-center rounded-2xl border border-white/20 bg-neutral-950/58 p-3 backdrop-blur-sm lg:-mt-1 lg:justify-self-end xl:max-w-[232px]"
+          >
             <div className="text-center">
               <p className="text-[0.95rem] leading-tight font-extrabold text-white">
                 Tu experiencia empieza aquí
@@ -312,7 +326,7 @@ function HomePage() {
       </section>
 
       <section
-        id="mapa"
+        id="experiencia"
         className="border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
@@ -357,6 +371,7 @@ function HomePage() {
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={() => scrollToSection('experiencia')}
               >
                 Explorar mapa
               </button>
@@ -369,7 +384,10 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12">
+      <section
+        id="visita"
+        className="bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
+      >
         <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_center,rgba(185,28,28,0.35),rgba(23,23,23,0.92)_48%,rgba(0,0,0,1)_100%)] px-5 py-12 text-center shadow-2xl shadow-black/60 sm:px-10 sm:py-14">
           <p className="text-sm font-extrabold tracking-[0.24em] text-red-400 uppercase">
             La Última Puerta

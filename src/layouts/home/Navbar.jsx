@@ -11,6 +11,10 @@ function Navbar() {
   const handleItemClick = (itemId) => {
     setActiveId(itemId)
     setIsOpen(false)
+    document.getElementById(itemId)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
   }
 
   return (
