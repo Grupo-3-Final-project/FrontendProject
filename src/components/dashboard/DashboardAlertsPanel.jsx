@@ -5,6 +5,7 @@ function DashboardAlertsPanel({ attractions = [], maintenance = [], bookings = [
     ...attractions
       .filter((attraction) => attraction.status !== 'OPEN')
       .map((attraction) => ({
+        key: `attraction-${attraction.id}`,
         title: attraction.name,
         message: `Estado actual: ${attraction.status}.`,
         variant: attraction.status === 'MAINTENANCE' ? 'warning' : 'danger',
@@ -14,6 +15,7 @@ function DashboardAlertsPanel({ attractions = [], maintenance = [], bookings = [
       .filter((task) => task.status === 'SCHEDULED')
       .slice(0, 2)
       .map((task) => ({
+        key: `maintenance-${task.id}`,
         title: task.attractionName,
         message: `Mantenimiento programado para ${task.scheduledDate}.`,
         variant: 'warning',
@@ -23,6 +25,7 @@ function DashboardAlertsPanel({ attractions = [], maintenance = [], bookings = [
 
   if (alerts.length === 0) {
     alerts.push({
+      key: 'operation-stable',
       title: 'Operacion estable',
       message: `${bookings.length} reservas visibles y sin alertas activas.`,
       variant: 'success',
@@ -47,7 +50,7 @@ function DashboardAlertsPanel({ attractions = [], maintenance = [], bookings = [
       <div className="grid gap-4">
         {alerts.map((alert) => (
           <article
-            key={`${alert.title}-${alert.tag}`}
+            key={alert.key}
             className={`grid min-h-24 grid-cols-[auto_minmax(0,1fr)] gap-3 rounded-md bg-[linear-gradient(90deg,rgba(167,15,27,0.1),transparent_65%),rgba(10,10,11,0.66)] p-4 ${
               alert.variant === 'danger'
                 ? 'border border-red-500/40'
