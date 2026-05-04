@@ -240,35 +240,35 @@ function HomePage() {
           </div>
 
           <div className="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-[1.1fr_1.1fr_1.1fr_0.85fr]">
-            <article className="group relative min-h-44 overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45 sm:min-h-48">
+            <article className="group relative min-h-40 overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45 sm:min-h-44">
               <img
                 src={offerNightWithoutEscapeImage}
                 alt="Noche sin escape"
                 className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-85"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/55 to-red-950/15" />
-              <div className="relative flex min-h-48 flex-col justify-end p-5">
+              <div className="relative flex min-h-40 flex-col justify-end p-4 sm:min-h-44 sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white">
                   Noche sin escape
                 </h3>
-                <p className="mt-3 text-5xl font-black tracking-normal text-red-500">
+                <p className="mt-2 text-5xl font-black tracking-normal text-red-500">
                   -20%
                 </p>
               </div>
             </article>
 
-            <article className="group relative min-h-44 overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45 sm:min-h-48">
+            <article className="group relative min-h-40 overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45 sm:min-h-44">
               <img
                 src={offerFamilyPackImage}
                 alt="Pack familiar"
                 className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-85"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/55 to-red-950/15" />
-              <div className="relative flex min-h-48 flex-col justify-end p-5">
+              <div className="relative flex min-h-40 flex-col justify-end p-4 sm:min-h-44 sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white">
                   Pack familiar
                 </h3>
-                <p className="mt-3 text-4xl font-black tracking-normal text-red-500">
+                <p className="mt-2 text-4xl font-black tracking-normal text-red-500">
                   4 entradas
                 </p>
                 <p className="mt-1 text-lg font-semibold text-neutral-100">
@@ -277,31 +277,31 @@ function HomePage() {
               </div>
             </article>
 
-            <article className="group relative min-h-44 overflow-hidden rounded-2xl border border-white/15 bg-black shadow-2xl shadow-black/45 sm:min-h-48">
+            <article className="group relative min-h-40 overflow-hidden rounded-2xl border border-white/15 bg-black shadow-2xl shadow-black/45 sm:min-h-44">
               <img
                 src={offerHotelTicketImage}
                 alt="Hotel + entrada"
                 className="absolute inset-0 h-full w-full object-cover opacity-65 transition duration-500 group-hover:scale-105 group-hover:opacity-80"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-black/20" />
-              <div className="relative flex min-h-48 flex-col justify-end p-5">
+              <div className="relative flex min-h-40 flex-col justify-end p-4 sm:min-h-44 sm:p-5">
                 <h3 className="text-xl font-black tracking-normal text-white">
                   Hotel + entrada
                 </h3>
-                <p className="mt-3 text-4xl font-black tracking-normal text-red-500">
+                <p className="mt-2 text-4xl font-black tracking-normal text-red-500">
                   desde 129€
                 </p>
               </div>
             </article>
 
-            <article className="flex min-h-44 flex-col justify-center rounded-2xl border border-yellow-500/80 bg-[radial-gradient(circle_at_top,rgba(234,179,8,0.18),rgba(23,23,23,0.9)_52%,rgba(0,0,0,0.98)_100%)] p-5 text-center shadow-2xl shadow-black/45 sm:min-h-48">
-              <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-yellow-400/70 bg-yellow-500/10 text-2xl font-black text-yellow-300">
+            <article className="flex min-h-40 flex-col justify-center rounded-2xl border border-yellow-500/80 bg-[radial-gradient(circle_at_top,rgba(234,179,8,0.18),rgba(23,23,23,0.9)_52%,rgba(0,0,0,0.98)_100%)] p-4 text-center shadow-2xl shadow-black/45 sm:min-h-44 sm:p-5">
+              <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-full border border-yellow-400/70 bg-yellow-500/10 text-xl font-black text-yellow-300">
                 ♿
               </span>
-              <h3 className="mt-4 text-lg font-black tracking-normal text-white">
+              <h3 className="mt-3 text-lg font-black tracking-normal text-white">
                 Descuento discapacidad
               </h3>
-              <p className="mt-4 text-4xl font-black tracking-normal text-yellow-400">
+              <p className="mt-3 text-4xl font-black tracking-normal text-yellow-400">
                 -20%
               </p>
             </article>
