@@ -333,10 +333,10 @@ function HomePage() {
             <img
               src={parkMapImage}
               alt="Mapa visual del parque"
-              className="h-[20rem] w-full object-cover opacity-90 brightness-90 contrast-125 sm:h-[26rem] lg:h-[30rem]"
+              className="h-[20rem] w-full object-cover opacity-95 brightness-105 contrast-110 sm:h-[24rem] lg:h-[27rem]"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/5 to-black/35" />
-            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/0 to-black/25" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
             <span className="absolute top-[28%] left-[12%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
               Mansión Maldita
@@ -347,11 +347,11 @@ function HomePage() {
             <span className="absolute top-[16%] left-[48%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
               Torre del Terror
             </span>
-            <span className="absolute right-[14%] bottom-[28%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
+            <span className="absolute right-[18%] bottom-[38%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
               Laberinto Oscuro
             </span>
 
-            <div className="absolute right-4 bottom-4 left-4 flex flex-col gap-3 sm:right-5 sm:bottom-5 sm:left-auto sm:items-end">
+            <div className="absolute right-4 bottom-4 left-4 flex flex-col gap-2 sm:right-6 sm:bottom-6 sm:left-auto sm:items-end">
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -359,7 +359,7 @@ function HomePage() {
               >
                 Explorar mapa
               </button>
-              <p className="max-w-sm rounded-lg border border-white/10 bg-black/60 px-4 py-3 text-xs leading-5 text-neutral-300 backdrop-blur">
+              <p className="max-w-[15rem] rounded-lg border border-white/5 bg-black/35 px-3 py-2 text-[0.68rem] leading-4 text-neutral-300/75 backdrop-blur">
                 Mapa visual orientativo. El recorrido mobile se preparará en su
                 experiencia propia.
               </p>
