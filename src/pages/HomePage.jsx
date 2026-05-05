@@ -20,7 +20,7 @@ function HomePage() {
     <main className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
       <section
         id="inicio"
-        className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-6 sm:px-6 md:px-8 lg:min-h-[580px] lg:px-6 lg:py-3 xl:px-8"
+        className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-6 sm:px-6 md:px-8 lg:min-h-[600px] lg:px-6 lg:py-3 xl:px-8"
       >
         <img
           src={heroImage}
@@ -28,31 +28,31 @@ function HomePage() {
           className="absolute inset-0 -z-20 h-full w-full object-cover object-center opacity-100 brightness-100 contrast-100 lg:object-contain"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.86)_0%,rgba(0,0,0,0.52)_28%,rgba(0,0,0,0.08)_50%,rgba(0,0,0,0.28)_78%,rgba(0,0,0,0.52)_100%),linear-gradient(180deg,rgba(0,0,0,0.04)_0%,rgba(0,0,0,0)_55%,rgba(0,0,0,0.65)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.84)_0%,rgba(0,0,0,0.48)_28%,rgba(0,0,0,0.05)_52%,rgba(0,0,0,0.24)_78%,rgba(0,0,0,0.5)_100%),linear-gradient(180deg,rgba(0,0,0,0.02)_0%,rgba(0,0,0,0)_52%,rgba(0,0,0,0.68)_100%)]" />
 
-        <div className="mr-auto ml-0 grid min-h-[calc(100svh-6.75rem)] w-full max-w-[1180px] items-center gap-5 py-2 sm:py-4 lg:min-h-[552px] lg:grid-cols-[minmax(0,1fr)_216px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_232px]">
-          <div className="max-w-[41rem] pt-0 lg:-mt-1">
+        <div className="mr-auto ml-0 grid min-h-[calc(100svh-6.75rem)] w-full max-w-[1160px] items-center gap-4 py-2 sm:py-4 lg:min-h-[572px] lg:grid-cols-[minmax(0,1fr)_196px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_208px]">
+          <div className="max-w-[39rem] pt-0 lg:-mt-2">
             <span className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/45 px-3.5 py-2 text-sm font-semibold text-neutral-100 shadow-xl shadow-black/30 backdrop-blur">
               Granada · 18°C
             </span>
 
-            <p className="mt-3 text-xs font-extrabold uppercase tracking-[0.28em] text-red-500 sm:text-sm">
+            <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.26em] text-red-500 sm:text-sm">
               La Última Puerta
             </p>
-            <h1 className="mt-2 max-w-[34rem] text-4xl leading-[0.96] font-black tracking-normal text-white uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.7rem]">
+            <h1 className="mt-2 max-w-[31rem] text-[2.6rem] leading-[0.94] font-black tracking-normal text-white uppercase drop-shadow-[0_14px_32px_rgba(0,0,0,0.9)] sm:text-[3.15rem] lg:text-[3.2rem] xl:text-[3.5rem]">
               Cruza la puerta
               <span className="block text-red-600">si te atreves</span>
             </h1>
-            <p className="mt-3 max-w-xl text-base font-semibold text-neutral-100 sm:text-lg">
+            <p className="mt-4 max-w-xl text-base font-semibold text-neutral-100 sm:text-lg">
               ¿Te atreves a cruzarla?
             </p>
-            <p className="mt-2 max-w-md text-base leading-7 text-neutral-200/85 sm:max-w-lg">
+            <p className="mt-2 max-w-md text-base leading-7 text-neutral-200/80 sm:max-w-[31rem]">
               El parque de atracciones de terror más intenso te espera en
               Granada con experiencias nocturnas, sustos memorables y una
               entrada que no todos se atreven a atravesar.
             </p>
 
-            <div className="mt-5 flex flex-wrap items-center gap-3 sm:gap-4">
+            <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -71,19 +71,19 @@ function HomePage() {
 
           <aside
             id="info"
-            className="w-full max-w-[216px] justify-self-center rounded-2xl border border-white/20 bg-neutral-950/58 p-3 backdrop-blur-sm lg:-mt-1 lg:justify-self-end xl:max-w-[232px]"
+            className="w-full max-w-[196px] justify-self-center rounded-xl border border-white/15 bg-neutral-950/45 p-3 shadow-xl shadow-black/35 backdrop-blur-sm lg:-mt-2 lg:justify-self-end lg:opacity-90 xl:max-w-[208px]"
           >
             <div className="text-center">
-              <p className="text-[0.95rem] leading-tight font-extrabold text-white">
+              <p className="text-[0.9rem] leading-tight font-extrabold text-white">
                 Tu experiencia empieza aquí
               </p>
-              <p className="mt-2 text-xs leading-5 text-neutral-300">
+              <p className="mt-2 text-[0.7rem] leading-5 text-neutral-300/85">
                 Acceso visual a la experiencia mobile para preparar el recorrido
                 dentro del parque.
               </p>
             </div>
 
-            <div className="mx-auto mt-3 grid h-18 w-18 grid-cols-5 gap-1 rounded-xl border border-white/20 bg-white p-2">
+            <div className="mx-auto mt-3 grid h-16 w-16 grid-cols-5 gap-1 rounded-lg border border-white/20 bg-white p-2">
               <span className="rounded-sm bg-black" />
               <span className="rounded-sm bg-black" />
               <span className="rounded-sm bg-white" />
@@ -111,7 +111,7 @@ function HomePage() {
               <span className="rounded-sm bg-black" />
             </div>
 
-            <p className="mt-3 rounded-lg border border-red-900/70 bg-red-950/30 px-3 py-2 text-center text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-red-200">
+            <p className="mt-3 rounded-lg border border-red-950/60 bg-black/30 px-3 py-2 text-center text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-red-200/90">
               QR visual · Sin pago real
             </p>
           </aside>
