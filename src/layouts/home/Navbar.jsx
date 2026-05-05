@@ -51,7 +51,7 @@ function Navbar() {
     <>
       <button
         type="button"
-        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
+        className="fixed top-4 right-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
         aria-label={isOpen ? 'Cerrar menu principal' : 'Abrir menu principal'}
         aria-expanded={isOpen}
         aria-controls="home-navbar"

@@ -120,7 +120,7 @@ function HomePage() {
 
       <section
         id="atracciones"
-        className="border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -221,7 +221,7 @@ function HomePage() {
 
       <section
         id="ofertas"
-        className="border-b border-white/10 bg-neutral-950 px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-neutral-950 px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -311,7 +311,7 @@ function HomePage() {
 
       <section
         id="experiencia"
-        className="border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -370,7 +370,7 @@ function HomePage() {
 
       <section
         id="visita"
-        className="bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12"
+        className="scroll-mt-32 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_center,rgba(185,28,28,0.35),rgba(23,23,23,0.92)_48%,rgba(0,0,0,1)_100%)] px-5 py-12 text-center shadow-2xl shadow-black/60 sm:px-10 sm:py-14">
           <p className="text-sm font-extrabold tracking-[0.24em] text-red-400 uppercase">
