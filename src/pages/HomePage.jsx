@@ -69,10 +69,7 @@ function HomePage() {
             </div>
           </div>
 
-          <aside
-            id="info"
-            className="w-full max-w-[196px] justify-self-center rounded-xl border border-white/15 bg-neutral-950/45 p-3 shadow-xl shadow-black/35 backdrop-blur-sm lg:-mt-2 lg:justify-self-end lg:opacity-90 xl:max-w-[208px]"
-          >
+          <aside className="w-full max-w-[196px] justify-self-center rounded-xl border border-white/15 bg-neutral-950/45 p-3 shadow-xl shadow-black/35 backdrop-blur-sm lg:-mt-2 lg:justify-self-end lg:opacity-90 xl:max-w-[208px]">
             <div className="text-center">
               <p className="text-[0.9rem] leading-tight font-extrabold text-white">
                 Tu experiencia empieza aquí
@@ -502,6 +499,169 @@ function HomePage() {
                     Servicio médico
                   </li>
                 </ul>
+              </div>
+
+              <button
+                type="button"
+                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-8 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_30px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+              >
+                Comprar entradas
+              </button>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="info"
+        className="scroll-mt-32 border-b border-white/10 bg-neutral-950 px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
+      >
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold tracking-[0.22em] text-red-500 uppercase">
+                Información
+              </p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal text-white sm:text-4xl">
+                Antes de cruzar La Última Puerta
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-neutral-300">
+              Datos visuales para resolver dudas básicas antes de preparar la
+              visita. Todo el contenido es informativo y sin gestión real.
+            </p>
+          </div>
+
+          <div className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(21rem,0.8fr)]">
+            <div className="space-y-5">
+              <div>
+                <h3 className="mb-4 text-xl font-black tracking-normal text-white">
+                  Preguntas frecuentes
+                </h3>
+                <div className="space-y-3">
+                  <article className="rounded-2xl border border-white/10 bg-black/45 p-5 shadow-xl shadow-black/35">
+                    <h4 className="text-base font-black text-white">
+                      ¿Se recomienda reserva previa?
+                    </h4>
+                    <p className="mt-2 text-sm leading-6 text-neutral-400">
+                      Sí. La reserva anticipada ayuda a organizar la visita y
+                      evita esperas en fechas de alta demanda.
+                    </p>
+                  </article>
+
+                  <article className="rounded-2xl border border-white/10 bg-black/45 p-5 shadow-xl shadow-black/35">
+                    <h4 className="text-base font-black text-white">
+                      ¿Hay restricciones de edad o salud?
+                    </h4>
+                    <p className="mt-2 text-sm leading-6 text-neutral-400">
+                      Algunas atracciones pueden no estar recomendadas para
+                      menores o personas sensibles a experiencias intensas.
+                    </p>
+                  </article>
+
+                  <article className="rounded-2xl border border-white/10 bg-black/45 p-5 shadow-xl shadow-black/35">
+                    <h4 className="text-base font-black text-white">
+                      ¿Pueden entrar niños pequeños?
+                    </h4>
+                    <p className="mt-2 text-sm leading-6 text-neutral-400">
+                      El acceso familiar es posible, pero ciertas zonas de
+                      terror tienen recomendaciones específicas por edad.
+                    </p>
+                  </article>
+
+                  <article className="rounded-2xl border border-white/10 bg-black/45 p-5 shadow-xl shadow-black/35">
+                    <h4 className="text-base font-black text-white">
+                      ¿Hay aparcamiento gratuito?
+                    </h4>
+                    <p className="mt-2 text-sm leading-6 text-neutral-400">
+                      Sí. La zona de aparcamiento visual está situada junto al
+                      acceso principal del parque.
+                    </p>
+                  </article>
+
+                  <article className="rounded-2xl border border-white/10 bg-black/45 p-5 shadow-xl shadow-black/35">
+                    <h4 className="text-base font-black text-white">
+                      ¿Se permite reentrada?
+                    </h4>
+                    <p className="mt-2 text-sm leading-6 text-neutral-400">
+                      La reentrada queda sujeta a validación en taquilla durante
+                      la misma jornada de visita.
+                    </p>
+                  </article>
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-yellow-500/45 bg-yellow-500/10 p-5 shadow-xl shadow-black/35">
+                <h3 className="text-lg font-black tracking-normal text-white">
+                  Aviso importante
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-yellow-100/85">
+                  El parque contiene experiencias de terror intenso con efectos
+                  de luz, sonido y escenas inmersivas. Consulta las
+                  recomendaciones de cada atracción antes de acceder.
+                </p>
+              </div>
+            </div>
+
+            <aside className="space-y-5">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/45 shadow-xl shadow-black/35">
+                <div className="border-b border-white/10 bg-red-950/35 px-5 py-4">
+                  <h3 className="text-sm font-extrabold tracking-[0.14em] text-white uppercase">
+                    Contacto
+                  </h3>
+                </div>
+                <div className="space-y-4 p-5 text-sm">
+                  <div>
+                    <p className="text-xs font-bold tracking-[0.12em] text-neutral-500 uppercase">
+                      Teléfono
+                    </p>
+                    <p className="mt-1 font-bold text-white">900 123 456</p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold tracking-[0.12em] text-neutral-500 uppercase">
+                      Email
+                    </p>
+                    <p className="mt-1 font-bold text-white">
+                      info@laultimapuerta.es
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold tracking-[0.12em] text-neutral-500 uppercase">
+                      Dirección
+                    </p>
+                    <p className="mt-1 font-bold text-white">
+                      Ctra. Sierra Nevada Km 4, Granada
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/45 shadow-xl shadow-black/35">
+                <div className="border-b border-white/10 px-5 py-4">
+                  <h3 className="text-sm font-extrabold tracking-[0.14em] text-white uppercase">
+                    Datos del parque
+                  </h3>
+                </div>
+                <div className="divide-y divide-white/10 text-sm">
+                  <div className="flex items-center justify-between gap-4 px-5 py-4">
+                    <span className="text-neutral-400">Fundación</span>
+                    <span className="font-bold text-white">2019</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4">
+                    <span className="text-neutral-400">Aforo máximo</span>
+                    <span className="font-bold text-white">2.500 personas</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4">
+                    <span className="text-neutral-400">Temporada</span>
+                    <span className="font-bold text-white">Sept — Dic</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4">
+                    <span className="text-neutral-400">Idioma</span>
+                    <span className="font-bold text-white">
+                      Español / Inglés
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <button
