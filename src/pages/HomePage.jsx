@@ -370,8 +370,152 @@ function HomePage() {
 
       <section
         id="visita"
-        className="scroll-mt-32 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-sm font-extrabold tracking-[0.22em] text-red-500 uppercase">
+                Planifica tu visita
+              </p>
+              <h2 className="mt-2 text-3xl font-black tracking-normal text-white sm:text-4xl">
+                Todo listo antes de cruzar la puerta
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-neutral-300">
+              Consulta una guía visual de acceso, horarios y servicios para
+              preparar la visita sin convertir la Home en una compra real.
+            </p>
+          </div>
+
+          <div className="grid gap-5 xl:grid-cols-[minmax(0,1.7fr)_minmax(21rem,0.8fr)]">
+            <div className="space-y-5">
+              <div className="relative overflow-hidden rounded-3xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/60">
+                <img
+                  src={parkMapImage}
+                  alt="Mapa visual para planificar la visita"
+                  className="h-[18rem] w-full object-cover opacity-90 brightness-105 contrast-110 sm:h-[24rem] lg:h-[26rem]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20" />
+                <div className="absolute right-4 bottom-4 left-4 rounded-2xl border border-white/10 bg-black/55 p-4 backdrop-blur sm:right-6 sm:bottom-6 sm:left-6">
+                  <p className="text-sm font-extrabold tracking-[0.18em] text-red-300 uppercase">
+                    Mapa visual del parque
+                  </p>
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-200/85">
+                    Una vista orientativa para ubicar accesos, zonas principales
+                    y puntos de referencia antes de la experiencia mobile.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3">
+                <article className="rounded-2xl border border-white/10 bg-neutral-950 p-5 shadow-xl shadow-black/35">
+                  <p className="text-base font-black text-white">En coche</p>
+                  <p className="mt-2 text-sm leading-6 text-neutral-400">
+                    Acceso por A-44, salida 107. Aparcamiento gratuito junto a
+                    la entrada principal.
+                  </p>
+                </article>
+
+                <article className="rounded-2xl border border-white/10 bg-neutral-950 p-5 shadow-xl shadow-black/35">
+                  <p className="text-base font-black text-white">En autobús</p>
+                  <p className="mt-2 text-sm leading-6 text-neutral-400">
+                    Línea 26 desde el centro cada 20 minutos. Parada La Última
+                    Puerta.
+                  </p>
+                </article>
+
+                <article className="rounded-2xl border border-white/10 bg-neutral-950 p-5 shadow-xl shadow-black/35">
+                  <p className="text-base font-black text-white">En tren</p>
+                  <p className="mt-2 text-sm leading-6 text-neutral-400">
+                    Cercanías hasta estación Sur y lanzadera visual gratuita al
+                    parque.
+                  </p>
+                </article>
+              </div>
+            </div>
+
+            <aside className="space-y-5">
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-xl shadow-black/35">
+                <div className="border-b border-white/10 bg-red-950/35 px-5 py-4">
+                  <h3 className="text-sm font-extrabold tracking-[0.14em] text-white uppercase">
+                    Horario de apertura
+                  </h3>
+                </div>
+                <div className="divide-y divide-white/10">
+                  <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                    <span className="text-neutral-400">Lunes — Jueves</span>
+                    <span className="font-bold text-neutral-500">Cerrado</span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                    <span className="text-neutral-400">Viernes</span>
+                    <span className="font-bold text-green-400">
+                      19:00 — 01:00
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                    <span className="text-neutral-400">Sábado</span>
+                    <span className="font-bold text-green-400">
+                      18:00 — 02:00
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                    <span className="text-neutral-400">Domingo</span>
+                    <span className="font-bold text-green-400">
+                      18:00 — 00:00
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
+                    <span className="text-neutral-400">Festivos</span>
+                    <span className="font-bold text-green-400">
+                      18:00 — 01:00
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-neutral-950 shadow-xl shadow-black/35">
+                <div className="border-b border-white/10 px-5 py-4">
+                  <h3 className="text-sm font-extrabold tracking-[0.14em] text-white uppercase">
+                    Servicios
+                  </h3>
+                </div>
+                <ul className="divide-y divide-white/10 text-sm text-neutral-300">
+                  <li className="flex items-center gap-3 px-5 py-4">
+                    <span className="text-green-400">✓</span>
+                    Aparcamiento gratuito
+                  </li>
+                  <li className="flex items-center gap-3 px-5 py-4">
+                    <span className="text-green-400">✓</span>
+                    Cafetería y restaurante
+                  </li>
+                  <li className="flex items-center gap-3 px-5 py-4">
+                    <span className="text-green-400">✓</span>
+                    Tienda de souvenirs
+                  </li>
+                  <li className="flex items-center gap-3 px-5 py-4">
+                    <span className="text-green-400">✓</span>
+                    Consigna de equipaje
+                  </li>
+                  <li className="flex items-center gap-3 px-5 py-4">
+                    <span className="text-green-400">✓</span>
+                    Servicio médico
+                  </li>
+                </ul>
+              </div>
+
+              <button
+                type="button"
+                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-8 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_30px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+              >
+                Comprar entradas
+              </button>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_center,rgba(185,28,28,0.35),rgba(23,23,23,0.92)_48%,rgba(0,0,0,1)_100%)] px-5 py-12 text-center shadow-2xl shadow-black/60 sm:px-10 sm:py-14">
           <p className="text-sm font-extrabold tracking-[0.24em] text-red-400 uppercase">
             La Última Puerta
