@@ -1,16 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { navItems } from './NavData'
 import NavbarItem from './NavbarItem'
 import NavbarIdentity from './NavbarIdentity'
 
+const defaultActiveId = 'inicio'
+
+const getActiveIdFromHash = () => {
+  if (typeof window === 'undefined') {
+    return defaultActiveId
+  }
+
+  const hashId = window.location.hash.replace('#', '')
+  const isValidHash = navItems.some((item) => item.id === hashId)
+
+  return isValidHash ? hashId : defaultActiveId
+}
+
 function Navbar() {
-  const [activeId, setActiveId] = useState('inicio')
+  const [activeId, setActiveId] = useState(getActiveIdFromHash)
   const [isOpen, setIsOpen] = useState(false)
   const toggleLabel = isOpen ? 'X' : '☰'
+
+  useEffect(() => {
+    const syncActiveIdWithHash = () => {
+      setActiveId(getActiveIdFromHash())
+    }
+
+    window.addEventListener('hashchange', syncActiveIdWithHash)
+
+    return () => {
+      window.removeEventListener('hashchange', syncActiveIdWithHash)
+    }
+  }, [])
 
   const handleItemClick = (itemId) => {
     setActiveId(itemId)
     setIsOpen(false)
+
+    if (window.location.hash !== `#${itemId}`) {
+      window.location.hash = itemId
+    }
+
     document.getElementById(itemId)?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
