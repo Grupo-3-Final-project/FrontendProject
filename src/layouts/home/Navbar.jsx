@@ -1,16 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { navItems } from './NavData'
 import NavbarItem from './NavbarItem'
 import NavbarIdentity from './NavbarIdentity'
 
+const defaultActiveId = 'inicio'
+
+const getActiveIdFromHash = () => {
+  if (typeof window === 'undefined') {
+    return defaultActiveId
+  }
+
+  const hashId = window.location.hash.replace('#', '')
+  const isValidHash = navItems.some((item) => item.id === hashId)
+
+  return isValidHash ? hashId : defaultActiveId
+}
+
 function Navbar() {
-  const [activeId, setActiveId] = useState('inicio')
+  const [activeId, setActiveId] = useState(getActiveIdFromHash)
   const [isOpen, setIsOpen] = useState(false)
   const toggleLabel = isOpen ? 'X' : '☰'
+
+  useEffect(() => {
+    const syncActiveIdWithHash = () => {
+      setActiveId(getActiveIdFromHash())
+    }
+
+    window.addEventListener('hashchange', syncActiveIdWithHash)
+
+    return () => {
+      window.removeEventListener('hashchange', syncActiveIdWithHash)
+    }
+  }, [])
 
   const handleItemClick = (itemId) => {
     setActiveId(itemId)
     setIsOpen(false)
+
+    if (window.location.hash !== `#${itemId}`) {
+      window.location.hash = itemId
+    }
+
     document.getElementById(itemId)?.scrollIntoView({
       behavior: 'smooth',
       block: 'start',
@@ -21,7 +51,7 @@ function Navbar() {
     <>
       <button
         type="button"
-        className="fixed top-4 left-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
+        className="fixed top-4 right-4 z-[60] flex h-11 w-11 items-center justify-center border border-white/15 bg-black/90 text-2xl font-semibold leading-none text-white shadow-xl shadow-black/40 transition hover:border-red-600 hover:text-red-500 md:hidden"
         aria-label={isOpen ? 'Cerrar menu principal' : 'Abrir menu principal'}
         aria-expanded={isOpen}
         aria-controls="home-navbar"
