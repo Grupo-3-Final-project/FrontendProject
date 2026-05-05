@@ -4,7 +4,7 @@ import MapControlButton from './MapControlButton'
 
 function MobileMap({ markers, controls }) {
   return (
-    <section className="relative min-h-[356px] overflow-hidden rounded-xl border border-white/10 bg-neutral-950 shadow-2xl shadow-black/50">
+    <section className="relative min-h-[390px] flex-1 overflow-hidden rounded-xl border border-white/10 bg-neutral-950 shadow-2xl shadow-black/50 min-[390px]:min-h-[430px]">
       <img
         src={parkMapImage}
         alt="Mapa nocturno del parque de terror"

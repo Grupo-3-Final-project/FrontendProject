@@ -11,7 +11,7 @@ import {
 function MobilePage() {
   return (
     <main className="flex flex-1 bg-black px-2.5 py-3">
-      <section className="flex w-full flex-col gap-2.5">
+      <section className="flex min-h-0 w-full flex-col gap-2.5">
         <div className="flex gap-2 overflow-x-auto pb-0.5">
           {statusChips.map((chip) => (
             <StatusChip key={chip.id} {...chip} />
