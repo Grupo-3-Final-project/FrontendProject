@@ -2,7 +2,7 @@ import parkMapImage from '../../assets/home/publicHomeParkMap.png'
 import AttractionMarker from './AttractionMarker'
 import MapControlButton from './MapControlButton'
 
-function MobileMap({ markers, controls }) {
+function MobileMap({ markers, controls, onSelectAttraction }) {
   return (
     <section className="relative min-h-[390px] flex-1 overflow-hidden rounded-xl border border-white/10 bg-neutral-950 shadow-2xl shadow-black/50 min-[390px]:min-h-[430px]">
       <img
@@ -24,7 +24,11 @@ function MobileMap({ markers, controls }) {
       </div>
 
       {markers.map((marker) => (
-        <AttractionMarker key={marker.id} attraction={marker} />
+        <AttractionMarker
+          key={marker.id}
+          attraction={marker}
+          onSelect={onSelectAttraction}
+        />
       ))}
     </section>
   )
