@@ -26,31 +26,31 @@ function DashboardPage() {
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label="KPIs temporales">
         <DashboardKpiCard
           title="Visitantes hoy"
-          value="Metrica backend"
-          note="Pendiente de conexion"
+          value="Pendiente"
+          note="Esperando datos de backend"
           variant="danger"
           tag="Por conectar"
         />
         <DashboardKpiCard
           title="Ingresos hoy"
-          value="Metrica backend"
-          note="Calculo pendiente de backend"
+          value="Pendiente"
+          note="Metrica disponible tras integracion"
           variant="success"
           tag="Backend"
         />
         <DashboardKpiCard
           title="Entradas vendidas"
-          value="Metrica backend"
-          note="Datos por conectar"
+          value="Pendiente"
+          note="Datos preparados para conexion"
           variant="success"
           tag="Temporal"
         />
         <DashboardKpiCard
           title="Tiempo medio de espera"
-          value="Estado visual"
-          note="Informacion temporal"
+          value="Visual"
+          note="Estado operativo provisional"
           variant="warning"
-          tag="Operativo"
+          tag="Demo visual"
         />
       </section>
 
