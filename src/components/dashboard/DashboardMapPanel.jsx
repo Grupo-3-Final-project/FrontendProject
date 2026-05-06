@@ -1,4 +1,5 @@
 import { Badge } from '../ui'
+import parkMapImage from '../../assets/home/publicHomeParkMap.png'
 
 const attractionMarkers = [
   {
@@ -78,27 +79,27 @@ function DashboardMapPanel() {
       </div>
 
       <div
-        className="relative min-h-[430px] overflow-hidden rounded-lg border border-red-900/45 bg-[radial-gradient(circle_at_50%_46%,rgba(178,24,34,0.38),transparent_12rem),radial-gradient(circle_at_18%_20%,rgba(120,22,24,0.32),transparent_13rem),radial-gradient(circle_at_82%_66%,rgba(139,20,25,0.28),transparent_12rem),linear-gradient(135deg,rgba(38,24,21,0.88),rgba(5,5,5,0.98)_72%)] shadow-[inset_0_0_90px_rgba(0,0,0,0.78),0_0_34px_rgba(127,29,29,0.22)] before:absolute before:inset-0 before:bg-[radial-gradient(ellipse_at_center,transparent_38%,rgba(0,0,0,0.64)_92%)] after:absolute after:inset-[18px] after:rounded-md after:border after:border-white/10 max-[760px]:min-h-[340px]"
+        className="relative min-h-[430px] overflow-hidden rounded-lg border border-red-900/45 bg-neutral-950 shadow-[inset_0_0_90px_rgba(0,0,0,0.78),0_0_34px_rgba(127,29,29,0.22)] before:absolute before:inset-0 before:z-10 before:bg-[linear-gradient(90deg,rgba(0,0,0,0.6),transparent_26%,transparent_72%,rgba(0,0,0,0.62)),radial-gradient(ellipse_at_center,transparent_38%,rgba(0,0,0,0.72)_95%),linear-gradient(180deg,rgba(127,29,29,0.16),rgba(0,0,0,0.28))] after:absolute after:inset-[18px] after:z-20 after:rounded-md after:border after:border-white/10 max-[760px]:min-h-[340px]"
         aria-label="Mapa operativo temporal"
       >
-        <span className="absolute top-[43%] left-[12%] z-0 h-20 w-[78%] -rotate-[7deg] rounded-full border-t border-b border-red-300/10 bg-red-950/20 shadow-[0_0_34px_rgba(153,27,27,0.28)]" aria-hidden="true" />
-        <span className="absolute top-[31%] left-[33%] z-0 h-[38%] w-[34%] rounded-full border border-red-300/10 bg-black/16 shadow-[inset_0_0_42px_rgba(153,27,27,0.24)]" aria-hidden="true" />
-        <span className="absolute top-[10%] left-[46%] z-0 h-[82%] w-16 rotate-[18deg] rounded-full border-l border-r border-red-200/10 bg-red-950/16" aria-hidden="true" />
-        <span className="absolute bottom-[11%] left-[28%] z-0 h-24 w-[47%] rotate-[8deg] rounded-full border-t border-red-200/10 bg-black/12" aria-hidden="true" />
-        <span className="absolute top-[35%] left-[45%] z-10 h-28 w-28 rounded-full border border-red-500/30 bg-[radial-gradient(circle,rgba(220,38,38,0.3),rgba(10,10,10,0.16)_58%,transparent_70%)] shadow-[0_0_42px_rgba(220,38,38,0.28)]" aria-hidden="true" />
-        <span className="absolute top-[20%] left-[12%] z-0 h-24 w-36 rounded-[45%] border border-red-950/70 bg-black/22 shadow-[0_0_30px_rgba(0,0,0,0.4)]" aria-hidden="true" />
-        <span className="absolute top-[13%] right-[15%] z-0 h-28 w-44 rounded-[42%] border border-red-950/70 bg-black/24 shadow-[0_0_30px_rgba(0,0,0,0.4)]" aria-hidden="true" />
-        <span className="absolute right-[8%] bottom-[17%] z-0 h-28 w-32 rounded-[38%] border border-red-950/70 bg-black/24 shadow-[0_0_30px_rgba(0,0,0,0.4)]" aria-hidden="true" />
-        <span className="absolute bottom-[18%] left-[38%] z-0 h-20 w-36 rounded-[45%] border border-red-950/70 bg-black/22 shadow-[0_0_30px_rgba(0,0,0,0.4)]" aria-hidden="true" />
+        <img
+          src={parkMapImage}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-center brightness-[0.72] contrast-125 saturate-125"
+          aria-hidden="true"
+        />
+        <span className="absolute top-[43%] left-[12%] z-20 h-20 w-[78%] -rotate-[7deg] rounded-full border-t border-b border-red-300/10 bg-red-950/10 shadow-[0_0_34px_rgba(153,27,27,0.22)]" aria-hidden="true" />
+        <span className="absolute top-[31%] left-[33%] z-20 h-[38%] w-[34%] rounded-full border border-red-300/10 bg-black/10 shadow-[inset_0_0_42px_rgba(153,27,27,0.2)]" aria-hidden="true" />
+        <span className="absolute top-[35%] left-[45%] z-20 h-28 w-28 rounded-full border border-red-500/25 bg-[radial-gradient(circle,rgba(220,38,38,0.22),rgba(10,10,10,0.08)_58%,transparent_70%)] shadow-[0_0_42px_rgba(220,38,38,0.24)]" aria-hidden="true" />
 
-        <div className="absolute top-3 right-3 z-30 rounded-full border border-neutral-700 bg-black/72 px-3 py-1 text-[0.72rem] font-extrabold text-neutral-400">
+        <div className="absolute top-3 right-3 z-40 rounded-full border border-neutral-700 bg-black/72 px-3 py-1 text-[0.72rem] font-extrabold text-neutral-400">
           Sin datos reales
         </div>
 
         {attractionMarkers.map((marker) => (
           <div
             key={marker.name}
-            className={`absolute z-20 -translate-x-1/2 ${marker.positionClass}`}
+            className={`absolute z-30 -translate-x-1/2 ${marker.positionClass}`}
           >
             <div className={`grid min-w-[150px] gap-0.5 rounded-md border px-3 py-2 text-xs font-extrabold leading-tight ${marker.panelClass} max-[760px]:min-w-[126px] max-[760px]:px-2.5 max-[760px]:py-2 max-[760px]:text-[0.72rem]`}>
               <strong className="text-neutral-100">{marker.name}</strong>
