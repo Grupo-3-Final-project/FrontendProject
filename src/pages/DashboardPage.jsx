@@ -1,138 +1,548 @@
-import DashboardAlertsPanel from '../components/dashboard/DashboardAlertsPanel'
-import DashboardKpiCard from '../components/dashboard/DashboardKpiCard'
-import DashboardMapPanel from '../components/dashboard/DashboardMapPanel'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { LogOut, RefreshCw } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
+import { createAttraction, deleteAttraction, getAttractions, updateAttraction } from '../api/attractionApi'
+import { getDashboardSummary } from '../api/dashboardApi'
+import { createBooking, getBookings } from '../api/bookingApi'
+import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '../api/employeeApi'
+import { createHotel, deleteHotel, getHotels, updateHotel } from '../api/hotelApi'
+import { uploadImage } from '../api/imageApi'
+import { generateMaintenanceTasks, getMaintenanceTasks } from '../api/maintenanceApi'
+import { getOffers } from '../api/offerApi'
+import { generateShifts, getShifts } from '../api/shiftApi'
+import { loginInternalUser } from '../api/authApi'
+import {
+  clearAdminSession,
+  getApiErrorMessage,
+  getStoredAdminSession,
+  isUnauthorizedError,
+  storeAdminSession,
+} from '../api/apiClient'
+import { createUser, deleteUser, getUsers, updateUser } from '../api/userApi'
+import Button from '../components/ui/Button'
+import StatusMessage from '../components/ui/StatusMessage'
+import AdminLoginPanel from '../features/admin/AdminLoginPanel'
+import BookingDesk from '../features/admin/BookingDesk'
+import EntityManager from '../features/admin/EntityManager'
+import OperationsBoard from '../features/admin/OperationsBoard'
+import OverviewPanel from '../features/admin/OverviewPanel'
+import { dashboardTabs, entityDefinitions } from '../features/admin/adminConfig.jsx'
+
+const currentYear = new Date().getFullYear()
+
+const entityServices = {
+  users: {
+    load: getUsers,
+    create: createUser,
+    update: updateUser,
+    remove: deleteUser,
+  },
+  hotels: {
+    load: getHotels,
+    create: createHotel,
+    update: updateHotel,
+    remove: deleteHotel,
+  },
+  attractions: {
+    load: getAttractions,
+    create: createAttraction,
+    update: updateAttraction,
+    remove: deleteAttraction,
+  },
+  employees: {
+    load: getEmployees,
+    create: createEmployee,
+    update: updateEmployee,
+    remove: deleteEmployee,
+  },
+}
 
 function DashboardPage() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const activeTab = searchParams.get('tab') ?? 'overview'
+  const [session, setSession] = useState(() => getStoredAdminSession())
+  const [isLoading, setIsLoading] = useState(Boolean(session))
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [isLoggingIn, setIsLoggingIn] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [resources, setResources] = useState({
+    users: [],
+    hotels: [],
+    attractions: [],
+    employees: [],
+    offers: [],
+    bookings: [],
+    shifts: [],
+    maintenance: [],
+  })
+  const [summary, setSummary] = useState({
+    year: currentYear,
+    totalRevenue: 0,
+    ticketsByAgeRange: [],
+    topHotels: [],
+  })
+  const [forms, setForms] = useState(createInitialForms())
+  const [editingIds, setEditingIds] = useState({
+    users: null,
+    hotels: null,
+    attractions: null,
+    employees: null,
+  })
+  const [submittingState, setSubmittingState] = useState({
+    users: false,
+    hotels: false,
+    attractions: false,
+    employees: false,
+  })
+  const [sectionMessages, setSectionMessages] = useState({})
+
+  useEffect(() => {
+    if (!dashboardTabs.some((tab) => tab.key === activeTab)) {
+      setSearchParams({ tab: 'overview' })
+    }
+  }, [activeTab, setSearchParams])
+
+  const resetEntityForm = useCallback((entityKey) => {
+    setForms((current) => ({
+      ...current,
+      [entityKey]: {
+        ...entityDefinitions[entityKey].emptyForm,
+      },
+    }))
+    setEditingIds((current) => ({
+      ...current,
+      [entityKey]: null,
+    }))
+  }, [])
+
+  const setSectionMessage = useCallback((sectionKey, title, message, variant) => {
+    setSectionMessages((current) => ({
+      ...current,
+      [sectionKey]: { title, message, variant },
+    }))
+  }, [])
+
+  const clearSectionMessage = useCallback((sectionKey) => {
+    setSectionMessages((current) => ({
+      ...current,
+      [sectionKey]: null,
+    }))
+  }, [])
+
+  const handleUnauthorized = useCallback(
+    (error) => {
+      if (!isUnauthorizedError(error)) {
+        return false
+      }
+
+      clearAdminSession()
+      setSession(null)
+      setAuthError('La sesion ha caducado. Vuelve a iniciar sesion.')
+      setResources({
+        users: [],
+        hotels: [],
+        attractions: [],
+        employees: [],
+        offers: [],
+        bookings: [],
+        shifts: [],
+        maintenance: [],
+      })
+      return true
+    },
+    [],
+  )
+
+  const loadAdminData = useCallback(async () => {
+    const [summaryData, users, hotels, attractions, employees, offers, bookings, shifts, maintenance] =
+      await Promise.all([
+        getDashboardSummary(currentYear),
+        getUsers(),
+        getHotels(),
+        getAttractions(),
+        getEmployees(),
+        getOffers(),
+        getBookings(),
+        getShifts(),
+        getMaintenanceTasks(),
+      ])
+
+    setSummary(summaryData)
+    setResources({
+      users,
+      hotels,
+      attractions,
+      employees,
+      offers,
+      bookings,
+      shifts,
+      maintenance,
+    })
+  }, [])
+
+  const refreshAdminData = useCallback(
+    async (mode = 'load') => {
+      if (!session) {
+        return
+      }
+
+      if (mode === 'load') {
+        setIsLoading(true)
+      } else {
+        setIsRefreshing(true)
+      }
+
+      try {
+        await loadAdminData()
+        setAuthError('')
+      } catch (error) {
+        if (!handleUnauthorized(error)) {
+          setAuthError(getApiErrorMessage(error, 'No se han podido cargar los datos del panel.'))
+        }
+      } finally {
+        setIsLoading(false)
+        setIsRefreshing(false)
+      }
+    },
+    [handleUnauthorized, loadAdminData, session],
+  )
+
+  useEffect(() => {
+    if (session) {
+      void refreshAdminData()
+    }
+  }, [refreshAdminData, session])
+
+  const handleLogin = async (credentials) => {
+    setIsLoggingIn(true)
+    setAuthError('')
+
+    try {
+      const loginResponse = await loginInternalUser(credentials)
+      storeAdminSession(loginResponse)
+      setSession(loginResponse)
+    } catch (error) {
+      setAuthError(getApiErrorMessage(error, 'No se ha podido iniciar sesion.'))
+    } finally {
+      setIsLoggingIn(false)
+    }
+  }
+
+  const handleLogout = () => {
+    clearAdminSession()
+    setSession(null)
+    setAuthError('')
+  }
+
+  const handleFieldChange = (entityKey, fieldName, value) => {
+    setForms((current) => ({
+      ...current,
+      [entityKey]: {
+        ...current[entityKey],
+        [fieldName]: value,
+      },
+    }))
+  }
+
+  const handleEdit = (entityKey, item) => {
+    setForms((current) => ({
+      ...current,
+      [entityKey]: entityDefinitions[entityKey].fromItem(item),
+    }))
+    setEditingIds((current) => ({
+      ...current,
+      [entityKey]: item.id,
+    }))
+    setSectionMessage(entityKey, 'Edicion activa', 'Ya puedes modificar el formulario y guardar los cambios.', 'info')
+  }
+
+  const reloadEntity = useCallback(async (entityKey) => {
+    const items = await entityServices[entityKey].load()
+
+    setResources((current) => ({
+      ...current,
+      [entityKey]: items,
+    }))
+  }, [])
+
+  const handleEntitySubmit = async (entityKey) => {
+    clearSectionMessage(entityKey)
+    setSubmittingState((current) => ({
+      ...current,
+      [entityKey]: true,
+    }))
+
+    try {
+      const payload = entityDefinitions[entityKey].toPayload(forms[entityKey])
+      const currentId = editingIds[entityKey]
+
+      if (currentId) {
+        await entityServices[entityKey].update(currentId, payload)
+        setSectionMessage(entityKey, 'Registro actualizado', 'Los cambios se han guardado correctamente.', 'success')
+      } else {
+        await entityServices[entityKey].create(payload)
+        setSectionMessage(entityKey, 'Registro creado', 'El nuevo elemento ya esta disponible en el listado.', 'success')
+      }
+
+      await reloadEntity(entityKey)
+      resetEntityForm(entityKey)
+    } catch (error) {
+      if (!handleUnauthorized(error)) {
+        setSectionMessage(entityKey, 'Operacion rechazada', getApiErrorMessage(error), 'error')
+      }
+    } finally {
+      setSubmittingState((current) => ({
+        ...current,
+        [entityKey]: false,
+      }))
+    }
+  }
+
+  const handleEntityDelete = async (entityKey, id) => {
+    clearSectionMessage(entityKey)
+
+    try {
+      await entityServices[entityKey].remove(id)
+      await reloadEntity(entityKey)
+      if (editingIds[entityKey] === id) {
+        resetEntityForm(entityKey)
+      }
+      setSectionMessage(entityKey, 'Registro eliminado', 'El elemento se ha borrado correctamente.', 'success')
+    } catch (error) {
+      if (!handleUnauthorized(error)) {
+        setSectionMessage(entityKey, 'No se ha podido eliminar', getApiErrorMessage(error), 'error')
+      }
+    }
+  }
+
+  const handleUploadImage = async (file, folder) => {
+    try {
+      return await uploadImage(file, folder)
+    } catch (error) {
+      if (handleUnauthorized(error)) {
+        throw error
+      }
+
+      throw new Error(getApiErrorMessage(error, 'No se ha podido subir la imagen.'))
+    }
+  }
+
+  const handleBookingUserCreate = async (payload) => {
+    try {
+      const createdUser = await createUser(payload)
+      await reloadEntity('users')
+      setSectionMessage('bookings', 'Cliente creado', 'El cliente ya esta disponible para futuras ventas.', 'success')
+      return createdUser
+    } catch (error) {
+      if (handleUnauthorized(error)) {
+        throw error
+      }
+
+      setSectionMessage('bookings', 'No se ha podido dar de alta al cliente', getApiErrorMessage(error), 'error')
+      throw error
+    }
+  }
+
+  const handleBookingCreate = async (payload) => {
+    try {
+      const booking = await createBooking(payload)
+      await Promise.all([
+        reloadEntity('hotels'),
+        getBookings().then((bookings) =>
+          setResources((current) => ({
+            ...current,
+            bookings,
+          })),
+        ),
+        getDashboardSummary(currentYear).then(setSummary),
+      ])
+      setSectionMessage('bookings', 'Venta registrada', 'La compra se ha guardado y el dashboard ya muestra el impacto.', 'success')
+      return booking
+    } catch (error) {
+      if (handleUnauthorized(error)) {
+        throw error
+      }
+
+      setSectionMessage('bookings', 'No se ha podido registrar la venta', getApiErrorMessage(error), 'error')
+      throw error
+    }
+  }
+
+  const handleGenerateShifts = async (payload) => {
+    try {
+      await generateShifts(payload)
+      const shifts = await getShifts()
+      setResources((current) => ({
+        ...current,
+        shifts,
+      }))
+      setSectionMessage('operations', 'Turnos generados', 'La rotacion de turnos se ha recalculado correctamente.', 'success')
+    } catch (error) {
+      if (!handleUnauthorized(error)) {
+        setSectionMessage('operations', 'No se han podido generar turnos', getApiErrorMessage(error), 'error')
+      }
+    }
+  }
+
+  const handleGenerateMaintenance = async (payload) => {
+    try {
+      await generateMaintenanceTasks(payload)
+      const maintenance = await getMaintenanceTasks()
+      setResources((current) => ({
+        ...current,
+        maintenance,
+      }))
+      setSectionMessage('operations', 'Mantenimiento generado', 'La agenda de mantenimiento se ha actualizado.', 'success')
+    } catch (error) {
+      if (!handleUnauthorized(error)) {
+        setSectionMessage('operations', 'No se ha podido generar mantenimiento', getApiErrorMessage(error), 'error')
+      }
+    }
+  }
+
+  const activeEntityDefinition = entityDefinitions[activeTab]
+
+  const renderContent = useMemo(() => {
+    if (isLoading) {
+      return (
+        <StatusMessage
+          title="Cargando panel"
+          message="Estamos recuperando datos reales del backend para el panel interno."
+          variant="info"
+        />
+      )
+    }
+
+    if (!session) {
+      return <AdminLoginPanel onSubmit={handleLogin} isSubmitting={isLoggingIn} errorMessage={authError} />
+    }
+
+    if (activeEntityDefinition) {
+      return (
+        <EntityManager
+          definition={activeEntityDefinition}
+          items={resources[activeEntityDefinition.key]}
+          formValues={forms[activeEntityDefinition.key]}
+          editingId={editingIds[activeEntityDefinition.key]}
+          isSubmitting={submittingState[activeEntityDefinition.key]}
+          statusMessage={sectionMessages[activeEntityDefinition.key]}
+          onFieldChange={handleFieldChange}
+          onSubmit={handleEntitySubmit}
+          onEdit={handleEdit}
+          onDelete={handleEntityDelete}
+          onCancel={resetEntityForm}
+          onUploadImage={handleUploadImage}
+        />
+      )
+    }
+
+    if (activeTab === 'bookings') {
+      return (
+        <BookingDesk
+          users={resources.users}
+          hotels={resources.hotels}
+          offers={resources.offers}
+          onCreateUser={handleBookingUserCreate}
+          onCreateBooking={handleBookingCreate}
+          statusMessage={sectionMessages.bookings}
+        />
+      )
+    }
+
+    if (activeTab === 'operations') {
+      return (
+        <OperationsBoard
+          shifts={resources.shifts}
+          maintenance={resources.maintenance}
+          onGenerateShifts={handleGenerateShifts}
+          onGenerateMaintenance={handleGenerateMaintenance}
+          statusMessage={sectionMessages.operations}
+        />
+      )
+    }
+
+    return (
+      <OverviewPanel
+        summary={summary}
+        bookings={resources.bookings}
+        maintenance={resources.maintenance}
+        shifts={resources.shifts}
+      />
+    )
+  }, [
+    activeEntityDefinition,
+    activeTab,
+    authError,
+    editingIds,
+    forms,
+    handleBookingCreate,
+    handleBookingUserCreate,
+    handleGenerateMaintenance,
+    handleGenerateShifts,
+    isLoading,
+    isLoggingIn,
+    resetEntityForm,
+    resources,
+    sectionMessages,
+    session,
+    submittingState,
+    summary,
+  ])
+
   return (
-    <main className="min-w-0 space-y-5 px-0">
-      <header className="mb-6 flex max-w-5xl flex-col gap-5 pb-1 md:flex-row md:items-start md:justify-between">
-        <div>
-          <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+    <main className="min-w-0 space-y-5">
+      <header className="flex flex-col gap-4 rounded-2xl border border-red-900/40 bg-black/15 px-5 py-5 shadow-[0_18px_48px_rgba(0,0,0,0.24)] md:flex-row md:items-start md:justify-between">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
             Panel interno
           </p>
-          <h1 className="max-w-none text-[clamp(2rem,3.2vw,3rem)] leading-[1.05] text-neutral-100">
-            Dashboard interno
+          <h1 className="text-[clamp(2rem,3vw,2.8rem)] leading-[1.04] text-neutral-100">
+            {activeTab === 'overview'
+              ? 'Dashboard operativo'
+              : activeTab === 'bookings'
+                ? 'Taquilla'
+                : activeTab === 'operations'
+                  ? 'Turnos y mantenimiento'
+                  : entityDefinitions[activeTab]?.title ?? 'Panel interno'}
           </h1>
-          <p className="mt-2 max-w-[680px] text-[0.98rem] leading-6 text-neutral-300">
-            Gestion operativa del parque preparada para conectar metricas y
-            estados internos desde backend.
+          <p className="max-w-3xl text-[0.98rem] leading-6 text-neutral-300">
+            MVP conectado a backend para cubrir home, CRUDs, ventas en taquilla, metricas de direccion y operaciones del parque.
           </p>
         </div>
-        <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
-          Datos por conectar
-        </span>
+
+        <div className="flex flex-wrap items-center gap-3">
+          {session ? (
+            <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3 text-sm text-stone-300">
+              <div className="font-bold text-stone-100">{session.username}</div>
+              <div className="text-xs text-stone-500">{session.role}</div>
+            </div>
+          ) : null}
+          {session ? (
+            <>
+              <Button disabled={isRefreshing} onClick={() => void refreshAdminData('refresh')} variant="secondary">
+                <RefreshCw className="h-4 w-4" />
+                {isRefreshing ? 'Actualizando...' : 'Actualizar'}
+              </Button>
+              <Button onClick={handleLogout} variant="danger">
+                <LogOut className="h-4 w-4" />
+                Salir
+              </Button>
+            </>
+          ) : null}
+        </div>
       </header>
 
-      <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label="KPIs temporales">
-        <DashboardKpiCard
-          title="Visitantes hoy"
-          value="Metrica backend"
-          note="Pendiente de conexion"
-          variant="danger"
-          tag="Por conectar"
-        />
-        <DashboardKpiCard
-          title="Ingresos hoy"
-          value="Metrica backend"
-          note="Calculo pendiente de backend"
-          variant="success"
-          tag="Backend"
-        />
-        <DashboardKpiCard
-          title="Entradas vendidas"
-          value="Metrica backend"
-          note="Datos por conectar"
-          variant="success"
-          tag="Temporal"
-        />
-        <DashboardKpiCard
-          title="Tiempo medio de espera"
-          value="Estado visual"
-          note="Informacion temporal"
-          variant="warning"
-          tag="Operativo"
-        />
-      </section>
-
-      <section className="grid items-stretch gap-4 xl:grid-cols-[minmax(0,2.1fr)_minmax(340px,0.95fr)]">
-        <DashboardMapPanel />
-        <DashboardAlertsPanel />
-      </section>
-
-      <section className="grid gap-4 xl:grid-cols-2">
-        <article className="min-w-0 rounded-2xl border border-red-900/60 bg-neutral-950/80 p-4 shadow-[0_0_36px_rgba(127,29,29,0.18)]">
-          <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
-                Referencia visual
-              </p>
-              <h2 className="m-0 text-[1.2rem] font-bold text-neutral-100">Reservas recientes</h2>
-            </div>
-            <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
-              Por conectar
-            </span>
-          </div>
-          <div className="overflow-hidden rounded-xl border border-red-950/80">
-            <div className="grid min-h-[34px] grid-cols-1 items-center gap-3 border border-red-900/30 bg-red-950/35 px-4 py-3 text-xs font-extrabold tracking-[0.12em] text-neutral-200 uppercase md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Referencia visual</span>
-              <span>Conexion</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Estado</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Registro pendiente</span>
-              <span>Datos por conectar</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Por conectar</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Servicio temporal</span>
-              <span>Informacion temporal</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Visual</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-white/10 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Linea de presentacion</span>
-              <span>Sin datos reales</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Temporal</strong>
-            </div>
-          </div>
-        </article>
-
-        <article className="min-w-0 rounded-2xl border border-red-900/60 bg-neutral-950/80 p-4 shadow-[0_0_36px_rgba(127,29,29,0.18)]">
-          <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-            <div>
-              <p className="m-0 mb-2 text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
-                Referencia visual
-              </p>
-              <h2 className="m-0 text-[1.2rem] font-bold text-neutral-100">Mantenimiento programado</h2>
-            </div>
-            <span className="inline-flex min-h-[34px] items-center whitespace-nowrap rounded-md border border-yellow-600/40 bg-yellow-600/10 px-3 text-[0.82rem] font-extrabold text-yellow-400">
-              Por conectar
-            </span>
-          </div>
-          <div className="overflow-hidden rounded-xl border border-red-950/80">
-            <div className="grid min-h-[34px] grid-cols-1 items-center gap-3 border border-red-900/30 bg-red-950/35 px-4 py-3 text-xs font-extrabold tracking-[0.12em] text-neutral-200 uppercase md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Referencia visual</span>
-              <span>Conexion</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Estado</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-yellow-700/50 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Tarea pendiente</span>
-              <span>Datos por conectar</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Aviso</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-green-900/50 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Revision visual</span>
-              <span>Informacion temporal</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Operativo</strong>
-            </div>
-            <div className="grid min-h-[42px] grid-cols-1 items-center gap-3 border-b border-red-800/60 bg-neutral-950/40 px-4 py-[11px] text-sm text-neutral-300 last:border-b-0 md:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)_auto]">
-              <span className="font-bold text-neutral-100">Incidencia visual</span>
-              <span>Estado no conectado</span>
-              <strong className="text-left text-xs font-extrabold text-neutral-100 md:justify-self-end">Alerta</strong>
-            </div>
-          </div>
-        </article>
-      </section>
+      {renderContent}
     </main>
+  )
+}
+
+function createInitialForms() {
+  return Object.fromEntries(
+    Object.entries(entityDefinitions).map(([key, definition]) => [
+      key,
+      { ...definition.emptyForm },
+    ]),
   )
 }
 
