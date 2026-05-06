@@ -58,6 +58,8 @@ La home publica no debe mostrar datos internos de administracion. El dashboard i
 
 La home publica debe ser una pagina comercial, visual y orientada a venta.
 
+Las 6 capturas Home del paquete visual actual son referencia visual comercial actual: `home-hero-section.png`, `home-attractions-section.png`, `home-offers-section.png`, `home-experience-section.png`, `home-visit-planning-section.png` y `home-information-section.png`.
+
 Debe incluir:
 
 - Hero visual.
@@ -80,6 +82,8 @@ No debe incluir:
 
 El dashboard interno debe ser operativo y estar pensado solo para administracion o trabajadores del parque.
 
+`dashboard-overview-full-page.png` y `dashboard-operational-map.png` son la referencia visual actual para el Dashboard interno.
+
 Debe incluir:
 
 - KPIs.
@@ -93,6 +97,8 @@ Debe incluir:
 - Metricas calculadas por backend cuando aplique.
 
 Las metricas de negocio no deben calcularse en React si estan definidas como responsabilidad del backend.
+
+El Dashboard puede tener estructura visual inspirada en Figma, pero no debe fingir datos reales, CRUDs funcionales ni metricas backend. Las capturas de `backend-reference-only/` son apoyo futuro para backend, CRUDs o integracion real; no son referencia actual de implementacion.
 
 ## 7. Mobile visitante
 
