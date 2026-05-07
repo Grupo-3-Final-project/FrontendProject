@@ -33,7 +33,7 @@ export const entityDefinitions = {
   users: {
     key: 'users',
     title: 'Usuarios',
-    description: 'Alta, edicion y borrado de clientes para ventas en taquilla y consultas internas.',
+    description: 'Consulta y gestiona los datos de los clientes del parque.',
     emptyForm: {
       firstName: '',
       lastName: '',
@@ -75,7 +75,7 @@ export const entityDefinitions = {
   hotels: {
     key: 'hotels',
     title: 'Hoteles',
-    description: 'Gestion del inventario hotelero, plazas disponibles y precios por regimen.',
+    description: 'Gestiona plazas, habitaciones y precios de los hoteles.',
     emptyForm: {
       name: '',
       description: '',
@@ -156,7 +156,7 @@ export const entityDefinitions = {
   attractions: {
     key: 'attractions',
     title: 'Atracciones',
-    description: 'CRUD completo de atracciones con aforo, estado y frecuencia de mantenimiento.',
+    description: 'Actualiza el catalogo, el aforo y el estado de cada atraccion.',
     emptyForm: {
       name: '',
       description: '',
@@ -245,7 +245,7 @@ export const entityDefinitions = {
   employees: {
     key: 'employees',
     title: 'Empleados',
-    description: 'Gestion de limpiadores, animadores y tecnicos con turno y estado de actividad.',
+    description: 'Gestiona el personal del parque y su turno base.',
     emptyForm: {
       firstName: '',
       lastName: '',

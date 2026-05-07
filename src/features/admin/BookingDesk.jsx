@@ -115,7 +115,7 @@ function BookingDesk({
       setBookingResult(booking)
       setCompanions([])
       setLocalMessage({
-        title: 'Reserva registrada',
+        title: 'Compra registrada',
         message: 'La compra en taquilla se ha guardado correctamente.',
         variant: 'success',
       })
@@ -145,7 +145,7 @@ function BookingDesk({
 
   return (
     <section className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
-      <Card title="Venta en taquilla" subtitle="Registra una compra con oferta existente o monta una reserva propia desde administracion.">
+      <Card title="Venta en taquilla" subtitle="Registra una compra con oferta existente o crea una reserva a medida.">
         <div className="space-y-4">
           {activeMessage ? (
             <StatusMessage title={activeMessage.title} message={activeMessage.message} variant={activeMessage.variant} />
@@ -176,7 +176,7 @@ function BookingDesk({
                     value="new"
                     onChange={() => setCustomerMode('new')}
                   />
-                  <span className="text-sm text-stone-400">Alta y venta en el mismo flujo</span>
+                  <span className="text-sm text-stone-400">Dar de alta al cliente y registrar la compra</span>
                 </div>
               </label>
             </div>
@@ -420,13 +420,13 @@ function BookingDesk({
           ) : (
             <StatusMessage
               title="Falta seleccionar la compra"
-              message="Elige una oferta o un hotel para ver el resumen de la reserva."
+              message="Elige una oferta o un hotel para ver el resumen."
               variant="empty"
             />
           )}
         </Card>
 
-        <Card title="Ultima reserva creada" subtitle="Detalle devuelto por backend tras registrar la venta.">
+        <Card title="Ultima compra registrada" subtitle="Detalle de la ultima compra guardada.">
           {bookingResult ? (
             <div className="space-y-3 text-sm text-stone-300">
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
@@ -462,7 +462,7 @@ function BookingDesk({
           ) : (
             <StatusMessage
               title="Sin reserva reciente"
-              message="Cuando registres una venta, veras aqui el detalle devuelto por backend."
+              message="Cuando registres una compra, veras aqui el detalle de la reserva."
               variant="empty"
             />
           )}

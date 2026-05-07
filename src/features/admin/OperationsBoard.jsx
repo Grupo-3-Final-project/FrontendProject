@@ -62,7 +62,7 @@ function OperationsBoard({
       ) : null}
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="Generar turnos" subtitle="Crea la rotacion de 15 dias para limpiadores, animadores y tecnicos.">
+        <Card title="Generar turnos" subtitle="Crea la planificacion de turnos para el periodo indicado.">
           <form className="space-y-4" onSubmit={handleGenerateShifts}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
@@ -102,7 +102,7 @@ function OperationsBoard({
           </form>
         </Card>
 
-        <Card title="Generar mantenimiento" subtitle="Planifica revisiones automaticas segun el tamano de las atracciones.">
+        <Card title="Generar mantenimiento" subtitle="Genera las revisiones segun el tamano de las atracciones.">
           <form className="space-y-4" onSubmit={handleGenerateMaintenance}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
@@ -144,7 +144,7 @@ function OperationsBoard({
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="Ultimos turnos" subtitle="Vista previa de la cobertura generada.">
+        <Card title="Ultimos turnos" subtitle="Vista previa de los turnos generados.">
           {shiftPreview.length === 0 ? (
             <StatusMessage
               title="Sin turnos"
@@ -180,7 +180,7 @@ function OperationsBoard({
           )}
         </Card>
 
-        <Card title="Agenda de mantenimiento" subtitle="Tareas generadas y tecnicos asignados automaticamente.">
+        <Card title="Agenda de mantenimiento" subtitle="Tareas generadas con sus tecnicos asignados.">
           {maintenancePreview.length === 0 ? (
             <StatusMessage
               title="Sin mantenimiento"

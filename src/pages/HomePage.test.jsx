@@ -58,7 +58,7 @@ describe('HomePage', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText(/Hoteles, atracciones y ventas/i)).toBeInTheDocument()
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
 
     await waitFor(() => {
       expect(screen.getByText('Dragon Coaster')).toBeInTheDocument()

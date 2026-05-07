@@ -6,20 +6,11 @@ const normalizedBaseUrl = configuredBaseUrl.endsWith('/api')
   ? configuredBaseUrl.slice(0, -4)
   : configuredBaseUrl
 
-const adminSessionStorageKey = 'parqueAdminSession'
-
 const apiClient = axios.create({
   baseURL: normalizedBaseUrl,
 })
 
 apiClient.interceptors.request.use((config) => {
-  const session = getStoredAdminSession()
-
-  if (session?.token) {
-    config.headers = config.headers ?? {}
-    config.headers.Authorization = `Bearer ${session.token}`
-  }
-
   if (!(config.data instanceof FormData) && !config.headers?.['Content-Type']) {
     config.headers = config.headers ?? {}
     config.headers['Content-Type'] = 'application/json'
@@ -32,41 +23,6 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject(error),
 )
-
-export function getStoredAdminSession() {
-  if (typeof window === 'undefined') {
-    return null
-  }
-
-  const rawSession = window.localStorage.getItem(adminSessionStorageKey)
-
-  if (!rawSession) {
-    return null
-  }
-
-  try {
-    return JSON.parse(rawSession)
-  } catch {
-    window.localStorage.removeItem(adminSessionStorageKey)
-    return null
-  }
-}
-
-export function storeAdminSession(session) {
-  if (typeof window === 'undefined') {
-    return
-  }
-
-  window.localStorage.setItem(adminSessionStorageKey, JSON.stringify(session))
-}
-
-export function clearAdminSession() {
-  if (typeof window === 'undefined') {
-    return
-  }
-
-  window.localStorage.removeItem(adminSessionStorageKey)
-}
 
 const translatedMessages = {
   'Invalid credentials': 'Credenciales invalidas.',
@@ -91,7 +47,7 @@ const translatedMessages = {
     'No hay suficientes empleados activos para cubrir los turnos.',
   'Not enough technicians available':
     'No hay suficientes tecnicos disponibles para generar mantenimiento.',
-  'Authentication is required': 'Necesitas iniciar sesion para acceder a esta seccion.',
+  'Authentication is required': 'No tienes permiso para acceder a esta seccion.',
   Conflict: 'La operacion entra en conflicto con los datos actuales.',
   'Unexpected error': 'Se ha producido un error inesperado.',
 }
@@ -108,7 +64,7 @@ export function getApiErrorMessage(error, fallbackMessage = 'No se ha podido com
   }
 
   if (error?.response?.status === 401) {
-    return 'Necesitas iniciar sesion para continuar.'
+    return 'No tienes permiso para realizar esta operacion.'
   }
 
   if (error?.response?.status === 500) {
@@ -116,10 +72,6 @@ export function getApiErrorMessage(error, fallbackMessage = 'No se ha podido com
   }
 
   return fallbackMessage
-}
-
-export function isUnauthorizedError(error) {
-  return error?.response?.status === 401
 }
 
 export default apiClient

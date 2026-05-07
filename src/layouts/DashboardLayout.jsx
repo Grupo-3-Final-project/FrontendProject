@@ -28,7 +28,7 @@ function DashboardLayout() {
             Puerta
           </div>
           <p className="max-w-[200px] text-sm leading-6 text-stone-400">
-            Panel interno para taquilla y administracion del parque.
+            Taquilla y administracion del parque.
           </p>
         </div>
 
@@ -56,9 +56,9 @@ function DashboardLayout() {
         </nav>
 
         <div className="mt-8 rounded-lg border border-stone-800 bg-black/20 p-4 text-sm text-stone-400">
-          <div className="font-bold text-stone-200">Compra publica</div>
+          <div className="font-bold text-stone-200">Taquilla</div>
           <p className="mt-2 leading-6">
-            Para el MVP, las compras se registran desde taquilla.
+            Desde aqui puedes registrar compras y gestionar el parque.
           </p>
           <Link
             className="mt-4 inline-flex items-center gap-2 rounded-md border border-stone-700 px-3 py-2 font-bold text-stone-200 transition hover:border-red-500 hover:text-white"

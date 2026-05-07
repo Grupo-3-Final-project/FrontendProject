@@ -16,12 +16,13 @@ function Button({
   type = 'button',
   disabled = false,
   onClick,
+  className = '',
 }) {
   const variantClasses = buttonVariantClasses[variant] ?? buttonVariantClasses.primary
 
   return (
     <button
-      className={`${buttonBaseClasses} ${variantClasses}`}
+      className={`${buttonBaseClasses} ${variantClasses} ${className}`.trim()}
       type={type}
       disabled={disabled}
       onClick={onClick}

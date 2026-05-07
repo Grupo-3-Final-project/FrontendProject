@@ -58,28 +58,28 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
         <DashboardKpiCard
           title="Reservas registradas"
           value={String(bookings.length)}
-          note="Ventas historicas disponibles"
+          note="Compras registradas"
           variant="neutral"
           tag="Taquilla"
         />
         <DashboardKpiCard
           title="Mantenimientos"
           value={String(maintenance.length)}
-          note="Tareas generadas en el sistema"
+          note="Revisiones planificadas"
           variant="warning"
           tag="Operaciones"
         />
         <DashboardKpiCard
           title="Turnos activos"
           value={String(shifts.length)}
-          note="Asignaciones registradas"
+          note="Asignaciones activas"
           variant="danger"
           tag="Equipo"
         />
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <Card title="Entradas por rango de edad" subtitle="Metricas reales calculadas en backend para el ano en curso.">
+        <Card title="Entradas por rango de edad" subtitle="Resumen del ano en curso.">
           {summary.ticketsByAgeRange?.length ? (
             <div className="grid gap-3 md:grid-cols-3">
               {summary.ticketsByAgeRange.map((ticketGroup) => (
@@ -98,7 +98,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           )}
         </Card>
 
-        <Card title="Top 3 hoteles" subtitle="Hoteles que mas recaudan en el ano en curso.">
+        <Card title="Top 3 hoteles" subtitle="Hoteles con mayor recaudacion en el ano en curso.">
           {summary.topHotels?.length ? (
             <div className="space-y-3">
               {summary.topHotels.map((hotel, index) => (
@@ -129,7 +129,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
       <div className="grid gap-5 xl:grid-cols-3">
         <PreviewTable
           title="Reservas recientes"
-          subtitle="Ultimas ventas registradas en el sistema."
+          subtitle="Ultimas reservas registradas."
           items={recentBookings}
           columns={overviewHelpers.bookingColumns}
           emptyMessage="Todavia no hay reservas disponibles."
@@ -143,14 +143,14 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
         />
         <PreviewTable
           title="Cobertura de turnos"
-          subtitle="Ultimos turnos generados para el equipo."
+          subtitle="Ultimos turnos generados."
           items={latestShifts}
           columns={overviewHelpers.shiftColumns}
           emptyMessage="Aun no se han generado turnos."
         />
       </div>
 
-      <Card title="Estado de operacion" subtitle="Resumen rapido del sistema para la presentacion del sprint.">
+      <Card title="Estado general" subtitle="Resumen rapido del sistema.">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
             <div className="text-sm font-bold text-stone-300">Ultima reserva</div>
@@ -158,7 +158,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
               {recentBookings[0]?.userFullName ?? 'Sin datos'}
             </div>
             <div className="mt-2 text-sm text-stone-500">
-              {recentBookings[0] ? formatDateTime(recentBookings[0].createdAt) : 'Todavia no hay ventas registradas.'}
+              {recentBookings[0] ? formatDateTime(recentBookings[0].createdAt) : 'Todavia no hay reservas registradas.'}
             </div>
           </div>
           <div className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">

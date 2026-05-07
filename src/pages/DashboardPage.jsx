@@ -1,27 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { LogOut, RefreshCw } from 'lucide-react'
+import { RefreshCw } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { createAttraction, deleteAttraction, getAttractions, updateAttraction } from '../api/attractionApi'
-import { getDashboardSummary } from '../api/dashboardApi'
 import { createBooking, getBookings } from '../api/bookingApi'
+import { getDashboardSummary } from '../api/dashboardApi'
 import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '../api/employeeApi'
 import { createHotel, deleteHotel, getHotels, updateHotel } from '../api/hotelApi'
 import { uploadImage } from '../api/imageApi'
 import { generateMaintenanceTasks, getMaintenanceTasks } from '../api/maintenanceApi'
 import { getOffers } from '../api/offerApi'
 import { generateShifts, getShifts } from '../api/shiftApi'
-import { loginInternalUser } from '../api/authApi'
-import {
-  clearAdminSession,
-  getApiErrorMessage,
-  getStoredAdminSession,
-  isUnauthorizedError,
-  storeAdminSession,
-} from '../api/apiClient'
+import { getApiErrorMessage } from '../api/apiClient'
 import { createUser, deleteUser, getUsers, updateUser } from '../api/userApi'
 import Button from '../components/ui/Button'
 import StatusMessage from '../components/ui/StatusMessage'
-import AdminLoginPanel from '../features/admin/AdminLoginPanel'
 import BookingDesk from '../features/admin/BookingDesk'
 import EntityManager from '../features/admin/EntityManager'
 import OperationsBoard from '../features/admin/OperationsBoard'
@@ -60,11 +52,9 @@ const entityServices = {
 function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const activeTab = searchParams.get('tab') ?? 'overview'
-  const [session, setSession] = useState(() => getStoredAdminSession())
-  const [isLoading, setIsLoading] = useState(Boolean(session))
+  const [isLoading, setIsLoading] = useState(true)
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [isLoggingIn, setIsLoggingIn] = useState(false)
-  const [authError, setAuthError] = useState('')
+  const [pageError, setPageError] = useState('')
   const [resources, setResources] = useState({
     users: [],
     hotels: [],
@@ -129,30 +119,6 @@ function DashboardPage() {
     }))
   }, [])
 
-  const handleUnauthorized = useCallback(
-    (error) => {
-      if (!isUnauthorizedError(error)) {
-        return false
-      }
-
-      clearAdminSession()
-      setSession(null)
-      setAuthError('La sesion ha caducado. Vuelve a iniciar sesion.')
-      setResources({
-        users: [],
-        hotels: [],
-        attractions: [],
-        employees: [],
-        offers: [],
-        bookings: [],
-        shifts: [],
-        maintenance: [],
-      })
-      return true
-    },
-    [],
-  )
-
   const loadAdminData = useCallback(async () => {
     const [summaryData, users, hotels, attractions, employees, offers, bookings, shifts, maintenance] =
       await Promise.all([
@@ -182,10 +148,6 @@ function DashboardPage() {
 
   const refreshAdminData = useCallback(
     async (mode = 'load') => {
-      if (!session) {
-        return
-      }
-
       if (mode === 'load') {
         setIsLoading(true)
       } else {
@@ -194,45 +156,20 @@ function DashboardPage() {
 
       try {
         await loadAdminData()
-        setAuthError('')
+        setPageError('')
       } catch (error) {
-        if (!handleUnauthorized(error)) {
-          setAuthError(getApiErrorMessage(error, 'No se han podido cargar los datos del panel.'))
-        }
+        setPageError(getApiErrorMessage(error, 'No se han podido cargar los datos del panel.'))
       } finally {
         setIsLoading(false)
         setIsRefreshing(false)
       }
     },
-    [handleUnauthorized, loadAdminData, session],
+    [loadAdminData],
   )
 
   useEffect(() => {
-    if (session) {
-      void refreshAdminData()
-    }
-  }, [refreshAdminData, session])
-
-  const handleLogin = async (credentials) => {
-    setIsLoggingIn(true)
-    setAuthError('')
-
-    try {
-      const loginResponse = await loginInternalUser(credentials)
-      storeAdminSession(loginResponse)
-      setSession(loginResponse)
-    } catch (error) {
-      setAuthError(getApiErrorMessage(error, 'No se ha podido iniciar sesion.'))
-    } finally {
-      setIsLoggingIn(false)
-    }
-  }
-
-  const handleLogout = () => {
-    clearAdminSession()
-    setSession(null)
-    setAuthError('')
-  }
+    void refreshAdminData()
+  }, [refreshAdminData])
 
   const handleFieldChange = (entityKey, fieldName, value) => {
     setForms((current) => ({
@@ -287,9 +224,7 @@ function DashboardPage() {
       await reloadEntity(entityKey)
       resetEntityForm(entityKey)
     } catch (error) {
-      if (!handleUnauthorized(error)) {
-        setSectionMessage(entityKey, 'Operacion rechazada', getApiErrorMessage(error), 'error')
-      }
+      setSectionMessage(entityKey, 'Operacion rechazada', getApiErrorMessage(error), 'error')
     } finally {
       setSubmittingState((current) => ({
         ...current,
@@ -309,9 +244,7 @@ function DashboardPage() {
       }
       setSectionMessage(entityKey, 'Registro eliminado', 'El elemento se ha borrado correctamente.', 'success')
     } catch (error) {
-      if (!handleUnauthorized(error)) {
-        setSectionMessage(entityKey, 'No se ha podido eliminar', getApiErrorMessage(error), 'error')
-      }
+      setSectionMessage(entityKey, 'No se ha podido eliminar', getApiErrorMessage(error), 'error')
     }
   }
 
@@ -319,10 +252,6 @@ function DashboardPage() {
     try {
       return await uploadImage(file, folder)
     } catch (error) {
-      if (handleUnauthorized(error)) {
-        throw error
-      }
-
       throw new Error(getApiErrorMessage(error, 'No se ha podido subir la imagen.'))
     }
   }
@@ -331,13 +260,9 @@ function DashboardPage() {
     try {
       const createdUser = await createUser(payload)
       await reloadEntity('users')
-      setSectionMessage('bookings', 'Cliente creado', 'El cliente ya esta disponible para futuras ventas.', 'success')
+      setSectionMessage('bookings', 'Cliente creado', 'El cliente ya aparece en el listado.', 'success')
       return createdUser
     } catch (error) {
-      if (handleUnauthorized(error)) {
-        throw error
-      }
-
       setSectionMessage('bookings', 'No se ha podido dar de alta al cliente', getApiErrorMessage(error), 'error')
       throw error
     }
@@ -356,14 +281,10 @@ function DashboardPage() {
         ),
         getDashboardSummary(currentYear).then(setSummary),
       ])
-      setSectionMessage('bookings', 'Venta registrada', 'La compra se ha guardado y el dashboard ya muestra el impacto.', 'success')
+      setSectionMessage('bookings', 'Compra registrada', 'La compra se ha guardado correctamente.', 'success')
       return booking
     } catch (error) {
-      if (handleUnauthorized(error)) {
-        throw error
-      }
-
-      setSectionMessage('bookings', 'No se ha podido registrar la venta', getApiErrorMessage(error), 'error')
+      setSectionMessage('bookings', 'No se ha podido registrar la compra', getApiErrorMessage(error), 'error')
       throw error
     }
   }
@@ -376,11 +297,9 @@ function DashboardPage() {
         ...current,
         shifts,
       }))
-      setSectionMessage('operations', 'Turnos generados', 'La rotacion de turnos se ha recalculado correctamente.', 'success')
+      setSectionMessage('operations', 'Turnos generados', 'La planificacion se ha actualizado.', 'success')
     } catch (error) {
-      if (!handleUnauthorized(error)) {
-        setSectionMessage('operations', 'No se han podido generar turnos', getApiErrorMessage(error), 'error')
-      }
+      setSectionMessage('operations', 'No se han podido generar turnos', getApiErrorMessage(error), 'error')
     }
   }
 
@@ -394,9 +313,7 @@ function DashboardPage() {
       }))
       setSectionMessage('operations', 'Mantenimiento generado', 'La agenda de mantenimiento se ha actualizado.', 'success')
     } catch (error) {
-      if (!handleUnauthorized(error)) {
-        setSectionMessage('operations', 'No se ha podido generar mantenimiento', getApiErrorMessage(error), 'error')
-      }
+      setSectionMessage('operations', 'No se ha podido generar mantenimiento', getApiErrorMessage(error), 'error')
     }
   }
 
@@ -407,14 +324,10 @@ function DashboardPage() {
       return (
         <StatusMessage
           title="Cargando panel"
-          message="Estamos recuperando datos reales del backend para el panel interno."
+          message="Estamos cargando la informacion del panel."
           variant="info"
         />
       )
-    }
-
-    if (!session) {
-      return <AdminLoginPanel onSubmit={handleLogin} isSubmitting={isLoggingIn} errorMessage={authError} />
     }
 
     if (activeEntityDefinition) {
@@ -472,7 +385,6 @@ function DashboardPage() {
   }, [
     activeEntityDefinition,
     activeTab,
-    authError,
     editingIds,
     forms,
     handleBookingCreate,
@@ -480,11 +392,10 @@ function DashboardPage() {
     handleGenerateMaintenance,
     handleGenerateShifts,
     isLoading,
-    isLoggingIn,
+    reloadEntity,
     resetEntityForm,
     resources,
     sectionMessages,
-    session,
     submittingState,
     summary,
   ])
@@ -498,39 +409,33 @@ function DashboardPage() {
           </p>
           <h1 className="text-[clamp(2rem,3vw,2.8rem)] leading-[1.04] text-neutral-100">
             {activeTab === 'overview'
-              ? 'Dashboard operativo'
+              ? 'Dashboard interno'
               : activeTab === 'bookings'
                 ? 'Taquilla'
                 : activeTab === 'operations'
-                  ? 'Turnos y mantenimiento'
+                  ? 'Operaciones'
                   : entityDefinitions[activeTab]?.title ?? 'Panel interno'}
           </h1>
           <p className="max-w-3xl text-[0.98rem] leading-6 text-neutral-300">
-            MVP conectado a backend para cubrir home, CRUDs, ventas en taquilla, metricas de direccion y operaciones del parque.
+            Gestion interna para reservas, operaciones y administracion del parque.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          {session ? (
-            <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3 text-sm text-stone-300">
-              <div className="font-bold text-stone-100">{session.username}</div>
-              <div className="text-xs text-stone-500">{session.role}</div>
-            </div>
-          ) : null}
-          {session ? (
-            <>
-              <Button disabled={isRefreshing} onClick={() => void refreshAdminData('refresh')} variant="secondary">
-                <RefreshCw className="h-4 w-4" />
-                {isRefreshing ? 'Actualizando...' : 'Actualizar'}
-              </Button>
-              <Button onClick={handleLogout} variant="danger">
-                <LogOut className="h-4 w-4" />
-                Salir
-              </Button>
-            </>
-          ) : null}
+          <Button disabled={isRefreshing} onClick={() => void refreshAdminData('refresh')} variant="secondary">
+            <RefreshCw className="h-4 w-4" />
+            {isRefreshing ? 'Actualizando...' : 'Actualizar'}
+          </Button>
         </div>
       </header>
+
+      {pageError ? (
+        <StatusMessage
+          title="No se han podido cargar los datos"
+          message={pageError}
+          variant="error"
+        />
+      ) : null}
 
       {renderContent}
     </main>
