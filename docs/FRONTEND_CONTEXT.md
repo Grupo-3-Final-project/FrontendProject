@@ -1,71 +1,56 @@
-# FRONTEND_CONTEXT.md - Contexto Frontend
+# FRONTEND_CONTEXT.md - Contexto frontend
 
-## 1. Objetivo del frontend
+## 1. Objetivo
 
-El frontend pertenece a una aplicacion web de gestion y venta para un parque de atracciones de terror.
+Este documento define el alcance funcional frontend del proyecto "La Ultima Puerta".
 
-Su objetivo es ofrecer tres experiencias separadas:
-
-- Una home publica orientada a venta y presentacion visual del parque.
-- Un dashboard interno para administracion y operacion.
-- Una experiencia mobile para visitantes dentro del parque.
-
-Este documento aporta contexto funcional frontend para futuros trabajos. `AGENTS.md` sigue siendo la norma principal del proyecto. `docs/API_CONTRACT.md` sigue siendo la fuente de verdad para contrato API. `docs/CONTRACT_TESTING.md` sigue siendo la fuente de verdad para contract testing.
-
-## 2. Contexto del cliente
-
-El cliente necesita una aplicacion para un parque de atracciones de terror.
-
-El tono visual debe transmitir una estetica oscura, misteriosa, nocturna y tipo Halloween. La palabra "Puerta" es clave para la marca.
-
-El nombre definitivo aprobado por el cliente el 30/04/2026 es "La Última Puerta".
-
-El slogan definitivo es "¿Te atreves a cruzarla?"
-
-El parque se situa funcionalmente en Granada. El cliente valoro mostrar el tiempo de Granada. Esta informacion puede aparecer en Home, Dashboard o Mobile si aporta valor real a la experiencia y sin sobrecargar la interfaz.
-
-Ya hay decision final sobre las propuestas visuales. Las imagenes seleccionadas sirven como referencia visual y de composicion, pero no todo lo visible en una imagen implica funcionalidad automatica.
-
-Cualquier funcionalidad no documentada debe validarse antes de implementarse.
-
-## 3. Decision final del cliente
-
-Decision aprobada el 30/04/2026:
-
-- Logo: puerta gotica roja.
-- Color principal: rojo.
-- Home definitiva: diseno 1.
-- Dashboard definitivo: diseno 1.
-- Mobile definitiva: diseno 3.
-
-Las imagenes seleccionadas son referencia visual y de composicion. No sustituyen a `docs/API_CONTRACT.md`, no definen campos JSON, no crean endpoints y no convierten automaticamente elementos visuales en funcionalidades.
-
-Para referencia visual oficial aprobada por el cliente, revisar `docs/VISUAL_REFERENCE.md`. Las imágenes incluidas sirven como referencia de composición y estilo, pero no sustituyen al contrato funcional ni al contrato API.
-
-## 4. Separacion de experiencias
-
-El frontend se divide en tres experiencias principales:
+El frontend debe mantener tres experiencias separadas:
 
 - Home publica.
 - Dashboard interno.
 - Mobile visitante.
 
-Nunca deben mezclarse funcionalidades entre estas experiencias.
+`AGENTS.md` sigue siendo la norma general del proyecto. `docs/API_CONTRACT.md` sigue siendo la fuente de verdad para endpoints, requests, responses y campos JSON. `docs/CONTRACT_TESTING.md` sigue siendo la fuente de verdad para contract testing.
 
-La home publica no debe mostrar datos internos de administracion. El dashboard interno no debe convertirse en una landing comercial. La experiencia mobile no debe incluir funcionalidades de gestion interna ni login de visitante.
+## 2. Contexto del cliente
 
-## 5. Home publica
+El cliente necesita una aplicacion web para un parque de atracciones de terror.
 
-La home publica debe ser una pagina comercial, visual y orientada a venta.
+Decision de cliente:
 
-Debe incluir:
+- Nombre visual: La Ultima Puerta.
+- Slogan visual: ¿Te atreves a cruzarla?
+- Logo: puerta gotica roja.
+- Color principal: rojo.
+- Estetica: terror, noche, misterio, premium, minimalista y profesional.
+- Ubicacion funcional: Granada.
+
+La referencia visual activa esta consolidada en `docs/VISUAL_REFERENCE.md`.
+
+Figma y la web publicada son referencia visual. No son contrato funcional, no crean endpoints y no autorizan por si solos nuevas funcionalidades.
+
+## 3. Separacion de experiencias
+
+### Home publica
+
+Ruta principal prevista:
+
+```text
+/home
+```
+
+Objetivo: pagina comercial, visual y orientada a venta.
+
+Puede incluir:
 
 - Hero visual.
 - Atracciones destacadas.
 - Ofertas visibles.
-- Packs familiares, hotel + entrada y descuento por discapacidad como contenido comercial.
-- CTA o acceso relacionado con compra.
-- QR o acceso a la experiencia mobile.
+- Packs familiares.
+- Hotel + entrada.
+- Descuento por discapacidad.
+- CTA de compra o reserva.
+- Acceso o QR hacia la experiencia mobile cuando aplique.
 
 No debe incluir:
 
@@ -76,11 +61,17 @@ No debe incluir:
 - Metricas operativas.
 - Logica propia del dashboard.
 
-## 6. Dashboard interno
+### Dashboard interno
 
-El dashboard interno debe ser operativo y estar pensado solo para administracion o trabajadores del parque.
+Ruta principal prevista:
 
-Debe incluir:
+```text
+/dashboard
+```
+
+Objetivo: administracion y operacion interna del parque.
+
+Puede incluir:
 
 - KPIs.
 - Reservas.
@@ -88,169 +79,164 @@ Debe incluir:
 - Atracciones.
 - Empleados.
 - Mantenimiento.
+- Taquilla.
 - Mapa operativo.
-- Alertas o estados internos.
+- Alertas internas.
 - Metricas calculadas por backend cuando aplique.
 
-Las metricas de negocio no deben calcularse en React si estan definidas como responsabilidad del backend.
+No debe incluir:
 
-## 7. Mobile visitante
+- Enfoque comercial tipo landing.
+- QR de visitante como experiencia principal.
+- Flujo mobile del visitante.
+- Logica de compra compleja para clientes finales.
 
-La experiencia mobile visitante debe ser mobile-first y accesible mediante QR.
+### Mobile visitante
 
-Debe ser una experiencia web movil, no una app nativa real. No debe tener login, pago real ni flujo de compra complejo.
-
-Debe incluir:
-
-- Mapa.
-- Ruta optimizada.
-- Detalle de atraccion.
-- Progreso del visitante.
-- Boton de actualizar ruta.
-- Atracciones completadas guardadas en LocalStorage.
-
-La logica debe mantenerse simple. No se deben usar websockets ni sistemas complejos para este flujo.
-
-## 8. Compra desde taquilla
-
-La compra principal se gestiona desde taquilla o administracion.
-
-No debe haber pagos reales ni login de visitante. Cuando se implemente el flujo de compra, puede generar email, factura o QR mock si encaja con el alcance aprobado.
-
-La experiencia Mobile debe servir para acceder al recorrido dentro del parque, no para gestionar una compra compleja.
-
-## 9. Rutas principales
-
-Rutas principales previstas:
+Rutas previstas:
 
 ```text
-/home
-/dashboard
 /mobile
 /mobile/map
 /mobile/route
 /mobile/attraction/:id
 ```
 
-Las subrutas mobile pueden implementarse mas adelante. La existencia de estas rutas no implica que todas deban implementarse en el mismo paso.
+Objetivo: experiencia web mobile-first para visitantes dentro del parque tras escanear un QR.
 
-## 10. Criterios visuales
+Debe incluir:
 
-La estetica general debe ser oscura, misteriosa, premium, minimalista y profesional.
+- Mapa del parque.
+- Detalle de atraccion.
+- Ruta optimizada o recomendada.
+- Progreso del visitante.
+- Atracciones completadas guardadas en `localStorage`.
+- Boton para actualizar o recalcular ruta.
 
-Criterios visuales:
+No debe incluir:
+
+- Login obligatorio.
+- Pago real.
+- Dashboard interno.
+- Gestion administrativa.
+- App nativa.
+- Geolocalizacion real.
+- WebSockets.
+- IA.
+- Sensores o automatizacion real.
+
+## 4. Decisiones MVP
+
+Para el MVP se acuerda:
+
+- Prioridad absoluta: estabilidad y entrega funcional.
+- Las colas y tiempos de espera son simulados, pueden generarse con valores mock o random.
+- Las atracciones visitadas se guardan en `localStorage`.
+- No hay geolocalizacion real.
+- No hay sensores ni automatizacion real.
+- No se implementan formularios complejos de gestion manual de colas.
+- El login es opcional y solo debe trabajarse en una rama separada si se aprueba.
+- El QR de entrada y el QR del parque son conceptos distintos.
+- El QR de entrada puede representar acceso, compra o reserva.
+- El QR del parque puede abrir la experiencia mobile del visitante.
+- Figma es referencia visual, no contrato funcional.
+
+## 5. Compra y QR
+
+La compra principal se gestiona desde taquilla o administracion.
+
+No debe haber pagos reales ni login obligatorio de visitante en el MVP.
+
+Cuando se trabaje el flujo de compra, puede incluir email, factura o QR mock si encaja con el alcance aprobado.
+
+La experiencia mobile sirve para recorrer el parque, consultar atracciones y actualizar la ruta. No debe convertirse en un sistema complejo de compra.
+
+## 6. Criterios visuales
+
+La interfaz debe ser oscura, clara y defendible en evaluacion.
+
+Reglas visuales:
 
 - Fondo negro o gris muy oscuro.
 - Rojo como color principal.
-- Verde para estados positivos u operativos.
+- Verde para estados positivos, operativo, abierto, completado o baja espera.
 - Amarillo o dorado para avisos, mantenimiento o estados intermedios.
-- Rojo intenso para errores criticos, alertas graves o fuera de servicio.
+- Rojo intenso para criticos, cerrado, error o fuera de servicio.
 - No usar morado.
-- UI limpia, legible, con espacio y sin sobrecarga.
+- UI limpia, legible, con aire y sin exceso de informacion.
 
-El objetivo es que la interfaz sea presentable y defendible, no recargada ni dificil de mantener.
+Los detalles visuales, capturas y fuentes activas se documentan en `docs/VISUAL_REFERENCE.md`.
 
-### Criterio tecnico de estilos
+## 7. Estilos frontend
 
 Tailwind CSS es el sistema principal de estilos del frontend.
 
-Si se anade nueva UI, debe hacerse con Tailwind CSS.
+Si se añade nueva UI, debe hacerse con Tailwind CSS.
 
-No se deben crear nuevos archivos CSS normales para componentes, paginas o layouts.
+No se deben crear nuevos archivos CSS normales para componentes, paginas o layouts salvo aprobacion explicita.
 
-`src/index.css` queda reservado unicamente para:
+`src/index.css` queda reservado para:
 
 - `@import "tailwindcss";`
 - Minimos globales imprescindibles.
-- Variables globales solo si siguen siendo necesarias.
+- Variables globales si siguen siendo necesarias.
 - Base global de `html`, `body` y `#root` si aplica.
-
-Si un componente necesita estilos repetidos, se debe resolver con componentes reutilizables o composicion de clases Tailwind, no creando CSS normal.
 
 No se deben usar estilos inline.
 
 No se deben introducir librerias UI externas sin aprobacion.
 
-La UI debe seguir respetando la estetica oscura, el rojo como color principal, verde para estados positivos u operativos, amarillo o dorado para avisos o mantenimiento, rojo intenso para errores criticos y la prohibicion de usar morado.
+## 8. Que NO implementar sin validacion
 
-## 11. Que NO implementar sin validacion
-
-No implementar sin validacion previa del equipo o cliente:
+No implementar sin validacion previa:
 
 - Login de visitante.
-- Perfil de usuario mobile.
+- Perfil complejo de usuario mobile.
 - Compra real desde mobile.
 - Pagos reales.
 - Notificaciones reales.
 - WebSockets.
 - IA.
 - Geolocalizacion real.
+- Sensores.
+- Automatizacion real de colas.
+- Formularios complejos de gestion manual de colas.
 - State manager global.
 - Librerias UI externas.
-- Graficas externas sin aprobacion.
-- Carruseles externos sin aprobacion.
-- Iconos externos sin aprobacion.
-- Funcionalidades que solo aparezcan en una maqueta generada pero no esten pedidas por cliente.
+- Graficas externas.
+- Carruseles externos.
+- Iconos externos.
+- Funcionalidades que solo aparezcan en Figma o en una maqueta.
 
-La prioridad es mantener el alcance claro y evitar sobreingenieria.
-
-## 12. Relacion con backend
+## 9. Relacion con backend/API
 
 El frontend debe respetar siempre `docs/API_CONTRACT.md`.
 
-`docs/API_CONTRACT.md` sigue siendo la fuente de verdad para endpoints, requests, responses y campos JSON.
-
-`docs/API_NAMING_DICTIONARY.md`, si existe en la rama actual, es solo una guia rapida de naming y no sustituye al contrato API.
-
 Reglas principales:
 
-- No inventar campos.
+- No inventar endpoints.
 - No renombrar campos JSON.
-- No cambiar endpoints sin aprobacion.
-- No inventar campos ni endpoints desde las maquetaciones.
-- No hacer llamadas API dentro de componentes.
+- No cambiar requests o responses sin aprobacion.
+- No crear servicios API desde una maqueta visual.
+- No hacer llamadas API dentro de componentes JSX.
 - Centralizar llamadas en `src/api/`.
 - Mantener los nombres recibidos y enviados alineados con el contrato.
-- Consumir las metricas de negocio desde backend cuando esten definidas en contrato.
+- Consumir metricas de negocio desde backend cuando esten definidas como responsabilidad del backend.
 
-Antes de crear servicios API en frontend, se debe revisar siempre `docs/API_CONTRACT.md`. Los servicios deben usar los endpoints y campos JSON exactos del contrato, sin inventar variantes de naming.
+`docs/API_NAMING_DICTIONARY.md` es una guia rapida de naming. No sustituye a `docs/API_CONTRACT.md`.
 
-Ejemplos de errores a evitar:
+Si un cambio afecta endpoints, DTOs, requests, responses, nombres JSON, servicios API, Swagger/OpenAPI o contract testing, tambien se deben revisar:
 
-- Usar `clientId` o `idClient` si el contrato usa `userId`.
-- Usar `idHotel` si el contrato usa `hotelId`.
-- Usar `surname` si el contrato usa `lastName`.
-- Usar `totalSeats` o `availableSeats` para hoteles, porque hoteles usan `totalPlaces` y `availablePlaces`.
-- Usar `totalPlaces` o `availablePlaces` para atracciones, porque atracciones usan `totalSeats` y `availableSeats`.
+- `docs/API_CONTRACT.md`
+- `docs/CONTRACT_TESTING.md`
+- `docs/API_NAMING_DICTIONARY.md`
 
-Si hay duda, se debe mandar `docs/API_CONTRACT.md` como fuente de verdad.
+## 10. Documentacion relacionada
 
-Si un cambio afecta endpoints, DTOs, requests, responses, nombres de campos JSON, servicios API, tests de contrato, Swagger/OpenAPI o comunicacion frontend-backend, se deben revisar tambien `docs/API_CONTRACT.md` y `docs/CONTRACT_TESTING.md`.
-
-## 13. Testing y calidad
-
-Cada paso debe validarse antes de continuar.
-
-Se deben anadir tests cuando se preparen:
-
-- Componentes reutilizables.
-- Servicios API.
-- Logica de estado.
-- Formularios.
-- Flujos criticos.
-
-No se debe avanzar sin validacion. Los commits deben ser pequenos, claros y con conventional commits.
-
-## 14. Flujo de trabajo obligatorio
-
-Flujo recomendado:
-
-1. Trabajar desde `dev` actualizado.
-2. Crear una rama especifica por tarea.
-3. Hacer un cambio cada vez.
-4. Validar el cambio.
-5. Preparar commit con conventional commits.
-6. Hacer push de la rama.
-7. Integrar primero en `dev`.
-
-No se deben modificar archivos no relacionados con la tarea.
+- `AGENTS.md`: normas generales, flujo de trabajo, estructura y limites.
+- `docs/FRONTEND_CONTEXT.md`: alcance funcional frontend y decisiones MVP.
+- `docs/VISUAL_REFERENCE.md`: fuente activa de referencia visual.
+- `docs/API_CONTRACT.md`: contrato API.
+- `docs/CONTRACT_TESTING.md`: estrategia de contract testing.
+- `docs/API_NAMING_DICTIONARY.md`: guia rapida de nombres.
+- `docs/FIGMA_FINAL_REFERENCE.md`: referencia historica/deprecated.
