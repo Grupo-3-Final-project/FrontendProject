@@ -1,8 +1,12 @@
+import { useState } from 'react'
 import parkMapImage from '../../assets/home/publicHomeParkMap.png'
+import AttractionModal from './AttractionModal'
 import AttractionMarker from './AttractionMarker'
 import MapControlButton from './MapControlButton'
 
 function MobileMap({ markers, controls }) {
+  const [selectedAttraction, setSelectedAttraction] = useState(null)
+
   return (
     <section className="relative min-h-[430px] flex-1 overflow-hidden rounded-xl border border-white/10 bg-neutral-950 shadow-2xl shadow-black/50">
       <img
@@ -24,8 +28,10 @@ function MobileMap({ markers, controls }) {
       </div>
 
       {markers.map((marker) => (
-        <AttractionMarker key={marker.id} attraction={marker} />
+        <AttractionMarker key={marker.id} attraction={marker} onSelect={setSelectedAttraction} />
       ))}
+
+      <AttractionModal attraction={selectedAttraction} onClose={() => setSelectedAttraction(null)} />
     </section>
   )
 }
