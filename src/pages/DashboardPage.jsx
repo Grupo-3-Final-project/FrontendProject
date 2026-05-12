@@ -8,7 +8,7 @@ import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '..
 import { createHotel, deleteHotel, getHotels, updateHotel } from '../api/hotelApi'
 import { uploadImage } from '../api/imageApi'
 import { generateMaintenanceTasks, getMaintenanceTasks } from '../api/maintenanceApi'
-import { getOffers } from '../api/offerApi'
+import { createOffer, getOffers } from '../api/offerApi'
 import { generateShifts, getShifts } from '../api/shiftApi'
 import { getApiErrorMessage } from '../api/apiClient'
 import { createUser, deleteUser, getUsers, updateUser } from '../api/userApi'
@@ -40,6 +40,10 @@ const entityServices = {
     create: createAttraction,
     update: updateAttraction,
     remove: deleteAttraction,
+  },
+  offers: {
+    load: getOffers,
+    create: createOffer,
   },
   employees: {
     load: getEmployees,
@@ -76,12 +80,14 @@ function DashboardPage() {
     users: null,
     hotels: null,
     attractions: null,
+    offers: null,
     employees: null,
   })
   const [submittingState, setSubmittingState] = useState({
     users: false,
     hotels: false,
     attractions: false,
+    offers: false,
     employees: false,
   })
   const [sectionMessages, setSectionMessages] = useState({})

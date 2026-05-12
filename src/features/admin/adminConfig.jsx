@@ -17,6 +17,7 @@ export const dashboardTabs = [
   { key: 'users', label: 'Usuarios' },
   { key: 'hotels', label: 'Hoteles' },
   { key: 'attractions', label: 'Atracciones' },
+  { key: 'offers', label: 'Ofertas' },
   { key: 'employees', label: 'Empleados' },
   { key: 'operations', label: 'Operaciones' },
 ]
@@ -240,6 +241,84 @@ export const entityDefinitions = {
       ...item,
       totalSeats: String(item.totalSeats),
       availableSeats: String(item.availableSeats),
+    }),
+  },
+  offers: {
+    key: 'offers',
+    title: 'Ofertas',
+    description: 'Crea packs comerciales con hotel, pension, entradas e imagen.',
+    canEdit: false,
+    canDelete: false,
+    emptyForm: {
+      title: '',
+      description: '',
+      hotelId: '1',
+      boardType: 'FULL_BOARD',
+      includedTickets: '1',
+      totalPrice: '0',
+      imageUrl: '',
+    },
+    fields: [
+      { name: 'title', label: 'Titulo', type: 'text' },
+      { name: 'description', label: 'Descripcion', type: 'textarea' },
+      numberField('hotelId', 'Hotel', { min: 1 }),
+      {
+        name: 'boardType',
+        label: 'Regimen',
+        type: 'select',
+        options: [
+          { value: 'HALF_BOARD', label: 'Media pension' },
+          { value: 'FULL_BOARD', label: 'Pension completa' },
+        ],
+      },
+      numberField('includedTickets', 'Entradas incluidas', { min: 1 }),
+      numberField('totalPrice', 'Precio total', { min: 0.01, step: 0.01 }),
+      { name: 'imageUrl', label: 'Imagen', type: 'image', folder: 'offers' },
+    ],
+    columns: [
+      {
+        key: 'title',
+        label: 'Oferta',
+        render: (item) => (
+          <div className="flex items-center gap-3">
+            <img
+              src={item.imageUrl}
+              alt={item.title}
+              className="h-12 w-16 rounded-md border border-stone-800 object-cover"
+            />
+            <div className="min-w-0">
+              <div className="font-bold text-stone-100">{item.title}</div>
+              <div className="text-xs text-stone-500">{item.hotelName}</div>
+            </div>
+          </div>
+        ),
+      },
+      {
+        key: 'boardType',
+        label: 'Regimen',
+        render: (item) => formatBoardType(item.boardType),
+      },
+      {
+        key: 'includedTickets',
+        label: 'Entradas',
+      },
+      {
+        key: 'totalPrice',
+        label: 'Precio',
+        render: (item) => formatCurrency(item.totalPrice),
+      },
+    ],
+    toPayload: (form) => ({
+      ...form,
+      hotelId: Number(form.hotelId),
+      includedTickets: Number(form.includedTickets),
+      totalPrice: Number(form.totalPrice),
+    }),
+    fromItem: (item) => ({
+      ...item,
+      hotelId: String(item.hotelId),
+      includedTickets: String(item.includedTickets),
+      totalPrice: String(item.totalPrice),
     }),
   },
   employees: {
