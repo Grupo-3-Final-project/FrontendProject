@@ -98,4 +98,48 @@ describe('MobilePage', () => {
     expect(screen.queryAllByText('Abyss Wheel')).toHaveLength(0)
     expect(screen.getAllByText('Dragon Coaster').length).toBeGreaterThan(0)
   })
+
+  it('keeps the mobile experience available when Granada weather cannot be loaded', async () => {
+    getMobileAccess.mockResolvedValue({
+      ticketId: 7,
+      bookingId: 3,
+      holderFullName: 'Ana Garcia',
+      ticketStatus: 'VALID',
+      visitDate: '2026-05-22',
+      attractions: [
+        {
+          id: 1,
+          name: 'Dragon Coaster',
+          description: 'Montana rusa principal del parque.',
+          size: 'LARGE',
+          status: 'OPEN',
+          totalSeats: 32,
+          availableSeats: 28,
+          maintenanceFrequencyDays: 7,
+          imageUrl: 'https://example.com/dragon.jpg',
+        },
+      ],
+    })
+
+    getGranadaWeather.mockRejectedValue({
+      response: {
+        data: {
+          message: 'Weather service unavailable',
+        },
+      },
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/mobile/token-2']}>
+        <Routes>
+          <Route path="/mobile/:mobileAccessToken" element={<MobilePage />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByText('Ana Garcia')).toBeInTheDocument()
+    expect(screen.getByText('Tiempo de Granada no disponible')).toBeInTheDocument()
+    expect(screen.getByText('No se ha podido consultar el tiempo de Granada.')).toBeInTheDocument()
+    expect(screen.getAllByText('Dragon Coaster').length).toBeGreaterThan(0)
+  })
 })

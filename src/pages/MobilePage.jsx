@@ -31,6 +31,7 @@ function MobilePage() {
   const { mobileAccessToken } = useParams()
   const [mobileAccess, setMobileAccess] = useState(null)
   const [weather, setWeather] = useState(null)
+  const [weatherError, setWeatherError] = useState('')
   const [plan, setPlan] = useState(() => buildMobilePlan([], []))
   const [pageError, setPageError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
@@ -49,17 +50,33 @@ function MobilePage() {
     }
 
     try {
-      const [mobileAccessResponse, weatherResponse] = await Promise.all([
+      const [mobileAccessResult, weatherResult] = await Promise.allSettled([
         getMobileAccess(mobileAccessToken),
         getGranadaWeather(),
       ])
+
+      if (mobileAccessResult.status === 'rejected') {
+        throw mobileAccessResult.reason
+      }
+
       const visitedAttractionIds = readVisitedAttractions(mobileAccessToken)
+      const mobileAccessResponse = mobileAccessResult.value
 
       setMobileAccess(mobileAccessResponse)
-      setWeather(weatherResponse)
       setPlan(buildMobilePlan(mobileAccessResponse.attractions, visitedAttractionIds))
+
+      if (weatherResult.status === 'fulfilled') {
+        setWeather(weatherResult.value)
+        setWeatherError('')
+      } else {
+        setWeather(null)
+        setWeatherError(getApiErrorMessage(weatherResult.reason, 'No se ha podido consultar el tiempo de Granada.'))
+      }
+
       setPageError('')
     } catch (error) {
+      setWeather(null)
+      setWeatherError('')
       setPageError(getApiErrorMessage(error, 'No se ha podido cargar la experiencia movil.'))
     } finally {
       setIsLoading(false)
@@ -147,6 +164,14 @@ function MobilePage() {
             title="No se ha podido abrir la experiencia movil"
             message={pageError}
             variant="error"
+          />
+        ) : null}
+
+        {!pageError && weatherError ? (
+          <StatusMessage
+            title="Tiempo de Granada no disponible"
+            message={weatherError}
+            variant="warning"
           />
         ) : null}
 
