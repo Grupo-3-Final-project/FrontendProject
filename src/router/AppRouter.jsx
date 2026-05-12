@@ -19,6 +19,7 @@ function AppRouter() {
         </Route>
         <Route path="/mobile" element={<MobileLayout />}>
           <Route index element={<MobilePage />} />
+          <Route path=":mobileAccessToken" element={<MobilePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

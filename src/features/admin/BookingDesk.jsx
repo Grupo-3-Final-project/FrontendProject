@@ -116,8 +116,10 @@ function BookingDesk({
       setCompanions([])
       setLocalMessage({
         title: 'Compra registrada',
-        message: 'La compra en taquilla se ha guardado correctamente.',
-        variant: 'success',
+        message: booking.emailSent
+          ? 'La compra en taquilla se ha guardado y el correo se ha enviado correctamente.'
+          : 'La compra se ha registrado, pero no se ha podido enviar el correo al cliente.',
+        variant: booking.emailSent ? 'success' : 'warning',
       })
     } finally {
       setIsSubmitting(false)
@@ -444,6 +446,17 @@ function BookingDesk({
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
                 <div className="text-xs font-bold uppercase text-stone-500">Total</div>
                 <div className="mt-1 text-base font-black text-stone-100">{formatCurrency(bookingResult.totalPrice)}</div>
+              </div>
+              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
+                <div className="text-xs font-bold uppercase text-stone-500">Correo</div>
+                <div className={`mt-1 text-base font-black ${bookingResult.emailSent ? 'text-stone-100' : 'text-red-300'}`}>
+                  {bookingResult.emailSent ? 'Enviado' : 'No enviado'}
+                </div>
+                <div className="mt-1 text-xs text-stone-500">
+                  {bookingResult.emailSent
+                    ? 'El cliente deberia recibir sus QR por correo.'
+                    : 'La reserva existe, pero hay que revisar o reenviar el correo.'}
+                </div>
               </div>
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
                 <div className="text-xs font-bold uppercase text-stone-500">Entradas calculadas</div>

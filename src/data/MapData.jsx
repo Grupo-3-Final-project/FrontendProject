@@ -29,47 +29,12 @@ export const mapControls = [
   { id: 'focus', label: 'Centrar vista', icon: HiOutlineEye },
 ]
 
-export const attractionMarkers = [
-  {
-    id: 'terror-tower',
-    name: 'Torre del Terror',
-    waitTime: 0,
-    positionClass: 'left-[48%] top-[16%]',
-  },
-  {
-    id: 'haunted-mansion',
-    name: 'Mansion Maldita',
-    waitTime: 45,
-    positionClass: 'left-[18%] top-[28%]',
-  },
-  {
-    id: 'dark-labyrinth',
-    name: 'Laberinto Oscuro',
-    waitTime: 16,
-    positionClass: 'left-[70%] top-[48%]',
-  },
-  {
-    id: 'blood-river',
-    name: 'Rio de Sangre',
-    waitTime: 25,
-    positionClass: 'left-[35%] top-[40%]',
-  },
-  {
-    id: 'forgotten-zone',
-    name: 'Zona Olvidada',
-    waitTime: 20,
-    positionClass: 'left-[23%] top-[55%]',
-  },
-  {
-    id: 'macabre-carousel',
-    name: 'Carrusel Macabro',
-    waitTime: 35,
-    positionClass: 'left-[42%] top-[68%]',
-  },
-  {
-    id: 'lost-cemetery',
-    name: 'Cementerio Perdido',
-    waitTime: 6,
-    positionClass: 'left-[52%] top-[88%]',
-  },
+export const markerPositionClasses = [
+  'left-[48%] top-[16%]',
+  'left-[18%] top-[28%]',
+  'left-[70%] top-[48%]',
+  'left-[35%] top-[40%]',
+  'left-[23%] top-[55%]',
+  'left-[42%] top-[68%]',
+  'left-[52%] top-[88%]',
 ]
