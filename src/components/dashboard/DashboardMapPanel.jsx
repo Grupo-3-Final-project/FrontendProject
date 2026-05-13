@@ -28,12 +28,12 @@ function DashboardMapPanel() {
           <small className="text-xs font-bold text-neutral-400">Estado visual</small>
         </span>
         <span className="absolute top-[18%] left-[18%] z-20 grid max-w-[180px] gap-1 rounded-md border border-amber-500/70 bg-black/80 px-4 py-3 text-sm font-bold text-amber-300 max-[760px]:max-w-[140px] max-[760px]:text-[0.82rem]">
-          <strong>Area en revision</strong>
+          <strong>Área en revisión</strong>
           <small className="text-xs font-bold text-neutral-400">Datos por conectar</small>
         </span>
         <span className="absolute right-[10%] bottom-[18%] z-20 grid max-w-[180px] gap-1 rounded-md border border-red-500/75 bg-black/80 px-4 py-3 text-sm font-bold text-red-300 max-[760px]:max-w-[140px] max-[760px]:text-[0.82rem]">
           <strong>Incidencia interna</strong>
-          <small className="text-xs font-bold text-neutral-400">Informacion temporal</small>
+          <small className="text-xs font-bold text-neutral-400">Información temporal</small>
         </span>
         <span className="absolute bottom-[16%] left-[14%] z-20 grid max-w-[180px] gap-1 rounded-md border border-neutral-500/50 bg-black/80 px-4 py-3 text-sm font-bold text-neutral-400 max-[760px]:max-w-[140px] max-[760px]:text-[0.82rem]">
           <strong>Zona sin conexion</strong>

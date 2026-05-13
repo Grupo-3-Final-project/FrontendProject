@@ -48,7 +48,7 @@ export const entityDefinitions = {
       { name: 'lastName', label: 'Apellidos', type: 'text' },
       { name: 'dni', label: 'DNI', type: 'text' },
       { name: 'email', label: 'Email', type: 'email' },
-      { name: 'phone', label: 'Telefono', type: 'text' },
+      { name: 'phone', label: 'Teléfono', type: 'text' },
       { name: 'birthDate', label: 'Fecha de nacimiento', type: 'date' },
     ],
     columns: [
@@ -63,7 +63,7 @@ export const entityDefinitions = {
         ),
       },
       { key: 'email', label: 'Email' },
-      { key: 'phone', label: 'Telefono' },
+      { key: 'phone', label: 'Teléfono' },
       {
         key: 'birthDate',
         label: 'Nacimiento',
@@ -90,13 +90,13 @@ export const entityDefinitions = {
     },
     fields: [
       { name: 'name', label: 'Nombre', type: 'text' },
-      { name: 'description', label: 'Descripcion', type: 'textarea' },
+      { name: 'description', label: 'Descripción', type: 'textarea' },
       numberField('totalRooms', 'Habitaciones totales', { min: 1 }),
       numberField('availableRooms', 'Habitaciones disponibles', { min: 0 }),
       numberField('totalPlaces', 'Plazas totales', { min: 1 }),
       numberField('availablePlaces', 'Plazas disponibles', { min: 0 }),
-      numberField('halfBoardPrice', 'Media pension', { min: 0.01, step: 0.01 }),
-      numberField('fullBoardPrice', 'Pension completa', { min: 0.01, step: 0.01 }),
+      numberField('halfBoardPrice', 'Media pensión', { min: 0.01, step: 0.01 }),
+      numberField('fullBoardPrice', 'Pensión completa', { min: 0.01, step: 0.01 }),
       { name: 'imageUrl', label: 'Imagen', type: 'image', folder: 'hotels' },
     ],
     columns: [
@@ -157,7 +157,7 @@ export const entityDefinitions = {
   attractions: {
     key: 'attractions',
     title: 'Atracciones',
-    description: 'Actualiza el catalogo, el aforo y el estado de cada atraccion.',
+    description: 'Actualiza el catálogo, el aforo y el estado de cada atracción.',
     emptyForm: {
       name: '',
       description: '',
@@ -169,13 +169,13 @@ export const entityDefinitions = {
     },
     fields: [
       { name: 'name', label: 'Nombre', type: 'text' },
-      { name: 'description', label: 'Descripcion', type: 'textarea' },
+      { name: 'description', label: 'Descripción', type: 'textarea' },
       {
         name: 'size',
-        label: 'Tamano',
+        label: 'Tamaño',
         type: 'select',
         options: [
-          { value: 'SMALL', label: 'Pequena' },
+          { value: 'SMALL', label: 'Pequeña' },
           { value: 'MEDIUM', label: 'Mediana' },
           { value: 'LARGE', label: 'Grande' },
         ],
@@ -197,7 +197,7 @@ export const entityDefinitions = {
     columns: [
       {
         key: 'name',
-        label: 'Atraccion',
+        label: 'Atracción',
         render: (item) => (
           <div className="flex items-center gap-3">
             <img
@@ -228,8 +228,8 @@ export const entityDefinitions = {
       },
       {
         key: 'maintenanceFrequencyDays',
-        label: 'Revision',
-        render: (item) => `Cada ${item.maintenanceFrequencyDays} dias`,
+        label: 'Revisión',
+        render: (item) => `Cada ${item.maintenanceFrequencyDays} días`,
       },
     ],
     toPayload: (form) => ({
@@ -246,7 +246,7 @@ export const entityDefinitions = {
   offers: {
     key: 'offers',
     title: 'Ofertas',
-    description: 'Crea packs comerciales con hotel, pension, entradas e imagen.',
+    description: 'Crea packs comerciales con hotel, pensión, entradas e imagen.',
     emptyForm: {
       title: '',
       description: '',
@@ -257,16 +257,16 @@ export const entityDefinitions = {
       imageUrl: '',
     },
     fields: [
-      { name: 'title', label: 'Titulo', type: 'text' },
-      { name: 'description', label: 'Descripcion', type: 'textarea' },
+      { name: 'title', label: 'Título', type: 'text' },
+      { name: 'description', label: 'Descripción', type: 'textarea' },
       numberField('hotelId', 'Hotel', { min: 1 }),
       {
         name: 'boardType',
-        label: 'Regimen',
+        label: 'Régimen',
         type: 'select',
         options: [
-          { value: 'HALF_BOARD', label: 'Media pension' },
-          { value: 'FULL_BOARD', label: 'Pension completa' },
+          { value: 'HALF_BOARD', label: 'Media pensión' },
+          { value: 'FULL_BOARD', label: 'Pensión completa' },
         ],
       },
       numberField('includedTickets', 'Entradas incluidas', { min: 1 }),
@@ -293,7 +293,7 @@ export const entityDefinitions = {
       },
       {
         key: 'boardType',
-        label: 'Regimen',
+        label: 'Régimen',
         render: (item) => formatBoardType(item.boardType),
       },
       {
@@ -344,7 +344,7 @@ export const entityDefinitions = {
         options: [
           { value: 'CLEANER', label: 'Limpiador' },
           { value: 'ANIMATOR', label: 'Animador' },
-          { value: 'TECHNICIAN', label: 'Tecnico' },
+          { value: 'TECHNICIAN', label: 'Técnico' },
         ],
       },
       {
@@ -352,7 +352,7 @@ export const entityDefinitions = {
         label: 'Turno base',
         type: 'select',
         options: [
-          { value: 'MORNING', label: 'Manana' },
+          { value: 'MORNING', label: 'Mañana' },
           { value: 'AFTERNOON', label: 'Tarde' },
         ],
       },
@@ -421,7 +421,7 @@ export const overviewHelpers = {
   maintenanceColumns: [
     {
       key: 'attractionName',
-      label: 'Atraccion',
+      label: 'Atracción',
       render: (item) => item.attractionName,
     },
     {
@@ -448,7 +448,7 @@ export const overviewHelpers = {
     },
     {
       key: 'period',
-      label: 'Periodo',
+      label: 'Período',
       render: (item) => `${formatDate(item.startDate)} - ${formatDate(item.endDate)}`,
     },
   ],

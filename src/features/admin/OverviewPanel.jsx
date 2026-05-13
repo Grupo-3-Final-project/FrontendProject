@@ -79,7 +79,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
       </div>
 
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <Card title="Entradas por rango de edad" subtitle="Resumen del ano en curso.">
+        <Card title="Entradas por rango de edad" subtitle="Resumen del año en curso.">
           {summary.ticketsByAgeRange?.length ? (
             <div className="grid gap-3 md:grid-cols-3">
               {summary.ticketsByAgeRange.map((ticketGroup) => (
@@ -92,13 +92,13 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           ) : (
             <StatusMessage
               title="Sin datos de venta"
-              message="Todavia no hay entradas registradas para calcular el desglose."
+              message="Todavía no hay entradas registradas para calcular el desglose."
               variant="empty"
             />
           )}
         </Card>
 
-        <Card title="Top 3 hoteles" subtitle="Hoteles con mayor recaudacion en el ano en curso.">
+        <Card title="Top 3 hoteles" subtitle="Hoteles con mayor recaudación en el año en curso.">
           {summary.topHotels?.length ? (
             <div className="space-y-3">
               {summary.topHotels.map((hotel, index) => (
@@ -132,7 +132,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           subtitle="Ultimas reservas registradas."
           items={recentBookings}
           columns={overviewHelpers.bookingColumns}
-          emptyMessage="Todavia no hay reservas disponibles."
+          emptyMessage="Todavía no hay reservas disponibles."
         />
         <PreviewTable
           title="Mantenimiento programado"
@@ -158,11 +158,11 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
               {recentBookings[0]?.userFullName ?? 'Sin datos'}
             </div>
             <div className="mt-2 text-sm text-stone-500">
-              {recentBookings[0] ? formatDateTime(recentBookings[0].createdAt) : 'Todavia no hay reservas registradas.'}
+              {recentBookings[0] ? formatDateTime(recentBookings[0].createdAt) : 'Todavía no hay reservas registradas.'}
             </div>
           </div>
           <div className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-            <div className="text-sm font-bold text-stone-300">Proxima revision</div>
+            <div className="text-sm font-bold text-stone-300">Próxima revisión</div>
             <div className="mt-3 text-lg font-black text-stone-100">
               {upcomingMaintenance[0]?.attractionName ?? 'Sin tareas'}
             </div>
@@ -186,7 +186,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
 }
 
 function formatShiftLabel(shift) {
-  return shift === 'MORNING' ? 'Manana' : shift === 'AFTERNOON' ? 'Tarde' : shift
+  return shift === 'MORNING' ? 'Mañana' : shift === 'AFTERNOON' ? 'Tarde' : shift
 }
 
 export default OverviewPanel

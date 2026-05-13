@@ -30,7 +30,7 @@ function DashboardAlertsPanel() {
           <div>
             <h3 className="m-0 text-base font-bold text-neutral-100">Aviso operativo</h3>
             <p className="mt-1 mb-0 text-sm leading-relaxed text-neutral-400">
-              Contenido temporal sin informacion real conectada.
+              Contenido temporal sin información real conectada.
             </p>
           </div>
         </article>

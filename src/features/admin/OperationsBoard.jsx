@@ -62,7 +62,7 @@ function OperationsBoard({
       ) : null}
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="Generar turnos" subtitle="Crea la planificacion de turnos para el periodo indicado.">
+        <Card title="Generar turnos" subtitle="Crea la planificación de turnos para el período indicado.">
           <form className="space-y-4" onSubmit={handleGenerateShifts}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
@@ -102,7 +102,7 @@ function OperationsBoard({
           </form>
         </Card>
 
-        <Card title="Generar mantenimiento" subtitle="Genera las revisiones segun el tamano de las atracciones.">
+        <Card title="Generar mantenimiento" subtitle="Genera las revisiones según el tamaño de las atracciones.">
           <form className="space-y-4" onSubmit={handleGenerateMaintenance}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
@@ -148,7 +148,7 @@ function OperationsBoard({
           {shiftPreview.length === 0 ? (
             <StatusMessage
               title="Sin turnos"
-              message="Todavia no hay turnos generados en el sistema."
+              message="Todavía no hay turnos generados en el sistema."
               variant="empty"
             />
           ) : (
@@ -158,7 +158,7 @@ function OperationsBoard({
                   <tr className="text-stone-400">
                     <th className="px-3 py-3 font-extrabold uppercase">Empleado</th>
                     <th className="px-3 py-3 font-extrabold uppercase">Turno</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Periodo</th>
+                    <th className="px-3 py-3 font-extrabold uppercase">Período</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-900">
@@ -184,7 +184,7 @@ function OperationsBoard({
           {maintenancePreview.length === 0 ? (
             <StatusMessage
               title="Sin mantenimiento"
-              message="Todavia no se ha generado la agenda de mantenimiento."
+              message="Todavía no se ha generado la agenda de mantenimiento."
               variant="empty"
             />
           ) : (
@@ -192,7 +192,7 @@ function OperationsBoard({
               <table className="min-w-full divide-y divide-stone-800 text-left text-sm">
                 <thead>
                   <tr className="text-stone-400">
-                    <th className="px-3 py-3 font-extrabold uppercase">Atraccion</th>
+                    <th className="px-3 py-3 font-extrabold uppercase">Atracción</th>
                     <th className="px-3 py-3 font-extrabold uppercase">Fecha</th>
                     <th className="px-3 py-3 font-extrabold uppercase">Tecnicos</th>
                   </tr>
