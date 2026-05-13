@@ -39,6 +39,7 @@ const translatedMessages = {
   'Employee not found': 'No se ha encontrado el empleado solicitado.',
   'Offer not found': 'No se ha encontrado la oferta solicitada.',
   'Booking not found': 'No se ha encontrado la reserva solicitada.',
+  'Weather service unavailable': 'No se ha podido consultar el tiempo de Granada.',
   'Email already exists': 'Ya existe un registro con ese email.',
   'DNI already exists': 'Ya existe un registro con ese DNI.',
   'Hotel is full': 'El hotel seleccionado no tiene plazas disponibles.',

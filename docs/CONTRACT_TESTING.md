@@ -147,6 +147,7 @@ El frontend no debe depender de trazas internas, nombres de excepciones Java ni 
 | Reservas | `POST /api/bookings` | Compra con acompanantes y total calculado |
 | Reservas | `POST /api/bookings` | Error si el hotel esta completo |
 | Reservas | `POST /api/bookings` | Error si un menor viaja sin adulto |
+| Tiempo | `GET /api/weather/granada` | Payload actual de tiempo de Granada |
 | Dashboard | `GET /api/dashboard/tickets-by-age-range` | Metrica por rango de edad |
 | Dashboard | `GET /api/dashboard/current-year-revenue` | Recaudacion anual |
 | Dashboard | `GET /api/dashboard/top-hotels` | Top 3 hoteles por recaudacion |
@@ -202,6 +203,14 @@ Los tests deben cubrir que:
 - Se calcula el total ganado en el ano en curso.
 - Se obtienen los 3 hoteles que mas recaudan en el ano indicado.
 - Las metricas se calculan en backend y el frontend solo las muestra.
+
+### Tiempo
+
+Los tests deben cubrir que:
+
+- El endpoint `GET /api/weather/granada` devuelve `200 OK` cuando el proveedor responde.
+- La respuesta expone `city`, `temperatureCelsius`, `apparentTemperatureCelsius`, `condition`, `day` y `updatedAt`.
+- Si el proveedor externo falla, el backend responde con error controlado.
 
 ## 9. Campos criticos por response
 
