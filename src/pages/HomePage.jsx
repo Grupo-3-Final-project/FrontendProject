@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
@@ -9,6 +9,9 @@ import { getApiErrorMessage } from '../api/apiClient'
 import Button from '../components/ui/Button'
 import StatusMessage from '../components/ui/StatusMessage'
 import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
+
+const marqueeBaseDurationMs = 28000
+const marqueeItemDurationMs = 5000
 
 function HomePage() {
   const [catalog, setCatalog] = useState({
@@ -54,6 +57,7 @@ function HomePage() {
     }
   }, [])
 
+
   const liveOverview = useMemo(
     () => [
       {
@@ -71,6 +75,7 @@ function HomePage() {
     ],
     [catalog.attractions, catalog.hotels, catalog.offers],
   )
+
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
@@ -161,35 +166,7 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.attractions.length ? (
-              <div className="grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {catalog.attractions.map((attraction) => (
-                  <article
-                    key={attraction.id}
-                    className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950/85 shadow-2xl shadow-black/45 transition duration-300 hover:-translate-y-1 hover:border-red-700/70"
-                  >
-                    <div className="relative aspect-[5/4] overflow-hidden">
-                      <img
-                        src={attraction.imageUrl}
-                        alt={attraction.name}
-                        className="h-full w-full object-cover opacity-85 transition duration-500 group-hover:scale-105 group-hover:opacity-100"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent" />
-                    </div>
-                    <div className="flex flex-1 flex-col items-center p-4 text-center sm:p-5">
-                      <h3 className="text-xl font-black tracking-normal text-white sm:text-2xl">
-                        {attraction.name}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-neutral-400">
-                        {attraction.description}
-                      </p>
-                      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-                        <StatusPill status={attraction.status} />
-                        <InfoTag>{formatAttractionSize(attraction.size)}</InfoTag>
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <AttractionCoverflowCarousel attractions={catalog.attractions} />
             ) : (
               <StatusMessage
                 title="Sin atracciones"
@@ -214,34 +191,11 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.hotels.length ? (
-              <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-                {catalog.hotels.map((hotel) => (
-                  <article
-                    key={hotel.id}
-                    className="overflow-hidden rounded-2xl border border-white/10 bg-black/30 shadow-2xl shadow-black/45"
-                  >
-                    <img
-                      src={hotel.imageUrl}
-                      alt={hotel.name}
-                      className="aspect-[16/10] w-full object-cover"
-                    />
-                    <div className="space-y-4 p-5">
-                      <div>
-                        <h3 className="text-xl font-black text-white">{hotel.name}</h3>
-                        <p className="mt-2 text-sm leading-6 text-neutral-400">{hotel.description}</p>
-                      </div>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <InfoBox label="Habitaciones libres" value={`${hotel.availableRooms}/${hotel.totalRooms}`} />
-                        <InfoBox label="Plazas libres" value={`${hotel.availablePlaces}/${hotel.totalPlaces}`} />
-                      </div>
-                      <div className="grid gap-3 sm:grid-cols-2">
-                        <PriceBox label="Media pension" value={hotel.halfBoardPrice} />
-                        <PriceBox label="Pension completa" value={hotel.fullBoardPrice} />
-                      </div>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <AutoCarousel
+                items={catalog.hotels}
+                getItemKey={(hotel) => hotel.id}
+                renderItem={(hotel) => <HotelCard hotel={hotel} />}
+              />
             ) : (
               <StatusMessage
                 title="Sin hoteles"
@@ -266,33 +220,37 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.offers.length ? (
-              <div className="grid items-stretch gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
                 {catalog.offers.map((offer) => (
                   <article
                     key={offer.id}
-                    className="group relative min-h-40 overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45 sm:min-h-44"
+                    className="group relative min-h-[19rem] overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45"
                   >
                     <img
                       src={offer.imageUrl}
                       alt={offer.title}
                       className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-85"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/55 to-red-950/15" />
-                    <div className="relative flex min-h-40 flex-col justify-end p-4 sm:min-h-44 sm:p-5">
-                      <h3 className="text-xl font-black tracking-normal text-white">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-red-950/15" />
+                    <div className="relative flex min-h-[19rem] flex-col justify-end p-5 sm:p-6">
+                      <h3 className="line-clamp-2 text-2xl leading-tight font-black tracking-normal text-white">
                         {offer.title}
                       </h3>
-                      <p className="mt-2 text-sm leading-6 text-neutral-200/85">
+                      <p className="mt-3 line-clamp-2 max-w-[28rem] text-sm leading-6 text-neutral-200/85">
                         {offer.description}
                       </p>
-                      <div className="mt-3 flex flex-wrap gap-2 text-xs font-bold uppercase tracking-[0.12em] text-red-200">
-                        <span>{offer.hotelName}</span>
-                        <span>-</span>
-                        <span>{formatBoardType(offer.boardType)}</span>
-                        <span>-</span>
-                        <span>{offer.includedTickets} entradas</span>
+                      <div className="mt-4 flex flex-wrap gap-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-red-100">
+                        <span className="max-w-full truncate rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
+                          {offer.hotelName}
+                        </span>
+                        <span className="rounded-md border border-red-900/60 bg-red-950/35 px-2.5 py-1">
+                          {formatBoardType(offer.boardType)}
+                        </span>
+                        <span className="rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
+                          {offer.includedTickets} entradas
+                        </span>
                       </div>
-                      <p className="mt-3 text-3xl font-black tracking-normal text-red-500">
+                      <p className="mt-4 text-3xl font-black tracking-normal text-red-500">
                         {formatCurrency(offer.totalPrice)}
                       </p>
                     </div>
@@ -677,6 +635,244 @@ function renderLoadingOrError(isLoading, errorMessage) {
   }
 
   return null
+}
+
+function AttractionCoverflowCarousel({ attractions }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  useEffect(() => {
+    setActiveIndex(0)
+  }, [attractions.length])
+
+  useEffect(() => {
+    if (attractions.length <= 1) {
+      return undefined
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % attractions.length)
+    }, 4000)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [attractions.length])
+
+  const slides = getCoverflowSlides(attractions, activeIndex)
+
+  return (
+    <div className="relative mx-auto h-[34rem] max-w-7xl overflow-hidden py-5 sm:h-[38rem] lg:h-[42rem]">
+      <div className="absolute inset-x-12 top-1/2 h-48 -translate-y-1/2 rounded-full bg-red-950/10 blur-3xl" />
+      <div className="absolute inset-y-0 left-0 z-20 w-16 bg-gradient-to-r from-black via-black/80 to-transparent sm:w-24" />
+      <div className="absolute inset-y-0 right-0 z-20 w-16 bg-gradient-to-l from-black via-black/80 to-transparent sm:w-24" />
+      {slides.map(({ attraction, position }) => (
+        <AttractionCoverflowCard
+          key={attraction.id}
+          attraction={attraction}
+          position={position}
+        />
+      ))}
+    </div>
+  )
+}
+
+function getCoverflowSlides(attractions, activeIndex) {
+  if (attractions.length === 1) {
+    return [{ attraction: attractions[0], position: 'current' }]
+  }
+
+  if (attractions.length === 2) {
+    return [
+      { attraction: attractions[activeIndex], position: 'current' },
+      { attraction: attractions[(activeIndex + 1) % attractions.length], position: 'next' },
+    ]
+  }
+
+  return [
+    {
+      attraction: attractions[(activeIndex - 1 + attractions.length) % attractions.length],
+      position: 'previous',
+    },
+    {
+      attraction: attractions[activeIndex],
+      position: 'current',
+    },
+    {
+      attraction: attractions[(activeIndex + 1) % attractions.length],
+      position: 'next',
+    },
+  ]
+}
+
+function AttractionCoverflowCard({ attraction, position }) {
+  const isCurrent = position === 'current'
+  const positionClassName = {
+    previous:
+      'z-10 hidden w-[22rem] -translate-x-[140%] -translate-y-1/2 scale-[0.92] opacity-55 md:block lg:w-[28rem]',
+    current:
+      'z-30 w-[min(88vw,31rem)] -translate-x-1/2 -translate-y-1/2 scale-100 opacity-100 sm:w-[33rem] lg:w-[37rem]',
+    next:
+      'z-10 hidden w-[22rem] translate-x-[48%] -translate-y-1/2 scale-[0.92] opacity-55 md:block lg:w-[28rem]',
+  }[position]
+
+  const cardClassName = isCurrent
+    ? 'group relative flex h-[31rem] flex-col overflow-hidden rounded-[1.75rem] border border-red-950/60 bg-neutral-950 shadow-[0_0_34px_rgba(127,29,29,0.18)] transition-all duration-500 hover:scale-[1.015] hover:border-red-800/75 hover:shadow-[0_0_48px_rgba(185,28,28,0.28)] sm:h-[35rem] lg:h-[39rem]'
+    : 'relative flex h-[26rem] flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950 shadow-[0_0_24px_rgba(0,0,0,0.65)] transition-all duration-700 sm:h-[30rem]'
+
+  return (
+    <div className={`absolute top-1/2 left-1/2 transition-all duration-700 ease-in-out ${positionClassName}`}>
+      <article className={cardClassName}>
+        <img
+          src={attraction.imageUrl}
+          alt={attraction.name}
+          className={`h-full w-full object-cover transition duration-700 ${isCurrent ? 'opacity-90 group-hover:scale-[1.03] group-hover:opacity-95' : 'opacity-70 grayscale contrast-90'}`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
+
+        {isCurrent ? (
+          <GothicFrame />
+        ) : (
+          <div className="absolute inset-0 bg-black/25" />
+        )}
+
+        <div className={`absolute right-0 bottom-0 left-0 ${isCurrent ? 'p-6 sm:p-7' : 'p-5'}`}>
+          <h3 className={`${isCurrent ? 'text-3xl sm:text-4xl' : 'text-2xl'} line-clamp-2 leading-tight font-black tracking-normal ${isCurrent ? 'text-white' : 'text-neutral-100 drop-shadow-[0_0_18px_rgba(0,0,0,0.8)]'}`}>
+            {attraction.name}
+          </h3>
+          {isCurrent && (
+            <p className="mt-3 line-clamp-3 max-w-xl text-sm leading-6 text-neutral-300 sm:text-base">
+              {attraction.description}
+            </p>
+          )}
+          <div className={`${isCurrent ? 'mt-5' : 'mt-4'} flex flex-wrap items-center gap-2`}>
+            <StatusPill status={attraction.status} />
+            <InfoTag>{formatAttractionSize(attraction.size)}</InfoTag>
+          </div>
+        </div>
+      </article>
+    </div>
+  )
+}
+
+function GothicFrame() {
+  return (
+    <div className="pointer-events-none absolute inset-0 rounded-[1.75rem]">
+      <div className="absolute inset-2 rounded-[1.45rem] border border-red-950/50 shadow-[inset_0_0_24px_rgba(127,29,29,0.16)]" />
+      <div className="absolute inset-5 rounded-[1.1rem] border border-white/5" />
+      <div className="absolute top-5 left-1/2 h-16 w-28 -translate-x-1/2 rounded-t-full border-t border-red-900/55" />
+      <div className="absolute top-6 left-1/2 h-12 w-px -translate-x-1/2 bg-gradient-to-b from-red-900/55 to-transparent" />
+      <div className="absolute top-5 left-5 h-12 w-12 rounded-tl-2xl border-t border-l border-red-900/55" />
+      <div className="absolute top-5 right-5 h-12 w-12 rounded-tr-2xl border-t border-r border-red-900/55" />
+      <div className="absolute bottom-5 left-5 h-12 w-12 rounded-bl-2xl border-b border-l border-red-950/65" />
+      <div className="absolute right-5 bottom-5 h-12 w-12 rounded-br-2xl border-r border-b border-red-950/65" />
+      <div className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-red-950/25 to-transparent" />
+      <div className="absolute inset-x-10 top-9 h-px bg-gradient-to-r from-transparent via-red-900/55 to-transparent" />
+      <div className="absolute inset-x-10 bottom-9 h-px bg-gradient-to-r from-transparent via-red-950/55 to-transparent" />
+    </div>
+  )
+}
+
+function HotelCard({ hotel }) {
+  return (
+    <article className="flex h-full min-h-[30rem] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 shadow-2xl shadow-black/45">
+      <img
+        src={hotel.imageUrl}
+        alt={hotel.name}
+        className="h-52 w-full object-cover"
+      />
+      <div className="flex flex-1 flex-col space-y-4 p-5">
+        <div>
+          <h3 className="line-clamp-2 min-h-[3.5rem] text-xl leading-tight font-black text-white">{hotel.name}</h3>
+          <p className="mt-3 line-clamp-3 text-sm leading-6 text-neutral-400">{hotel.description}</p>
+        </div>
+        <div className="mt-auto grid gap-3">
+          <InfoBox label="Habitaciones libres" value={`${hotel.availableRooms}/${hotel.totalRooms}`} />
+          <InfoBox label="Plazas libres" value={`${hotel.availablePlaces}/${hotel.totalPlaces}`} />
+        </div>
+        <div className="grid gap-3">
+          <PriceBox label="Media pension" value={hotel.halfBoardPrice} />
+          <PriceBox label="Pension completa" value={hotel.fullBoardPrice} />
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function AutoCarousel({ items, getItemKey, renderItem }) {
+  const trackRef = useRef(null)
+  const carouselItems = useMemo(() => (items.length > 1 ? [...items, ...items] : items), [items])
+
+  useEffect(() => {
+    const track = trackRef.current
+
+    if (!track || items.length <= 1) {
+      return undefined
+    }
+
+    let animation
+    let frameId
+
+    const startAnimation = () => {
+      animation?.cancel()
+
+      const distance = track.scrollWidth / 2
+      const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+      if (!distance || prefersReducedMotion) {
+        return
+      }
+
+      animation = track.animate(
+        [
+          { transform: 'translate3d(0, 0, 0)' },
+          { transform: `translate3d(-${distance}px, 0, 0)` },
+        ],
+        {
+          duration: Math.max(marqueeBaseDurationMs, items.length * marqueeItemDurationMs),
+          iterations: Infinity,
+          easing: 'linear',
+        },
+      )
+    }
+
+    const scheduleAnimation = () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      frameId = window.requestAnimationFrame(startAnimation)
+    }
+
+    scheduleAnimation()
+    window.addEventListener('resize', scheduleAnimation)
+
+    return () => {
+      if (frameId) {
+        window.cancelAnimationFrame(frameId)
+      }
+
+      animation?.cancel()
+      window.removeEventListener('resize', scheduleAnimation)
+    }
+  }, [items.length])
+
+  return (
+    <div className="relative overflow-hidden py-1">
+      <div ref={trackRef} className="flex">
+        {carouselItems.map((item, index) => (
+          <div key={`${getItemKey(item)}-${index}`} className="w-[82vw] flex-none px-2.5 sm:w-1/2 xl:w-1/4">
+            {renderItem(item)}
+          </div>
+        ))}
+      </div>
+      {items.length > 1 && (
+        <>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-black via-black/80 to-transparent sm:w-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-black via-black/80 to-transparent sm:w-20" />
+        </>
+      )}
+    </div>
+  )
 }
 
 function scrollToSection(sectionId) {
