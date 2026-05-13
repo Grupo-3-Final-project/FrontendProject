@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { getOffers } from '../api/offerApi'
 import DashboardPage from './DashboardPage'
 
 vi.mock('../api/attractionApi', () => ({
@@ -47,7 +48,10 @@ vi.mock('../api/maintenanceApi', () => ({
 }))
 
 vi.mock('../api/offerApi', () => ({
+  createOffer: vi.fn(),
+  deleteOffer: vi.fn(),
   getOffers: vi.fn().mockResolvedValue([]),
+  updateOffer: vi.fn(),
 }))
 
 vi.mock('../api/shiftApi', () => ({
@@ -63,6 +67,10 @@ vi.mock('../api/userApi', () => ({
 }))
 
 describe('DashboardPage', () => {
+  afterEach(() => {
+    vi.mocked(getOffers).mockResolvedValue([])
+  })
+
   it('shows the internal dashboard without requiring login', async () => {
     render(
       <MemoryRouter initialEntries={['/dashboard?tab=overview']}>
@@ -70,11 +78,38 @@ describe('DashboardPage', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText('Dashboard interno')).toBeInTheDocument()
+    expect(screen.getByText('Panel interno')).toBeInTheDocument()
     expect(screen.queryByText('Acceso interno')).not.toBeInTheDocument()
 
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /Actualizar/i })).toBeInTheDocument()
+    })
+  })
+
+  it('shows edit and delete actions for offers', async () => {
+    vi.mocked(getOffers).mockResolvedValue([
+      {
+        id: 1,
+        title: 'Oferta Familiar Magic Park',
+        description: 'Hotel + entradas para 2 adultos y 2 ninos.',
+        hotelId: 1,
+        hotelName: 'Hotel Magic Park',
+        boardType: 'FULL_BOARD',
+        includedTickets: 4,
+        totalPrice: 399.99,
+        imageUrl: 'https://example.com/offer.jpg',
+      },
+    ])
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=offers']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Eliminar' })).toBeInTheDocument()
     })
   })
 })
