@@ -109,13 +109,6 @@ function HomePage() {
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
               <button
                 type="button"
-                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
-                onClick={() => scrollToSection('visita')}
-              >
-                Comprar entradas
-              </button>
-              <button
-                type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
               >
                 Ver trailer
@@ -480,10 +473,6 @@ function HomePage() {
                   </li>
                 </ul>
               </div>
-
-              <Link to="/dashboard?tab=bookings">
-                <Button className="w-full">Comprar entradas</Button>
-              </Link>
             </aside>
           </div>
         </div>
@@ -575,9 +564,6 @@ function HomePage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-200/85 sm:text-lg">
             La experiencia comienza antes de entrar. Atrevete a cruzarla.
           </p>
-          <Link to="/dashboard?tab=bookings">
-            <Button className="mt-8 sm:w-auto">Comprar entradas</Button>
-          </Link>
         </div>
       </section>
     </main>
