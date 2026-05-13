@@ -36,11 +36,11 @@ export function formatDateTime(value) {
 
 export function formatBoardType(value) {
   if (value === 'FULL_BOARD') {
-    return 'Pension completa'
+    return 'Pensión completa'
   }
 
   if (value === 'HALF_BOARD') {
-    return 'Media pension'
+    return 'Media pensión'
   }
 
   if (value === 'CHILD') {
@@ -60,7 +60,7 @@ export function formatBoardType(value) {
 
 export function formatAttractionSize(value) {
   if (value === 'SMALL') {
-    return 'Pequena'
+    return 'Pequeña'
   }
 
   if (value === 'MEDIUM') {
@@ -100,7 +100,7 @@ export function formatEmployeeType(value) {
   }
 
   if (value === 'TECHNICIAN') {
-    return 'Tecnico'
+    return 'Técnico'
   }
 
   return value ?? '-'
@@ -108,7 +108,7 @@ export function formatEmployeeType(value) {
 
 export function formatShiftLabel(value) {
   if (value === 'MORNING') {
-    return 'Manana'
+    return 'Mañana'
   }
 
   if (value === 'AFTERNOON') {

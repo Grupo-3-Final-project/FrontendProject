@@ -196,7 +196,7 @@ function DashboardPage() {
       ...current,
       [entityKey]: item.id,
     }))
-    setSectionMessage(entityKey, 'Edicion activa', 'Ya puedes modificar el formulario y guardar los cambios.', 'info')
+    setSectionMessage(entityKey, 'Edición activa', 'Ya puedes modificar el formulario y guardar los cambios.', 'info')
   }
 
   const reloadEntity = useCallback(async (entityKey) => {
@@ -224,13 +224,13 @@ function DashboardPage() {
         setSectionMessage(entityKey, 'Registro actualizado', 'Los cambios se han guardado correctamente.', 'success')
       } else {
         await entityServices[entityKey].create(payload)
-        setSectionMessage(entityKey, 'Registro creado', 'El nuevo elemento ya esta disponible en el listado.', 'success')
+        setSectionMessage(entityKey, 'Registro creado', 'El nuevo elemento ya está disponible en el listado.', 'success')
       }
 
       await reloadEntity(entityKey)
       resetEntityForm(entityKey)
     } catch (error) {
-      setSectionMessage(entityKey, 'Operacion rechazada', getApiErrorMessage(error), 'error')
+      setSectionMessage(entityKey, 'Operación rechazada', getApiErrorMessage(error), 'error')
     } finally {
       setSubmittingState((current) => ({
         ...current,
@@ -303,7 +303,7 @@ function DashboardPage() {
         ...current,
         shifts,
       }))
-      setSectionMessage('operations', 'Turnos generados', 'La planificacion se ha actualizado.', 'success')
+      setSectionMessage('operations', 'Turnos generados', 'La planificación se ha actualizado.', 'success')
     } catch (error) {
       setSectionMessage('operations', 'No se han podido generar turnos', getApiErrorMessage(error), 'error')
     }
@@ -330,7 +330,7 @@ function DashboardPage() {
       return (
         <StatusMessage
           title="Cargando panel"
-          message="Estamos cargando la informacion del panel."
+          message="Estamos cargando la información del panel."
           variant="info"
         />
       )
@@ -419,7 +419,7 @@ function DashboardPage() {
             {activeTabLabel}
           </h1>
           <p className="max-w-2xl text-sm leading-5 text-neutral-400">
-            Gestion interna para reservas, operaciones y administracion del parque.
+            Gestión interna para reservas, operaciones y administración del parque.
           </p>
         </div>
 

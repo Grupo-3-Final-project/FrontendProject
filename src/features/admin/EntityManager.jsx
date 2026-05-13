@@ -41,7 +41,7 @@ function EntityManager({
   }
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm('Esta accion eliminara el registro seleccionado. Deseas continuar?')
+    const confirmed = window.confirm('Esta acción eliminará el registro seleccionado. ¿Deseas continuar?')
 
     if (!confirmed) {
       return
@@ -205,7 +205,7 @@ function EntityManager({
               </Button>
               {editingId ? (
                 <Button onClick={() => onCancel(definition.key)} variant="secondary">
-                  Cancelar edicion
+                  Cancelar edición
                 </Button>
               ) : null}
             </div>
@@ -217,7 +217,7 @@ function EntityManager({
         {sortedItems.length === 0 ? (
           <StatusMessage
             title="Sin registros"
-            message="Todavia no hay datos para esta seccion."
+            message="Todavía no hay datos para esta sección."
             variant="empty"
           />
         ) : (
