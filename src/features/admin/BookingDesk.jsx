@@ -246,7 +246,7 @@ function BookingDesk({
                     value="custom"
                     onChange={() => setPurchaseMode('custom')}
                   />
-                  <span className="text-sm text-stone-400">Elegir hotel, pension y viajeros</span>
+                  <span className="text-sm text-stone-400">Elegir hotel, pensión y viajeros</span>
                 </div>
               </label>
             </div>
@@ -287,14 +287,14 @@ function BookingDesk({
                   </select>
                 </label>
                 <label className="block space-y-2">
-                  <span className="text-sm font-bold text-stone-200">Regimen</span>
+                  <span className="text-sm font-bold text-stone-200">Régimen</span>
                   <select
                     className={inputClasses}
                     value={boardType}
                     onChange={(event) => setBoardType(event.target.value)}
                   >
-                    <option value="HALF_BOARD">Media pension</option>
-                    <option value="FULL_BOARD">Pension completa</option>
+                    <option value="HALF_BOARD">Media pensión</option>
+                    <option value="FULL_BOARD">Pensión completa</option>
                   </select>
                 </label>
               </div>
@@ -407,7 +407,7 @@ function BookingDesk({
                 <div className="mt-1 text-base font-black text-stone-100">{bookingSummary.hotelName}</div>
               </div>
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Regimen</div>
+                <div className="text-xs font-bold uppercase text-stone-500">Régimen</div>
                 <div className="mt-1 text-base font-black text-stone-100">{formatBoardType(bookingSummary.boardType)}</div>
               </div>
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
@@ -497,7 +497,7 @@ function userFieldLabel(fieldName) {
     lastName: 'Apellidos',
     dni: 'DNI',
     email: 'Email',
-    phone: 'Telefono',
+    phone: 'Teléfono',
     birthDate: 'Fecha de nacimiento',
   }
 

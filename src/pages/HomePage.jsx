@@ -5,6 +5,7 @@ import parkMapImage from '../assets/home/publicHomeParkMap.png'
 import { getAttractions } from '../api/attractionApi'
 import { getHotels } from '../api/hotelApi'
 import { getOffers } from '../api/offerApi'
+import { getGranadaWeather } from '../api/weatherApi'
 import { getApiErrorMessage } from '../api/apiClient'
 import Button from '../components/ui/Button'
 import StatusMessage from '../components/ui/StatusMessage'
@@ -18,6 +19,7 @@ function HomePage() {
   })
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
 
   useEffect(() => {
     let isMounted = true
@@ -27,14 +29,28 @@ function HomePage() {
       setErrorMessage('')
 
       try {
-        const [attractions, hotels, offers] = await Promise.all([
-          getAttractions(),
-          getHotels(),
-          getOffers(),
+        const [catalogResult, weatherResult] = await Promise.allSettled([
+          Promise.all([
+            getAttractions(),
+            getHotels(),
+            getOffers(),
+          ]),
+          getGranadaWeather(),
         ])
 
         if (isMounted) {
-          setCatalog({ attractions, hotels, offers })
+          if (catalogResult.status === 'fulfilled') {
+            const [attractions, hotels, offers] = catalogResult.value
+            setCatalog({ attractions, hotels, offers })
+          } else {
+            setErrorMessage(getApiErrorMessage(catalogResult.reason, 'No se ha podido cargar la home.'))
+          }
+
+          if (weatherResult.status === 'fulfilled') {
+            setWeatherLabel(`Granada - ${Math.round(weatherResult.value.temperatureCelsius)} C`)
+          } else {
+            setWeatherLabel('Granada - Sin datos')
+          }
         }
       } catch (error) {
         if (isMounted) {
@@ -89,7 +105,7 @@ function HomePage() {
         <div className="mr-auto ml-0 grid min-h-[calc(100svh-6.75rem)] w-full max-w-[1160px] items-center gap-4 py-2 sm:py-4 lg:min-h-[572px] lg:grid-cols-[minmax(0,1fr)_196px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_208px]">
           <div className="max-w-[39rem] pt-0 lg:-mt-2">
             <span className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/45 px-3.5 py-2 text-sm font-semibold text-neutral-100 shadow-xl shadow-black/30 backdrop-blur">
-              Granada - 18 C
+              {weatherLabel}
             </span>
 
             <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.26em] text-red-500 sm:text-sm">
@@ -107,13 +123,6 @@ function HomePage() {
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
-              <button
-                type="button"
-                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
-                onClick={() => scrollToSection('visita')}
-              >
-                Comprar entradas
-              </button>
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -480,10 +489,6 @@ function HomePage() {
                   </li>
                 </ul>
               </div>
-
-              <Link to="/dashboard?tab=bookings">
-                <Button className="w-full">Comprar entradas</Button>
-              </Link>
             </aside>
           </div>
         </div>
@@ -575,9 +580,6 @@ function HomePage() {
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-200/85 sm:text-lg">
             La experiencia comienza antes de entrar. Atrevete a cruzarla.
           </p>
-          <Link to="/dashboard?tab=bookings">
-            <Button className="mt-8 sm:w-auto">Comprar entradas</Button>
-          </Link>
         </div>
       </section>
     </main>

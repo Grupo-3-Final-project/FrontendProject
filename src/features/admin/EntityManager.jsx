@@ -25,6 +25,9 @@ function EntityManager({
   const [selectedFiles, setSelectedFiles] = useState({})
   const [uploadingField, setUploadingField] = useState('')
 
+  const canEdit = definition.canEdit !== false
+  const canDelete = definition.canDelete !== false
+  const hasActions = canEdit || canDelete
   const formTitle = editingId ? 'Editar registro' : 'Nuevo registro'
   const sortedItems = useMemo(() => items ?? [], [items])
 
@@ -38,7 +41,7 @@ function EntityManager({
   }
 
   const handleDelete = async (id) => {
-    const confirmed = window.confirm('Esta accion eliminara el registro seleccionado. Deseas continuar?')
+    const confirmed = window.confirm('Esta acción eliminará el registro seleccionado. ¿Deseas continuar?')
 
     if (!confirmed) {
       return
@@ -202,7 +205,7 @@ function EntityManager({
               </Button>
               {editingId ? (
                 <Button onClick={() => onCancel(definition.key)} variant="secondary">
-                  Cancelar edicion
+                  Cancelar edición
                 </Button>
               ) : null}
             </div>
@@ -214,7 +217,7 @@ function EntityManager({
         {sortedItems.length === 0 ? (
           <StatusMessage
             title="Sin registros"
-            message="Todavia no hay datos para esta seccion."
+            message="Todavía no hay datos para esta sección."
             variant="empty"
           />
         ) : (
@@ -227,7 +230,9 @@ function EntityManager({
                       {column.label}
                     </th>
                   ))}
-                  <th className="px-3 py-3 font-extrabold uppercase">Acciones</th>
+                  {hasActions ? (
+                    <th className="px-3 py-3 font-extrabold uppercase">Acciones</th>
+                  ) : null}
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-900">
@@ -238,16 +243,22 @@ function EntityManager({
                         {column.render ? column.render(item) : item[column.key]}
                       </td>
                     ))}
-                    <td className="px-3 py-3">
-                      <div className="flex flex-wrap gap-2">
-                        <Button onClick={() => onEdit(definition.key, item)} variant="secondary">
-                          Editar
-                        </Button>
-                        <Button onClick={() => handleDelete(item.id)} variant="danger">
-                          Eliminar
-                        </Button>
-                      </div>
-                    </td>
+                    {hasActions ? (
+                      <td className="px-3 py-3">
+                        <div className="flex flex-wrap gap-2">
+                          {canEdit ? (
+                            <Button onClick={() => onEdit(definition.key, item)} variant="secondary">
+                              Editar
+                            </Button>
+                          ) : null}
+                          {canDelete ? (
+                            <Button onClick={() => handleDelete(item.id)} variant="danger">
+                              Eliminar
+                            </Button>
+                          ) : null}
+                        </div>
+                      </td>
+                    ) : null}
                   </tr>
                 ))}
               </tbody>

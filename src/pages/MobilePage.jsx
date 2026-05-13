@@ -157,8 +157,8 @@ function MobilePage() {
       : 'Ya no quedan atracciones pendientes en este dispositivo.'
 
   return (
-    <main className="flex flex-1 bg-black px-2.5 py-3">
-      <section className="flex w-full flex-col gap-2.5">
+    <main className="flex min-h-0 flex-1 overflow-y-auto bg-black px-2.5 py-3">
+      <section className="flex min-h-full w-full flex-col gap-2.5">
         {pageError ? (
           <StatusMessage
             title="No se ha podido abrir la experiencia movil"
@@ -193,7 +193,7 @@ function MobilePage() {
 
         {!isLoading && !pageError && mobileAccess ? (
           <>
-            <div className="flex gap-2 overflow-x-auto pb-0.5">
+            <div className="flex shrink-0 gap-2 overflow-x-auto pb-0.5">
               {statusChips.map((chip) => (
                 <StatusChip key={chip.id} {...chip} />
               ))}

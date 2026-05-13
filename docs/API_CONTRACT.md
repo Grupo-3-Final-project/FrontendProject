@@ -656,6 +656,50 @@ Response `201 Created`:
 }
 ```
 
+### PUT /api/offers/{id}
+
+Actualiza una oferta existente.
+
+Request:
+
+```json
+{
+  "title": "Oferta Familiar Premium",
+  "description": "Hotel + entradas para 2 adultos y 2 ninos con mejoras.",
+  "hotelId": 1,
+  "boardType": "HALF_BOARD",
+  "includedTickets": 5,
+  "totalPrice": 449.99,
+  "imageUrl": "https://example.com/offer-premium.jpg"
+}
+```
+
+Response `200 OK`:
+
+```json
+{
+  "id": 1,
+  "title": "Oferta Familiar Premium",
+  "description": "Hotel + entradas para 2 adultos y 2 ninos con mejoras.",
+  "hotelId": 1,
+  "hotelName": "Hotel Magic Park",
+  "boardType": "HALF_BOARD",
+  "includedTickets": 5,
+  "totalPrice": 449.99,
+  "imageUrl": "https://example.com/offer-premium.jpg"
+}
+```
+
+### DELETE /api/offers/{id}
+
+Elimina una oferta.
+
+Response:
+
+```text
+204 No Content
+```
+
 ## 8. Compra y reserva
 
 Este contrato es critico porque conecta varios criterios de aceptacion.
@@ -1108,7 +1152,34 @@ Response `200 OK`:
 }
 ```
 
-## 12. Imagenes con Cloudinary
+## 12. Tiempo en Granada
+
+Endpoint publico para consultar el tiempo actual de Granada, usado en la home publica y en la experiencia movil del visitante.
+
+### GET /api/weather/granada
+
+Devuelve el tiempo actual de Granada consultado contra el proveedor meteorologico externo.
+
+Response `200 OK`:
+
+```json
+{
+  "city": "Granada",
+  "temperatureCelsius": 24.5,
+  "apparentTemperatureCelsius": 26.0,
+  "condition": "Poco nuboso",
+  "day": true,
+  "updatedAt": "2026-05-13T14:30:00"
+}
+```
+
+Errores posibles:
+
+- `500 Internal Server Error`: `Weather service unavailable`
+
+No requiere autenticacion.
+
+## 13. Imagenes con Cloudinary
 
 Este endpoint puede usarse para subir imagenes de hoteles, atracciones, ofertas o empleados.
 
@@ -1138,7 +1209,7 @@ Errores posibles:
 - `400 Bad Request`: `Invalid image file`
 - `500 Internal Server Error`: `Image upload failed`
 
-## 13. Swagger/OpenAPI
+## 14. Swagger/OpenAPI
 
 El backend debe exponer Swagger/OpenAPI y debe reflejar este contrato.
 

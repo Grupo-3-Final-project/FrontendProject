@@ -18,12 +18,12 @@ const mobileNavigationItems = [
 
 function MobileLayout() {
   return (
-    <div className="min-h-screen bg-black text-neutral-100">
-      <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col border-x border-white/10 bg-[linear-gradient(180deg,#111_0%,#050505_100%)] shadow-2xl max-[430px]:border-x-0">
+    <div className="h-dvh min-h-dvh overflow-hidden bg-black text-neutral-100">
+      <div className="mx-auto flex h-full min-h-0 w-full max-w-[430px] flex-col border-x border-white/10 bg-[linear-gradient(180deg,#111_0%,#050505_100%)] shadow-2xl max-[430px]:border-x-0">
         <MobileTopBar />
         <Outlet />
         <nav
-          className="mt-auto grid min-h-[62px] grid-cols-5 items-stretch border-t border-white/10 bg-neutral-950/95 px-1 text-center text-[0.64rem] text-neutral-500 shadow-[0_-18px_40px_rgba(0,0,0,0.35)]"
+          className="mt-auto grid min-h-[62px] shrink-0 grid-cols-5 items-stretch border-t border-white/10 bg-neutral-950/95 px-1 text-center text-[0.64rem] text-neutral-500 shadow-[0_-18px_40px_rgba(0,0,0,0.35)]"
           aria-label="Navegacion movil"
         >
           {mobileNavigationItems.map((item) => {

@@ -1,26 +1,9 @@
 import {
-  HiOutlineCloud,
   HiOutlineEye,
   HiOutlineMinus,
   HiOutlinePlus,
   HiOutlineSquare3Stack3D,
-  HiOutlineUserGroup,
 } from 'react-icons/hi2'
-
-export const statusChips = [
-  {
-    id: 'weather',
-    label: '18 C Parcialmente nublado',
-    icon: HiOutlineCloud,
-    variant: 'default',
-  },
-  {
-    id: 'crowd',
-    label: 'Afluencia: Alta',
-    icon: HiOutlineUserGroup,
-    variant: 'danger',
-  },
-]
 
 export const mapControls = [
   { id: 'zoom-in', label: 'Acercar mapa', icon: HiOutlinePlus },
