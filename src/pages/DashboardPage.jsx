@@ -406,28 +406,24 @@ function DashboardPage() {
     summary,
   ])
 
+  const activeTabLabel = dashboardTabs.find((tab) => tab.key === activeTab)?.label ?? 'Panel interno'
+
   return (
-    <main className="min-w-0 space-y-5">
-      <header className="flex flex-col gap-4 rounded-2xl border border-red-900/40 bg-black/15 px-5 py-5 shadow-[0_18px_48px_rgba(0,0,0,0.24)] md:flex-row md:items-start md:justify-between">
-        <div className="space-y-2">
-          <p className="text-xs font-semibold tracking-[0.22em] text-red-300/80 uppercase">
+    <main className="min-w-0 space-y-4">
+      <header className="flex flex-col gap-3 border-b border-red-900/35 bg-black/5 pb-4 md:flex-row md:items-center md:justify-between">
+        <div className="space-y-1">
+          <p className="text-[0.68rem] font-semibold tracking-[0.22em] text-red-400/80 uppercase">
             Panel interno
           </p>
-          <h1 className="text-[clamp(2rem,3vw,2.8rem)] leading-[1.04] text-neutral-100">
-            {activeTab === 'overview'
-              ? 'Dashboard interno'
-              : activeTab === 'bookings'
-                ? 'Taquilla'
-                : activeTab === 'operations'
-                  ? 'Operaciones'
-                  : entityDefinitions[activeTab]?.title ?? 'Panel interno'}
+          <h1 className="text-2xl leading-tight font-black text-neutral-100 md:text-3xl">
+            {activeTabLabel}
           </h1>
-          <p className="max-w-3xl text-[0.98rem] leading-6 text-neutral-300">
+          <p className="max-w-2xl text-sm leading-5 text-neutral-400">
             Gestion interna para reservas, operaciones y administracion del parque.
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex shrink-0 flex-wrap items-center gap-3">
           <Button disabled={isRefreshing} onClick={() => void refreshAdminData('refresh')} variant="secondary">
             <RefreshCw className="h-4 w-4" />
             {isRefreshing ? 'Actualizando...' : 'Actualizar'}
