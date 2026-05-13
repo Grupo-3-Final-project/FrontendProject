@@ -191,11 +191,7 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.hotels.length ? (
-              <AutoCarousel
-                items={catalog.hotels}
-                getItemKey={(hotel) => hotel.id}
-                renderItem={(hotel) => <HotelCard hotel={hotel} />}
-              />
+              <HotelEditorialCarousel hotels={catalog.hotels} />
             ) : (
               <StatusMessage
                 title="Sin hoteles"
@@ -672,6 +668,119 @@ function AttractionCoverflowCarousel({ attractions }) {
           position={position}
         />
       ))}
+    </div>
+  )
+}
+
+function HotelEditorialCarousel({ hotels }) {
+  const [activeHotelIndex, setActiveHotelIndex] = useState(0)
+
+  useEffect(() => {
+    setActiveHotelIndex(0)
+  }, [hotels.length])
+
+  useEffect(() => {
+    if (hotels.length <= 1) {
+      return undefined
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveHotelIndex((currentIndex) => (currentIndex + 1) % hotels.length)
+    }, 4000)
+
+    return () => {
+      window.clearInterval(intervalId)
+    }
+  }, [hotels.length])
+
+  const slides = getHotelSpotlightSlides(hotels, activeHotelIndex)
+  const currentHotel = slides[0]?.hotel
+  const previewHotels = slides.slice(1)
+
+  return (
+    <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-black/50 shadow-2xl shadow-black/50">
+      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-red-950/20 to-transparent" />
+      <div className="relative grid gap-5 p-4 sm:p-6 lg:grid-cols-[1.8fr_minmax(18rem,28rem)] lg:gap-6 xl:p-8">
+        <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-neutral-950/80 shadow-[0_0_28px_rgba(0,0,0,0.35)]">
+          <img
+            src={currentHotel.imageUrl}
+            alt={currentHotel.name}
+            className="h-72 w-full object-cover sm:h-[28rem]"
+          />
+          <div className="p-6 sm:p-7">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-400">Hotel destacado</p>
+            <h3 className="mt-4 text-3xl font-black tracking-tight text-white">{currentHotel.name}</h3>
+            <p className="mt-4 line-clamp-3 text-sm leading-6 text-neutral-300">{currentHotel.description}</p>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <SpotlightChip label="Habitaciones libres" value={`${currentHotel.availableRooms}/${currentHotel.totalRooms}`} />
+              <SpotlightChip label="Plazas libres" value={`${currentHotel.availablePlaces}/${currentHotel.totalPlaces}`} />
+              <SpotlightChip label="Media pensión" value={formatCurrency(currentHotel.halfBoardPrice)} />
+              <SpotlightChip label="Pensión completa" value={formatCurrency(currentHotel.fullBoardPrice)} />
+            </div>
+          </div>
+        </div>
+
+        <div className="grid gap-4">
+          {previewHotels.map(({ hotel }, index) => (
+            <div key={hotel.id} className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950/75 shadow-[0_0_20px_rgba(0,0,0,0.3)]">
+              <div className="relative h-36 overflow-hidden">
+                <img
+                  src={hotel.imageUrl}
+                  alt={hotel.name}
+                  className="h-full w-full object-cover grayscale contrast-90 opacity-80"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+              </div>
+              <div className="p-4 sm:p-5">
+                <h4 className="text-lg font-black text-white line-clamp-2">{hotel.name}</h4>
+                <p className="mt-2 line-clamp-2 text-sm leading-6 text-neutral-400">{hotel.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-neutral-200">
+                    Desde {formatCurrency(hotel.halfBoardPrice)}
+                  </span>
+                  <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-neutral-200">
+                    {hotel.availablePlaces} libres
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function getHotelSpotlightSlides(hotels, activeIndex) {
+  if (hotels.length === 1) {
+    return [{ hotel: hotels[0] }]
+  }
+
+  if (hotels.length === 2) {
+    return [
+      { hotel: hotels[activeIndex] },
+      { hotel: hotels[(activeIndex + 1) % hotels.length] },
+    ]
+  }
+
+  return [
+    {
+      hotel: hotels[activeIndex],
+    },
+    {
+      hotel: hotels[(activeIndex + 1) % hotels.length],
+    },
+    {
+      hotel: hotels[(activeIndex + 2) % hotels.length],
+    },
+  ]
+}
+
+function SpotlightChip({ label, value }) {
+  return (
+    <div className="rounded-2xl border border-white/10 bg-black/30 px-4 py-3">
+      <p className="text-[0.62rem] uppercase tracking-[0.18em] text-neutral-400">{label}</p>
+      <p className="mt-1 text-sm font-black text-white">{value}</p>
     </div>
   )
 }
