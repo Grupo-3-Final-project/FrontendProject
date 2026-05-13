@@ -50,6 +50,17 @@ vi.mock('../api/offerApi', () => ({
   ]),
 }))
 
+vi.mock('../api/weatherApi', () => ({
+  getGranadaWeather: vi.fn().mockResolvedValue({
+    city: 'Granada',
+    temperatureCelsius: 23.6,
+    apparentTemperatureCelsius: 24.2,
+    condition: 'Despejado',
+    day: true,
+    updatedAt: '2026-05-13T14:30:00',
+  }),
+}))
+
 describe('HomePage', () => {
   it('renders live catalog data from backend services', async () => {
     render(
@@ -64,6 +75,7 @@ describe('HomePage', () => {
       expect(screen.getByText('Dragon Coaster')).toBeInTheDocument()
       expect(screen.getAllByText('Hotel Magic Park').length).toBeGreaterThan(0)
       expect(screen.getByText('Pack familiar')).toBeInTheDocument()
+      expect(screen.getByText('Granada - 24 C')).toBeInTheDocument()
     })
   })
 })

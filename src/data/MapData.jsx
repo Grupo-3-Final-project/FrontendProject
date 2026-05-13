@@ -1,5 +1,4 @@
 import {
-  HiOutlineCloud,
   HiOutlineEye,
   HiOutlineMinus,
   HiOutlinePlus,
@@ -11,12 +10,6 @@ import terrorTower from "../assets/home/attractionTerrorTower.png";
 import darkLabyrinth from "../assets/home/attractionDarkLabyrinth.png";
 import bloodRiver from "../assets/home/attractionBloodRiver.png";
 export const statusChips = [
-  {
-    id: "weather",
-    label: "18 C Parcialmente nublado",
-    icon: HiOutlineCloud,
-    variant: "default",
-  },
   {
     id: "crowd",
     label: "Afluencia: Alta",
