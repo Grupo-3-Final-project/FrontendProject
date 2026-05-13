@@ -247,8 +247,6 @@ export const entityDefinitions = {
     key: 'offers',
     title: 'Ofertas',
     description: 'Crea packs comerciales con hotel, pension, entradas e imagen.',
-    canEdit: false,
-    canDelete: false,
     emptyForm: {
       title: '',
       description: '',

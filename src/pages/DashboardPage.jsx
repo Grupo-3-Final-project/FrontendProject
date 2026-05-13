@@ -8,7 +8,7 @@ import { createEmployee, deleteEmployee, getEmployees, updateEmployee } from '..
 import { createHotel, deleteHotel, getHotels, updateHotel } from '../api/hotelApi'
 import { uploadImage } from '../api/imageApi'
 import { generateMaintenanceTasks, getMaintenanceTasks } from '../api/maintenanceApi'
-import { createOffer, getOffers } from '../api/offerApi'
+import { createOffer, deleteOffer, getOffers, updateOffer } from '../api/offerApi'
 import { generateShifts, getShifts } from '../api/shiftApi'
 import { getApiErrorMessage } from '../api/apiClient'
 import { createUser, deleteUser, getUsers, updateUser } from '../api/userApi'
@@ -44,6 +44,8 @@ const entityServices = {
   offers: {
     load: getOffers,
     create: createOffer,
+    update: updateOffer,
+    remove: deleteOffer,
   },
   employees: {
     load: getEmployees,
