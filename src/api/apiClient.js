@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { clearInternalSession, getInternalToken } from '../features/auth/internalAuth'
 
 const defaultBaseUrl = 'http://localhost:8080'
 const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL ?? defaultBaseUrl
@@ -16,12 +17,27 @@ apiClient.interceptors.request.use((config) => {
     config.headers['Content-Type'] = 'application/json'
   }
 
+  if (config.skipAuth !== true) {
+    const token = getInternalToken()
+
+    if (token) {
+      config.headers = config.headers ?? {}
+      config.headers.Authorization = `Bearer ${token}`
+    }
+  }
+
   return config
 })
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error),
+  (error) => {
+    if (error?.response?.status === 401) {
+      clearInternalSession()
+    }
+
+    return Promise.reject(error)
+  },
 )
 
 const translatedMessages = {

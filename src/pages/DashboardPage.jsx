@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { RefreshCw } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import { createAttraction, deleteAttraction, getAttractions, updateAttraction } from '../api/attractionApi'
@@ -260,7 +260,7 @@ function DashboardPage() {
     try {
       return await uploadImage(file, folder)
     } catch (error) {
-      throw new Error(getApiErrorMessage(error, 'No se ha podido subir la imagen.'))
+      throw new Error(getApiErrorMessage(error, 'No se ha podido subir la imagen.'), { cause: error })
     }
   }
 
@@ -327,7 +327,7 @@ function DashboardPage() {
 
   const activeEntityDefinition = entityDefinitions[activeTab]
 
-  const renderContent = useMemo(() => {
+  const renderContent = (() => {
     if (isLoading) {
       return (
         <StatusMessage
@@ -390,23 +390,7 @@ function DashboardPage() {
         shifts={resources.shifts}
       />
     )
-  }, [
-    activeEntityDefinition,
-    activeTab,
-    editingIds,
-    forms,
-    handleBookingCreate,
-    handleBookingUserCreate,
-    handleGenerateMaintenance,
-    handleGenerateShifts,
-    isLoading,
-    reloadEntity,
-    resetEntityForm,
-    resources,
-    sectionMessages,
-    submittingState,
-    summary,
-  ])
+  })()
 
   const activeTabLabel = dashboardTabs.find((tab) => tab.key === activeTab)?.label ?? 'Panel interno'
 

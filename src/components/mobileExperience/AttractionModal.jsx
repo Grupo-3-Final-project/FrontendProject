@@ -18,7 +18,6 @@ function AttractionModal({ attraction, onClose }) {
     description,
     image,
     info = {},
-    location,
     minHeight,
     name,
     type,

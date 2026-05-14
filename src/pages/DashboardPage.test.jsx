@@ -71,7 +71,7 @@ describe('DashboardPage', () => {
     vi.mocked(getOffers).mockResolvedValue([])
   })
 
-  it('shows the internal dashboard without requiring login', async () => {
+  it('renders the internal dashboard content once the route is authenticated', async () => {
     render(
       <MemoryRouter initialEntries={['/dashboard?tab=overview']}>
         <DashboardPage />
@@ -79,8 +79,6 @@ describe('DashboardPage', () => {
     )
 
     expect(screen.getByText('Panel interno')).toBeInTheDocument()
-    expect(screen.queryByText('Acceso interno')).not.toBeInTheDocument()
-
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /Actualizar/i })).toBeInTheDocument()
     })

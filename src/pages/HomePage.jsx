@@ -1,5 +1,4 @@
 ﻿import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
 import { getAttractions } from '../api/attractionApi'
@@ -7,7 +6,6 @@ import { getHotels } from '../api/hotelApi'
 import { getOffers } from '../api/offerApi'
 import { getGranadaWeather } from '../api/weatherApi'
 import { getApiErrorMessage } from '../api/apiClient'
-import Button from '../components/ui/Button'
 import StatusMessage from '../components/ui/StatusMessage'
 import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
 
