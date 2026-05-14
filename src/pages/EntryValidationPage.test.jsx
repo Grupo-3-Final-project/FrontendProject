@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { validateEntry } from '../api/ticketApi'
 import EntryValidationPage from './EntryValidationPage'
@@ -12,7 +12,7 @@ describe('EntryValidationPage', () => {
     vi.restoreAllMocks()
   })
 
-  it('shows the validated ticket data when the QR entry token is accepted', async () => {
+  it('does not consume the ticket until the validation button is pressed', async () => {
     validateEntry.mockResolvedValue({
       ticketId: 19,
       bookingId: 10,
@@ -30,8 +30,14 @@ describe('EntryValidationPage', () => {
       </MemoryRouter>,
     )
 
+    expect(screen.getByText('Entrada lista para validar')).toBeInTheDocument()
+    expect(validateEntry).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Validar entrada' }))
+
     expect(await screen.findByText('Entrada validada')).toBeInTheDocument()
     expect(screen.getByText('Visitante Mvp')).toBeInTheDocument()
     expect(screen.getByText('#10')).toBeInTheDocument()
+    expect(validateEntry).toHaveBeenCalledWith('entry-token-1')
   })
 })

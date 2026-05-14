@@ -11,16 +11,18 @@ function EntryValidationPage() {
   const { entryToken } = useParams()
   const [validationResult, setValidationResult] = useState(null)
   const [pageError, setPageError] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
+  const [hasStartedValidation, setHasStartedValidation] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
 
-  const runValidation = useCallback(async (mode = 'load') => {
+  const runValidation = useCallback(async (mode = 'validate') => {
     if (!entryToken) {
-      setIsLoading(false)
       return
     }
 
-    if (mode === 'load') {
+    setHasStartedValidation(true)
+
+    if (mode === 'validate') {
       setIsLoading(true)
     } else {
       setIsRefreshing(true)
@@ -40,8 +42,12 @@ function EntryValidationPage() {
   }, [entryToken])
 
   useEffect(() => {
-    void runValidation()
-  }, [runValidation])
+    setValidationResult(null)
+    setPageError('')
+    setHasStartedValidation(false)
+    setIsLoading(false)
+    setIsRefreshing(false)
+  }, [entryToken])
 
   return (
     <main className="flex flex-1 bg-black px-2.5 py-3">
@@ -54,6 +60,14 @@ function EntryValidationPage() {
           />
         ) : null}
 
+        {!hasStartedValidation && entryToken ? (
+          <StatusMessage
+            title="Entrada lista para validar"
+            message="Abre esta pantalla en el control de acceso y pulsa el boton para registrar la entrada."
+            variant="info"
+          />
+        ) : null}
+
         {isLoading ? (
           <StatusMessage
             title="Validando entrada"
@@ -62,7 +76,7 @@ function EntryValidationPage() {
           />
         ) : null}
 
-        {!isLoading && pageError ? (
+        {!isLoading && hasStartedValidation && pageError ? (
           <StatusMessage
             title="No se ha podido validar la entrada"
             message={pageError}
@@ -127,12 +141,20 @@ function EntryValidationPage() {
           </>
         ) : null}
 
-        {!isLoading && entryToken ? (
+        {entryToken ? (
           <PrimaryCTA
             icon={HiOutlineArrowPath}
-            label={isRefreshing ? 'Reintentando validacion' : 'Reintentar validacion'}
-            disabled={isRefreshing}
-            onClick={() => void runValidation('refresh')}
+            label={
+              isLoading
+                ? 'Validando entrada'
+                : isRefreshing
+                  ? 'Reintentando validacion'
+                  : hasStartedValidation
+                    ? 'Reintentar validacion'
+                    : 'Validar entrada'
+            }
+            disabled={isLoading || isRefreshing}
+            onClick={() => void runValidation(hasStartedValidation ? 'refresh' : 'validate')}
           />
         ) : null}
       </section>

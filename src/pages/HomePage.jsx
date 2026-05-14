@@ -124,8 +124,9 @@ function HomePage() {
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={() => scrollToSection('atracciones')}
               >
-                Ver trailer
+                Ver atracciones
               </button>
             </div>
           </div>
