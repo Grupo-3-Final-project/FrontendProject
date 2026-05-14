@@ -1,17 +1,13 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+﻿import { useEffect, useMemo, useState } from 'react'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
 import { getAttractions } from '../api/attractionApi'
 import { getHotels } from '../api/hotelApi'
 import { getOffers } from '../api/offerApi'
+import { getGranadaWeather } from '../api/weatherApi'
 import { getApiErrorMessage } from '../api/apiClient'
-import Button from '../components/ui/Button'
 import StatusMessage from '../components/ui/StatusMessage'
 import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
-
-const marqueeBaseDurationMs = 28000
-const marqueeItemDurationMs = 5000
 
 function HomePage() {
   const [catalog, setCatalog] = useState({
@@ -21,6 +17,7 @@ function HomePage() {
   })
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
+  const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
 
   useEffect(() => {
     let isMounted = true
@@ -30,14 +27,28 @@ function HomePage() {
       setErrorMessage('')
 
       try {
-        const [attractions, hotels, offers] = await Promise.all([
-          getAttractions(),
-          getHotels(),
-          getOffers(),
+        const [catalogResult, weatherResult] = await Promise.allSettled([
+          Promise.all([
+            getAttractions(),
+            getHotels(),
+            getOffers(),
+          ]),
+          getGranadaWeather(),
         ])
 
         if (isMounted) {
-          setCatalog({ attractions, hotels, offers })
+          if (catalogResult.status === 'fulfilled') {
+            const [attractions, hotels, offers] = catalogResult.value
+            setCatalog({ attractions, hotels, offers })
+          } else {
+            setErrorMessage(getApiErrorMessage(catalogResult.reason, 'No se ha podido cargar la home.'))
+          }
+
+          if (weatherResult.status === 'fulfilled') {
+            setWeatherLabel(`Granada - ${Math.round(weatherResult.value.temperatureCelsius)} C`)
+          } else {
+            setWeatherLabel('Granada - Sin datos')
+          }
         }
       } catch (error) {
         if (isMounted) {
@@ -94,7 +105,7 @@ function HomePage() {
         <div className="mr-auto ml-0 grid min-h-[calc(100svh-6.75rem)] w-full max-w-[1160px] items-center gap-4 py-2 sm:py-4 lg:min-h-[572px] lg:grid-cols-[minmax(0,1fr)_196px] lg:py-0 xl:grid-cols-[minmax(0,1fr)_208px]">
           <div className="max-w-[39rem] pt-0 lg:-mt-2">
             <span className="inline-flex items-center gap-2 rounded-md border border-white/20 bg-black/45 px-3.5 py-2 text-sm font-semibold text-neutral-100 shadow-xl shadow-black/30 backdrop-blur">
-              Granada - 18 C
+              {weatherLabel}
             </span>
 
             <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.26em] text-red-500 sm:text-sm">
@@ -115,8 +126,9 @@ function HomePage() {
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={() => scrollToSection('atracciones')}
               >
-                Ver trailer
+                Ver atracciones
               </button>
             </div>
           </div>
@@ -542,25 +554,12 @@ function SectionHeader({ eyebrow, title, description }) {
   )
 }
 
-function InfoBox({ label, value }) {
-  return (
-    <div className="rounded-xl border border-white/10 bg-black/20 px-4 py-3">
-      <div className="text-xs font-bold uppercase tracking-[0.12em] text-neutral-500">{label}</div>
-      <div className="mt-2 text-sm font-bold text-white">{value}</div>
-    </div>
-  )
-}
-
 function InfoTag({ children }) {
   return (
     <span className="inline-flex rounded-md border border-white/10 bg-white/5 px-3 py-1 text-xs font-extrabold tracking-[0.14em] text-neutral-200 uppercase">
       {children}
     </span>
   )
-}
-
-function PriceBox({ label, value }) {
-  return <InfoBox label={label} value={formatCurrency(value)} />
 }
 
 function StatusPill({ status }) {
@@ -721,7 +720,7 @@ function HotelEditorialCarousel({ hotels }) {
         </div>
 
         <div className="grid gap-4">
-          {previewHotels.map(({ hotel }, index) => (
+          {previewHotels.map(({ hotel }) => (
             <div key={hotel.id} className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950/75 shadow-[0_0_20px_rgba(0,0,0,0.3)]">
               <div className="relative h-36 overflow-hidden">
                 <img
@@ -877,109 +876,6 @@ function GothicFrame() {
       <div className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-red-950/25 to-transparent" />
       <div className="absolute inset-x-10 top-9 h-px bg-gradient-to-r from-transparent via-red-900/55 to-transparent" />
       <div className="absolute inset-x-10 bottom-9 h-px bg-gradient-to-r from-transparent via-red-950/55 to-transparent" />
-    </div>
-  )
-}
-
-function HotelCard({ hotel }) {
-  return (
-    <article className="flex h-full min-h-[30rem] flex-col overflow-hidden rounded-2xl border border-white/10 bg-black/35 shadow-2xl shadow-black/45">
-      <img
-        src={hotel.imageUrl}
-        alt={hotel.name}
-        className="h-52 w-full object-cover"
-      />
-      <div className="flex flex-1 flex-col space-y-4 p-5">
-        <div>
-          <h3 className="line-clamp-2 min-h-[3.5rem] text-xl leading-tight font-black text-white">{hotel.name}</h3>
-          <p className="mt-3 line-clamp-3 text-sm leading-6 text-neutral-400">{hotel.description}</p>
-        </div>
-        <div className="mt-auto grid gap-3">
-          <InfoBox label="Habitaciones libres" value={`${hotel.availableRooms}/${hotel.totalRooms}`} />
-          <InfoBox label="Plazas libres" value={`${hotel.availablePlaces}/${hotel.totalPlaces}`} />
-        </div>
-        <div className="grid gap-3">
-          <PriceBox label="Media pension" value={hotel.halfBoardPrice} />
-          <PriceBox label="Pension completa" value={hotel.fullBoardPrice} />
-        </div>
-      </div>
-    </article>
-  )
-}
-
-function AutoCarousel({ items, getItemKey, renderItem }) {
-  const trackRef = useRef(null)
-  const carouselItems = useMemo(() => (items.length > 1 ? [...items, ...items] : items), [items])
-
-  useEffect(() => {
-    const track = trackRef.current
-
-    if (!track || items.length <= 1) {
-      return undefined
-    }
-
-    let animation
-    let frameId
-
-    const startAnimation = () => {
-      animation?.cancel()
-
-      const distance = track.scrollWidth / 2
-      const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
-      if (!distance || prefersReducedMotion) {
-        return
-      }
-
-      animation = track.animate(
-        [
-          { transform: 'translate3d(0, 0, 0)' },
-          { transform: `translate3d(-${distance}px, 0, 0)` },
-        ],
-        {
-          duration: Math.max(marqueeBaseDurationMs, items.length * marqueeItemDurationMs),
-          iterations: Infinity,
-          easing: 'linear',
-        },
-      )
-    }
-
-    const scheduleAnimation = () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      frameId = window.requestAnimationFrame(startAnimation)
-    }
-
-    scheduleAnimation()
-    window.addEventListener('resize', scheduleAnimation)
-
-    return () => {
-      if (frameId) {
-        window.cancelAnimationFrame(frameId)
-      }
-
-      animation?.cancel()
-      window.removeEventListener('resize', scheduleAnimation)
-    }
-  }, [items.length])
-
-  return (
-    <div className="relative overflow-hidden py-1">
-      <div ref={trackRef} className="flex">
-        {carouselItems.map((item, index) => (
-          <div key={`${getItemKey(item)}-${index}`} className="w-[82vw] flex-none px-2.5 sm:w-1/2 xl:w-1/4">
-            {renderItem(item)}
-          </div>
-        ))}
-      </div>
-      {items.length > 1 && (
-        <>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-black via-black/80 to-transparent sm:w-20" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-black via-black/80 to-transparent sm:w-20" />
-        </>
-      )}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import DashboardPage from '../pages/DashboardPage'
+import EntryValidationPage from '../pages/EntryValidationPage'
 import HomePage from '../pages/HomePage'
 import MobilePage from '../pages/MobilePage'
 import HomeLayout from '../layouts/HomeLayout'
@@ -19,6 +20,10 @@ function AppRouter() {
         </Route>
         <Route path="/mobile" element={<MobileLayout />}>
           <Route index element={<MobilePage />} />
+          <Route path=":mobileAccessToken" element={<MobilePage />} />
+        </Route>
+        <Route path="/entry" element={<MobileLayout />}>
+          <Route path=":entryToken" element={<EntryValidationPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

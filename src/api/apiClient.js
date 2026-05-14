@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { clearInternalSession, getInternalToken } from '../features/auth/internalAuth'
 
 const defaultBaseUrl = 'http://localhost:8080'
 const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL ?? defaultBaseUrl
@@ -16,12 +17,27 @@ apiClient.interceptors.request.use((config) => {
     config.headers['Content-Type'] = 'application/json'
   }
 
+  if (config.skipAuth !== true) {
+    const token = getInternalToken()
+
+    if (token) {
+      config.headers = config.headers ?? {}
+      config.headers.Authorization = `Bearer ${token}`
+    }
+  }
+
   return config
 })
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(error),
+  (error) => {
+    if (error?.response?.status === 401) {
+      clearInternalSession()
+    }
+
+    return Promise.reject(error)
+  },
 )
 
 const translatedMessages = {
@@ -39,10 +55,15 @@ const translatedMessages = {
   'Employee not found': 'No se ha encontrado el empleado solicitado.',
   'Offer not found': 'No se ha encontrado la oferta solicitada.',
   'Booking not found': 'No se ha encontrado la reserva solicitada.',
+  'Ticket not found': 'No se ha encontrado la entrada solicitada.',
   'Email already exists': 'Ya existe un registro con ese email.',
   'DNI already exists': 'Ya existe un registro con ese DNI.',
   'Hotel is full': 'El hotel seleccionado no tiene plazas disponibles.',
   'A minor cannot travel without an adult': 'Un menor no puede viajar sin un adulto.',
+  'Ticket is not available': 'La entrada ya no esta disponible.',
+  'Ticket already used': 'La entrada ya ha sido utilizada.',
+  'Ticket is not valid for today': 'La entrada no es valida para la fecha actual.',
+  'Weather service unavailable': 'No se ha podido consultar el tiempo de Granada.',
   'Not enough employees to cover required shifts':
     'No hay suficientes empleados activos para cubrir los turnos.',
   'Not enough technicians available':
