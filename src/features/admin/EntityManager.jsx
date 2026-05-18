@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { Pencil, Trash2 } from 'lucide-react'
 import Button from '../../components/ui/Button'
 import Card from '../../components/ui/Card'
 import StatusMessage from '../../components/ui/StatusMessage'
@@ -7,6 +8,15 @@ const inputClasses =
   'min-h-11 w-full rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 text-sm text-stone-100 outline-none transition focus:border-red-500'
 
 const textareaClasses = `${inputClasses} min-h-28 resize-y`
+
+const actionButtonBaseClasses =
+  'inline-flex h-8 min-h-8 w-8 items-center justify-center rounded-md border p-0 text-stone-100 shadow-none transition duration-150 ease-out focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-yellow-500/80 enabled:cursor-pointer enabled:hover:-translate-y-px enabled:active:translate-y-0'
+
+const editActionButtonClasses =
+  `${actionButtonBaseClasses} border-stone-700 bg-stone-950/85 enabled:hover:border-stone-500 enabled:hover:bg-stone-800`
+
+const deleteActionButtonClasses =
+  `${actionButtonBaseClasses} border-white/10 bg-gradient-to-b from-red-500 to-red-900 enabled:hover:from-red-400 enabled:hover:to-red-700`
 
 function EntityManager({
   definition,
@@ -231,7 +241,7 @@ function EntityManager({
                     </th>
                   ))}
                   {hasActions ? (
-                    <th className="px-3 py-3 font-extrabold uppercase">Acciones</th>
+                    <th className="w-20 px-2 py-3 text-center font-extrabold uppercase">Acciones</th>
                   ) : null}
                 </tr>
               </thead>
@@ -244,17 +254,29 @@ function EntityManager({
                       </td>
                     ))}
                     {hasActions ? (
-                      <td className="px-3 py-3">
-                        <div className="flex flex-wrap gap-2">
+                      <td className="px-2 py-3">
+                        <div className="flex flex-nowrap justify-center gap-1.5">
                           {canEdit ? (
-                            <Button onClick={() => onEdit(definition.key, item)} variant="secondary">
-                              Editar
-                            </Button>
+                            <button
+                              aria-label="Editar registro"
+                              className={editActionButtonClasses}
+                              onClick={() => onEdit(definition.key, item)}
+                              title="Editar"
+                              type="button"
+                            >
+                              <Pencil className="h-4 w-4" aria-hidden="true" />
+                            </button>
                           ) : null}
                           {canDelete ? (
-                            <Button onClick={() => handleDelete(item.id)} variant="danger">
-                              Eliminar
-                            </Button>
+                            <button
+                              aria-label="Eliminar registro"
+                              className={deleteActionButtonClasses}
+                              onClick={() => handleDelete(item.id)}
+                              title="Eliminar"
+                              type="button"
+                            >
+                              <Trash2 className="h-4 w-4" aria-hidden="true" />
+                            </button>
                           ) : null}
                         </div>
                       </td>

@@ -106,8 +106,8 @@ describe('DashboardPage', () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Editar' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Eliminar' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Editar registro' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Eliminar registro' })).toBeInTheDocument()
     })
   })
 })
