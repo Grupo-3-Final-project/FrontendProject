@@ -74,6 +74,50 @@ describe('adminConfig', () => {
     expect(entityDefinitions.employees.fields.find((field) => field.name === 'shift').options).toHaveLength(2)
   })
 
+  it('maps form payloads and source items for the remaining administrative entities', () => {
+    expect(entityDefinitions.users.fromItem({
+      firstName: 'Ana',
+      lastName: 'Garcia',
+      dni: '12345678A',
+      email: 'ana@example.com',
+      phone: '600111222',
+      birthDate: '1990-05-18',
+    })).toMatchObject({
+      firstName: 'Ana',
+      lastName: 'Garcia',
+      dni: '12345678A',
+      email: 'ana@example.com',
+      phone: '600111222',
+      birthDate: '1990-05-18',
+    })
+
+    expect(entityDefinitions.attractions.fromItem({
+      totalSeats: 32,
+      availableSeats: 18,
+    })).toMatchObject({
+      totalSeats: '32',
+      availableSeats: '18',
+    })
+
+    expect(entityDefinitions.offers.toPayload({
+      hotelId: '3',
+      includedTickets: '4',
+      totalPrice: '249.99',
+    })).toMatchObject({
+      hotelId: 3,
+      includedTickets: 4,
+      totalPrice: 249.99,
+    })
+
+    expect(entityDefinitions.employees.fromItem({
+      firstName: 'Luis',
+      active: false,
+    })).toMatchObject({
+      firstName: 'Luis',
+      active: false,
+    })
+  })
+
   it('renders administrative table columns and overview helpers', () => {
     render(
       <div>
@@ -192,5 +236,30 @@ describe('adminConfig', () => {
       .toContain('Hotel Umbral Nocturno')
     expect(overviewHelpers.ticketRangeLabel({ ageRange: 'ADULT', ticketsSold: 5 }))
       .toContain('Adulto')
+  })
+
+  it('renders alternative administrative variants for badges and overview values', () => {
+    render(
+      <div>
+        {entityDefinitions.attractions.columns[1].render({ status: 'MAINTENANCE' })}
+        {entityDefinitions.attractions.columns[1].render({ status: 'CLOSED' })}
+        {entityDefinitions.employees.columns[0].render({
+          firstName: 'Luis',
+          lastName: 'Romero',
+          dni: '99999999Z',
+        })}
+        {entityDefinitions.employees.columns[3].render({ active: false })}
+        {overviewHelpers.bookingColumns[2].render({
+          hotelName: 'Hotel Sombra',
+        })}
+      </div>,
+    )
+
+    expect(screen.getByText('Mantenimiento')).toBeInTheDocument()
+    expect(screen.getByText('Cerrada')).toBeInTheDocument()
+    expect(screen.getByText('Luis Romero')).toBeInTheDocument()
+    expect(screen.getByText('99999999Z')).toBeInTheDocument()
+    expect(screen.getByText('Inactivo')).toBeInTheDocument()
+    expect(screen.getByText('Hotel Sombra')).toBeInTheDocument()
   })
 })
