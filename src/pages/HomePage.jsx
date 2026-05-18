@@ -34,10 +34,14 @@ function getMapMarkerPosition(attraction, index) {
   return mapMarkerPositionsByName[attraction.name] ?? fallbackMapMarkerPositions[index % fallbackMapMarkerPositions.length]
 }
 
-const footerNavItems = [
+const footerDiscoverLinks = [
   { href: '#atracciones', label: 'Atracciones' },
   { href: '#hoteles', label: 'Hoteles' },
   { href: '#ofertas', label: 'Ofertas' },
+  { href: '#experiencia', label: 'Experiencia' },
+]
+
+const footerVisitLinks = [
   { href: '#visita', label: 'Planifica tu visita' },
   { href: '#info', label: 'Información' },
 ]
@@ -611,60 +615,59 @@ function HomePage() {
         </div>
       </section>
 
-      <footer className="border-t border-red-950/70 bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12">
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_top_left,rgba(185,28,28,0.32),rgba(23,23,23,0.94)_42%,rgba(0,0,0,1)_100%)] shadow-2xl shadow-black/60">
-          <div className="grid gap-8 px-5 py-8 sm:px-8 sm:py-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.8fr)_minmax(0,0.8fr)] lg:px-10">
-            <div className="max-w-xl">
-              <div className="flex items-center gap-4">
-                <img
-                  src={logoAmusementPark}
-                  alt="Logo de La Última Puerta"
-                  className="h-16 w-16 shrink-0 object-contain drop-shadow-[0_0_22px_rgba(220,38,38,0.35)]"
-                />
-                <div>
-                  <p className="text-sm font-extrabold tracking-[0.22em] text-red-400 uppercase">
+      <footer className="border-t border-red-950/70 bg-black px-4 py-8 sm:px-8 sm:py-10 md:px-10 lg:px-12">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-red-950/80 bg-[radial-gradient(circle_at_14%_18%,rgba(185,28,28,0.28),rgba(23,23,23,0.96)_34%,rgba(0,0,0,1)_100%)] shadow-[0_0_42px_rgba(127,29,29,0.16)]">
+          <div className="grid gap-8 px-5 py-7 sm:px-8 sm:py-8 lg:grid-cols-[minmax(28rem,1.7fr)_repeat(3,minmax(0,0.62fr))] lg:px-10">
+            <div className="max-w-2xl">
+              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 shadow-inner shadow-black/30 sm:gap-5">
+                <div className="relative flex h-24 w-24 shrink-0 items-center justify-center sm:h-28 sm:w-28">
+                  <div className="absolute inset-1 rounded-full bg-red-700/10 blur-xl" />
+                  <img
+                    src={logoAmusementPark}
+                    alt="Logo de La Última Puerta"
+                    className="relative h-20 w-20 object-contain drop-shadow-[0_0_24px_rgba(220,38,38,0.45)] sm:h-24 sm:w-24"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-2xl leading-tight font-black tracking-normal text-white sm:text-3xl lg:whitespace-nowrap xl:text-[2.35rem]">
                     La Última Puerta
                   </p>
-                  <p className="mt-1 text-lg font-black text-white">
+                  <p className="mt-2 text-sm font-extrabold tracking-[0.16em] text-red-300 uppercase">
                     ¿Te atreves a cruzarla?
+                  </p>
+                  <p className="mt-3 max-w-sm text-sm leading-6 text-neutral-300">
+                    Parque de terror inmersivo en Granada.
                   </p>
                 </div>
               </div>
-              <p className="mt-5 max-w-lg text-sm leading-7 text-neutral-300">
-                Una experiencia nocturna de terror, misterio y adrenalina en Granada.
-              </p>
+
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <p className="text-sm font-bold text-white">
+                  Planifica tu visita antes de cruzar la puerta.
+                </p>
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="#visita"
+                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-red-500 bg-red-700 px-4 py-2.5 text-xs font-extrabold tracking-wide text-white uppercase shadow-[0_0_24px_rgba(220,38,38,0.25)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400"
+                  >
+                    Planificar visita
+                  </a>
+                  <a
+                    href="#atracciones"
+                    className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-black/30 px-4 py-2.5 text-xs font-extrabold tracking-wide text-neutral-100 uppercase transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400"
+                  >
+                    Ver atracciones
+                  </a>
+                </div>
+              </div>
             </div>
 
-            <div>
+            <nav aria-label="Descubre La Última Puerta">
               <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
-                Visita
-              </h2>
-              <ul className="mt-4 space-y-3 text-sm text-neutral-300">
-                <li className="flex gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-                  Granada
-                </li>
-                <li className="flex gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-                  Compra de entradas en taquilla
-                </li>
-                <li className="flex gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-                  Experiencia mobile mediante QR
-                </li>
-                <li className="flex gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" />
-                  Mapa visual orientativo
-                </li>
-              </ul>
-            </div>
-
-            <nav aria-label="Navegación secundaria del Home">
-              <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
-                Navegación
+                Descubre
               </h2>
               <ul className="mt-4 space-y-3 text-sm">
-                {footerNavItems.map((item) => (
+                {footerDiscoverLinks.map((item) => (
                   <li key={item.href}>
                     <a
                       href={item.href}
@@ -676,11 +679,43 @@ function HomePage() {
                 ))}
               </ul>
             </nav>
+
+            <div>
+              <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
+                Visita
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm text-neutral-300">
+                {footerVisitLinks.map((item) => (
+                  <li key={item.href}>
+                    <a
+                      href={item.href}
+                      className="inline-flex rounded-md text-neutral-300 transition hover:text-red-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+                <li>Entradas en taquilla</li>
+                <li>Experiencia mobile mediante QR</li>
+              </ul>
+            </div>
+
+            <div>
+              <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
+                Servicios
+              </h2>
+              <ul className="mt-4 space-y-3 text-sm text-neutral-300">
+                <li>Accesibilidad</li>
+                <li>Horarios y servicios</li>
+                <li>Mapa visual orientativo</li>
+                <li>Granada</li>
+              </ul>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2 border-t border-white/10 px-5 py-5 text-xs font-bold tracking-[0.12em] text-neutral-500 uppercase sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
-            <p>Proyecto académico Factoría F5</p>
-            <p>La Última Puerta · 2026</p>
+          <div className="flex flex-col gap-2 border-t border-white/10 px-5 py-4 text-xs font-bold tracking-[0.12em] text-neutral-500 uppercase sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-10">
+            <p>© 2026 La Última Puerta</p>
+            <p>Terror, misterio y adrenalina bajo la noche de Granada.</p>
           </div>
         </div>
       </footer>
