@@ -804,6 +804,7 @@ function renderLoadingOrError(isLoading, errorMessage) {
 function AttractionCoverflowCarousel({ attractions }) {
   return (
     <HomeCoverflowCarousel
+      carouselName="atracciones"
       items={attractions}
       getItemKey={(attraction) => attraction.id}
       renderCard={(attraction, position) => (
@@ -816,6 +817,7 @@ function AttractionCoverflowCarousel({ attractions }) {
 function HotelCoverflowCarousel({ hotels }) {
   return (
     <HomeCoverflowCarousel
+      carouselName="hoteles"
       items={hotels}
       getItemKey={(hotel) => hotel.id}
       renderCard={(hotel, position) => (
@@ -828,6 +830,7 @@ function HotelCoverflowCarousel({ hotels }) {
 function OfferCoverflowCarousel({ offers }) {
   return (
     <HomeCoverflowCarousel
+      carouselName="ofertas"
       items={offers}
       getItemKey={(offer) => offer.id}
       renderCard={(offer, position) => (
@@ -837,15 +840,17 @@ function OfferCoverflowCarousel({ offers }) {
   )
 }
 
-function HomeCoverflowCarousel({ items, getItemKey, renderCard }) {
+function HomeCoverflowCarousel({ carouselName, items, getItemKey, renderCard }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [isHovering, setIsHovering] = useState(false)
+  const [isFocusWithin, setIsFocusWithin] = useState(false)
 
   useEffect(() => {
     setActiveIndex(0)
   }, [items.length])
 
   useEffect(() => {
-    if (items.length <= 1) {
+    if (items.length <= 1 || isHovering || isFocusWithin) {
       return undefined
     }
 
@@ -856,15 +861,58 @@ function HomeCoverflowCarousel({ items, getItemKey, renderCard }) {
     return () => {
       window.clearInterval(intervalId)
     }
-  }, [items.length])
+  }, [isFocusWithin, isHovering, items.length])
 
   const slides = getHomeCoverflowSlides(items, activeIndex)
+  const canNavigate = items.length > 1
+
+  const showPreviousItem = () => {
+    setActiveIndex((currentIndex) => (currentIndex - 1 + items.length) % items.length)
+  }
+
+  const showNextItem = () => {
+    setActiveIndex((currentIndex) => (currentIndex + 1) % items.length)
+  }
+
+  const handleBlur = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsFocusWithin(false)
+    }
+  }
 
   return (
-    <div className="relative mx-auto h-[34rem] max-w-7xl overflow-hidden py-5 sm:h-[38rem] lg:h-[42rem]">
+    <div
+      className="relative mx-auto h-[34rem] max-w-7xl overflow-hidden py-5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:h-[38rem] lg:h-[42rem]"
+      tabIndex={0}
+      aria-label={`Carrusel de ${carouselName}`}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onFocus={() => setIsFocusWithin(true)}
+      onBlur={handleBlur}
+    >
       <div className="absolute inset-x-12 top-1/2 h-48 -translate-y-1/2 rounded-full bg-red-950/10 blur-3xl" />
       <div className="absolute inset-y-0 left-0 z-20 w-16 bg-gradient-to-r from-black via-black/80 to-transparent sm:w-24" />
       <div className="absolute inset-y-0 right-0 z-20 w-16 bg-gradient-to-l from-black via-black/80 to-transparent sm:w-24" />
+      {canNavigate && (
+        <div className="pointer-events-none absolute inset-x-2 top-1/2 z-40 flex -translate-y-1/2 justify-between sm:inset-x-4">
+          <button
+            type="button"
+            aria-label={`Ver elemento anterior de ${carouselName}`}
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-red-950/70 bg-black/75 text-2xl leading-none font-black text-white shadow-[0_0_20px_rgba(0,0,0,0.65)] transition hover:border-red-500 hover:bg-red-950/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:h-11 sm:w-11 sm:text-3xl"
+            onClick={showPreviousItem}
+          >
+            ‹
+          </button>
+          <button
+            type="button"
+            aria-label={`Ver elemento siguiente de ${carouselName}`}
+            className="pointer-events-auto flex h-9 w-9 items-center justify-center rounded-full border border-red-950/70 bg-black/75 text-2xl leading-none font-black text-white shadow-[0_0_20px_rgba(0,0,0,0.65)] transition hover:border-red-500 hover:bg-red-950/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:h-11 sm:w-11 sm:text-3xl"
+            onClick={showNextItem}
+          >
+            ›
+          </button>
+        </div>
+      )}
       {slides.map(({ item, position }) => (
         <div key={getItemKey(item)}>
           {renderCard(item, position)}
