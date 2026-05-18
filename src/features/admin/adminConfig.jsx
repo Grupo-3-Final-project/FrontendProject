@@ -342,8 +342,8 @@ export const entityDefinitions = {
         label: 'Tipo',
         type: 'select',
         options: [
-          { value: 'CLEANER', label: 'Limpiador' },
-          { value: 'ANIMATOR', label: 'Animador' },
+          { value: 'CLEANER', label: 'Limpieza' },
+          { value: 'ANIMATOR', label: 'Animación' },
           { value: 'TECHNICIAN', label: 'Técnico' },
         ],
       },

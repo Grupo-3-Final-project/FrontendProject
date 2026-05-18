@@ -71,7 +71,7 @@ function DashboardLayout() {
         setSearchParams({ tab: 'overview' })
       }
     } catch (error) {
-      setAuthError(getApiErrorMessage(error, 'No se ha podido iniciar sesion.'))
+      setAuthError(getApiErrorMessage(error, 'No se ha podido iniciar sesión.'))
     } finally {
       setIsSubmitting(false)
     }
@@ -100,7 +100,7 @@ function DashboardLayout() {
                 aria-hidden="true"
               />
               <div className="mt-4 text-2xl leading-[0.95] font-black text-white">
-                <span className="block">La Ultima</span>
+                <span className="block">La Última</span>
                 <span className="block text-red-500">Puerta</span>
               </div>
               <p className="mt-4 text-[0.72rem] font-bold tracking-[0.28em] text-stone-400 uppercase">
@@ -110,7 +110,7 @@ function DashboardLayout() {
 
             {authError ? (
               <div className="mt-5">
-                <StatusMessage title="No se ha podido iniciar sesion" message={authError} variant="error" />
+                <StatusMessage title="No se ha podido iniciar sesión" message={authError} variant="error" />
               </div>
             ) : null}
 
@@ -132,7 +132,7 @@ function DashboardLayout() {
               </label>
 
               <label className="block space-y-2">
-                <span className="text-sm font-bold text-stone-200">Contrasena</span>
+                <span className="text-sm font-bold text-stone-200">Contraseña</span>
                 <input
                   className="min-h-11 w-full rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 text-sm text-stone-100 outline-none transition focus:border-red-500"
                   type="password"
@@ -153,7 +153,7 @@ function DashboardLayout() {
             </form>
 
             <p className="mt-5 text-center text-xs leading-5 text-stone-400">
-              El panel interno requiere autenticacion JWT para taquilla y administracion.
+              El panel interno requiere autenticación JWT para taquilla y administración.
             </p>
           </div>
         </section>
@@ -206,7 +206,7 @@ function DashboardLayout() {
         <div className="mt-auto w-full border-t border-white/10 text-sm text-stone-300">
           <div className="space-y-1 border-b border-white/10 px-7 py-4">
             <p className="text-[0.65rem] font-bold tracking-[0.16em] text-stone-500 uppercase">
-              Sesion activa
+              Sesión activa
             </p>
             <p className="truncate font-bold text-white">{internalSession.username}</p>
             <p className="text-xs text-stone-400">{internalSession.role}</p>
@@ -224,7 +224,7 @@ function DashboardLayout() {
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 shrink-0 text-stone-400" />
-            Cerrar sesion
+            Cerrar sesión
           </button>
         </div>
       </aside>

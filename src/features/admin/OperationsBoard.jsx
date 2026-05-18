@@ -144,7 +144,7 @@ function OperationsBoard({
       </div>
 
       <div className="grid gap-5 xl:grid-cols-2">
-        <Card title="Ultimos turnos" subtitle="Vista previa de los turnos generados.">
+        <Card title="Últimos turnos" subtitle="Vista previa de los turnos generados.">
           {shiftPreview.length === 0 ? (
             <StatusMessage
               title="Sin turnos"
@@ -180,7 +180,7 @@ function OperationsBoard({
           )}
         </Card>
 
-        <Card title="Agenda de mantenimiento" subtitle="Tareas generadas con sus tecnicos asignados.">
+        <Card title="Agenda de mantenimiento" subtitle="Tareas generadas con sus técnicos asignados.">
           {maintenancePreview.length === 0 ? (
             <StatusMessage
               title="Sin mantenimiento"
@@ -194,7 +194,7 @@ function OperationsBoard({
                   <tr className="text-stone-400">
                     <th className="px-3 py-3 font-extrabold uppercase">Atracción</th>
                     <th className="px-3 py-3 font-extrabold uppercase">Fecha</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Tecnicos</th>
+                    <th className="px-3 py-3 font-extrabold uppercase">Técnicos</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-900">

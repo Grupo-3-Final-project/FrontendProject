@@ -49,9 +49,9 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
     <section className="space-y-5">
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <DashboardKpiCard
-          title="Recaudacion anual"
+          title="Recaudación anual"
           value={formatCurrency(summary.totalRevenue)}
-          note={`Ano ${summary.year}`}
+          note={`Año ${summary.year}`}
           variant="success"
           tag="Dashboard"
         />
@@ -129,31 +129,31 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
       <div className="grid gap-5 xl:grid-cols-3">
         <PreviewTable
           title="Reservas recientes"
-          subtitle="Ultimas reservas registradas."
+          subtitle="Últimas reservas registradas."
           items={recentBookings}
           columns={overviewHelpers.bookingColumns}
           emptyMessage="Todavía no hay reservas disponibles."
         />
         <PreviewTable
           title="Mantenimiento programado"
-          subtitle="Proximas revisiones planificadas para atracciones."
+          subtitle="Próximas revisiones planificadas para atracciones."
           items={upcomingMaintenance}
           columns={overviewHelpers.maintenanceColumns}
-          emptyMessage="Aun no se ha generado mantenimiento."
+          emptyMessage="Aún no se ha generado mantenimiento."
         />
         <PreviewTable
           title="Cobertura de turnos"
-          subtitle="Ultimos turnos generados."
+          subtitle="Últimos turnos generados."
           items={latestShifts}
           columns={overviewHelpers.shiftColumns}
-          emptyMessage="Aun no se han generado turnos."
+          emptyMessage="Aún no se han generado turnos."
         />
       </div>
 
-      <Card title="Estado general" subtitle="Resumen rapido del sistema.">
+      <Card title="Estado general" subtitle="Resumen rápido del sistema.">
         <div className="grid gap-4 md:grid-cols-3">
           <div className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-            <div className="text-sm font-bold text-stone-300">Ultima reserva</div>
+            <div className="text-sm font-bold text-stone-300">Última reserva</div>
             <div className="mt-3 text-lg font-black text-stone-100">
               {recentBookings[0]?.userFullName ?? 'Sin datos'}
             </div>

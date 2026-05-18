@@ -92,11 +92,11 @@ export function formatAttractionStatus(value) {
 
 export function formatEmployeeType(value) {
   if (value === 'CLEANER') {
-    return 'Limpiador'
+    return 'Limpieza'
   }
 
   if (value === 'ANIMATOR') {
-    return 'Animador'
+    return 'Animación'
   }
 
   if (value === 'TECHNICIAN') {
