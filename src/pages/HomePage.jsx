@@ -311,7 +311,7 @@ function HomePage() {
                   aria-pressed={isSelected}
                   aria-label={`Destacar ${attraction.name} en el mapa`}
                   onClick={() => setSelectedMapAttractionId(attraction.id)}
-                  className={`absolute z-20 max-w-[8.5rem] -translate-x-1/2 -translate-y-1/2 rounded-lg border px-2.5 py-1.5 text-[0.62rem] leading-tight font-extrabold backdrop-blur transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:max-w-[11rem] sm:px-3 sm:py-2 sm:text-xs ${getMapMarkerPosition(attraction, index)} ${markerStateClassName}`}
+                    className={`absolute z-20 hidden max-w-[8.5rem] -translate-x-1/2 -translate-y-1/2 rounded-lg border px-2.5 py-1.5 text-[0.62rem] leading-tight font-extrabold backdrop-blur transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 md:block md:max-w-[11rem] md:px-3 md:py-2 md:text-xs ${getMapMarkerPosition(attraction, index)} ${markerStateClassName}`}
                 >
                   <span className="line-clamp-2">{attraction.name}</span>
                 </button>
