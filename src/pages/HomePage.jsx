@@ -511,26 +511,24 @@ function HomePage() {
                   <h3 className="text-sm font-extrabold tracking-[0.14em] text-white uppercase">
                     Servicios
                   </h3>
+                  <p className="mt-2 text-sm leading-6 text-neutral-400">
+                    Servicios disponibles durante la visita.
+                  </p>
                 </div>
                 <ul className="divide-y divide-white/10 text-sm text-neutral-300">
-                  <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">Disponible</span>
+                  <li className="px-5 py-4">
                     Aparcamiento gratuito
                   </li>
-                  <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">Disponible</span>
+                  <li className="px-5 py-4">
                     Cafetería y restaurante
                   </li>
-                  <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">Disponible</span>
+                  <li className="px-5 py-4">
                     Tienda de souvenirs
                   </li>
-                  <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">Disponible</span>
+                  <li className="px-5 py-4">
                     Consigna de equipaje
                   </li>
-                  <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">Disponible</span>
+                  <li className="px-5 py-4">
                     Servicio médico
                   </li>
                 </ul>
