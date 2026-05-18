@@ -109,17 +109,17 @@ function HomePage() {
             </span>
 
             <p className="mt-4 text-xs font-extrabold uppercase tracking-[0.26em] text-red-500 sm:text-sm">
-              La Ultima Puerta
+              La Última Puerta
             </p>
             <h1 className="mt-2 max-w-[31rem] text-[2.6rem] leading-[0.94] font-black tracking-normal text-white uppercase drop-shadow-[0_14px_32px_rgba(0,0,0,0.9)] sm:text-[3.15rem] lg:text-[3.2rem] xl:text-[3.5rem]">
               Cruza la puerta
               <span className="block text-red-600">si te atreves</span>
             </h1>
             <p className="mt-4 max-w-xl text-base font-semibold text-neutral-100 sm:text-lg">
-              Te atreves a cruzarla?
+              ¿Te atreves a cruzarla?
             </p>
             <p className="mt-2 max-w-md text-base leading-7 text-neutral-200/80 sm:max-w-[31rem]">
-              El parque de atracciones de terror mas intenso te espera en Granada con experiencias nocturnas, hoteles disponibles y ofertas listas para la visita.
+              El parque de atracciones de terror más intenso te espera en Granada con experiencias nocturnas, hoteles disponibles y ofertas listas para la visita.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
@@ -136,7 +136,7 @@ function HomePage() {
           <aside className="w-full max-w-[196px] justify-self-center rounded-xl border border-white/15 bg-neutral-950/45 p-3 shadow-xl shadow-black/35 backdrop-blur-sm lg:-mt-2 lg:justify-self-end lg:opacity-90 xl:max-w-[208px]">
             <div className="text-center">
               <p className="text-[0.9rem] leading-tight font-extrabold text-white">
-                Tu visita empieza aqui
+                Tu visita empieza aquí
               </p>
               <p className="mt-2 text-[0.7rem] leading-5 text-neutral-300/85">
                 Consulta atracciones, hoteles y ofertas antes de tu llegada.
@@ -145,7 +145,7 @@ function HomePage() {
 
             <div className="mx-auto mt-3 space-y-2">
               {errorMessage ? (
-                <StatusMessage title="Catalogo no disponible" message={errorMessage} variant="error" />
+                <StatusMessage title="Catálogo no disponible" message={errorMessage} variant="error" />
               ) : (
                 liveOverview.map((item) => (
                   <div key={item.label} className="rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-left">
@@ -172,7 +172,7 @@ function HomePage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Atracciones destacadas"
-            title="Elige tu proxima pesadilla"
+            title="Elige tu próxima pesadilla"
             description="Descubre algunas de las atracciones principales antes de organizar tu recorrido."
           />
 
@@ -182,7 +182,7 @@ function HomePage() {
             ) : (
               <StatusMessage
                 title="Sin atracciones"
-                message="Todavia no hay atracciones cargadas en el catalogo."
+                message="Todavía no hay atracciones cargadas en el catálogo."
                 variant="empty"
               />
             )
@@ -207,7 +207,7 @@ function HomePage() {
             ) : (
               <StatusMessage
                 title="Sin hoteles"
-                message="Todavia no hay hoteles disponibles en el sistema."
+                message="Todavía no hay hoteles disponibles en el sistema."
                 variant="empty"
               />
             )
@@ -268,7 +268,7 @@ function HomePage() {
             ) : (
               <StatusMessage
                 title="Sin ofertas"
-                message="Todavia no hay ofertas disponibles."
+                message="Todavía no hay ofertas disponibles."
                 variant="empty"
               />
             )
@@ -297,10 +297,10 @@ function HomePage() {
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
             <span className="absolute top-[28%] left-[12%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Mansion Maldita
+              Mansión Maldita
             </span>
             <span className="absolute bottom-[18%] left-[24%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Rio de Sangre
+              Río de Sangre
             </span>
             <span className="absolute top-[16%] left-[48%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
               Torre del Terror
@@ -350,7 +350,7 @@ function HomePage() {
                     Mapa visual del parque
                   </p>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-200/85">
-                    Una referencia para ubicar accesos, zonas principales y puntos de interes del parque.
+                    Una referencia para ubicar accesos, zonas principales y puntos de interés del parque.
                   </p>
                 </div>
               </div>
@@ -364,16 +364,16 @@ function HomePage() {
                 </article>
 
                 <article className="rounded-2xl border border-white/10 bg-neutral-950 p-5 shadow-xl shadow-black/35">
-                  <p className="text-base font-black text-white">En autobus</p>
+                  <p className="text-base font-black text-white">En autobús</p>
                   <p className="mt-2 text-sm leading-6 text-neutral-400">
-                    Linea 26 desde el centro cada 20 minutos. Parada La Ultima Puerta.
+                    Línea 26 desde el centro cada 20 minutos. Parada La Última Puerta.
                   </p>
                 </article>
 
                 <article className="rounded-2xl border border-white/10 bg-neutral-950 p-5 shadow-xl shadow-black/35">
                   <p className="text-base font-black text-white">En tren</p>
                   <p className="mt-2 text-sm leading-6 text-neutral-400">
-                    Cercanias hasta estacion Sur y servicio de lanzadera gratuito al parque.
+                    Cercanías hasta estación Sur y servicio de lanzadera gratuito al parque.
                   </p>
                 </article>
               </div>
@@ -396,7 +396,7 @@ function HomePage() {
                     <span className="font-bold text-green-400">19:00 - 01:00</span>
                   </div>
                   <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
-                    <span className="text-neutral-400">Sabado</span>
+                    <span className="text-neutral-400">Sábado</span>
                     <span className="font-bold text-green-400">18:00 - 02:00</span>
                   </div>
                   <div className="flex items-center justify-between gap-4 px-5 py-4 text-sm">
@@ -423,7 +423,7 @@ function HomePage() {
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
                     <span className="text-green-400">OK</span>
-                    Cafeteria y restaurante
+                    Cafetería y restaurante
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
                     <span className="text-green-400">OK</span>
@@ -435,7 +435,7 @@ function HomePage() {
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
                     <span className="text-green-400">OK</span>
-                    Servicio medico
+                    Servicio médico
                   </li>
                 </ul>
               </div>
@@ -450,9 +450,9 @@ function HomePage() {
       >
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Informacion"
-            title="Antes de cruzar La Ultima Puerta"
-            description="Resuelve las dudas mas frecuentes antes de tu llegada."
+            eyebrow="Información"
+            title="Antes de cruzar La Última Puerta"
+            description="Resuelve las dudas más frecuentes antes de tu llegada."
           />
 
           <div className="grid gap-5 xl:grid-cols-[minmax(0,1.45fr)_minmax(21rem,0.8fr)]">
@@ -463,24 +463,24 @@ function HomePage() {
                 </h3>
                 <div className="space-y-3">
                   <FaqItem
-                    title="Se recomienda reserva previa?"
-                    description="Si. La reserva anticipada ayuda a organizar la visita y evita esperas en fechas de alta demanda."
+                    title="¿Se recomienda reserva previa?"
+                    description="Sí. La reserva anticipada ayuda a organizar la visita y evita esperas en fechas de alta demanda."
                   />
                   <FaqItem
-                    title="Hay restricciones de edad o salud?"
+                    title="¿Hay restricciones de edad o salud?"
                     description="Algunas atracciones pueden no estar recomendadas para menores o personas sensibles a experiencias intensas."
                   />
                   <FaqItem
-                    title="Pueden entrar ninos pequenos?"
-                    description="El acceso familiar es posible, pero ciertas zonas de terror tienen recomendaciones especificas por edad."
+                    title="¿Pueden entrar niños pequeños?"
+                    description="El acceso familiar es posible, pero ciertas zonas de terror tienen recomendaciones específicas por edad."
                   />
                   <FaqItem
-                    title="Hay aparcamiento gratuito?"
-                    description="Si. El aparcamiento se encuentra junto al acceso principal del parque."
+                    title="¿Hay aparcamiento gratuito?"
+                    description="Sí. El aparcamiento se encuentra junto al acceso principal del parque."
                   />
                   <FaqItem
-                    title="Se permite reentrada?"
-                    description="La reentrada queda sujeta a validacion en taquilla durante la misma jornada de visita."
+                    title="¿Se permite reentrada?"
+                    description="La reentrada queda sujeta a validación en taquilla durante la misma jornada de visita."
                   />
                 </div>
               </div>
@@ -490,7 +490,7 @@ function HomePage() {
                   Aviso importante
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-yellow-100/85">
-                  El parque contiene experiencias de terror intenso con efectos de luz, sonido y escenas inmersivas. Consulta las recomendaciones de cada atraccion antes de acceder.
+                  El parque contiene experiencias de terror intenso con efectos de luz, sonido y escenas inmersivas. Consulta las recomendaciones de cada atracción antes de acceder.
                 </p>
               </div>
             </div>
@@ -499,19 +499,19 @@ function HomePage() {
               <InfoCard
                 title="Contacto"
                 rows={[
-                  ['Telefono', '900 123 456'],
+                  ['Teléfono', '900 123 456'],
                   ['Email', 'info@laultimapuerta.es'],
-                  ['Direccion', 'Ctra. Sierra Nevada Km 4, Granada'],
+                  ['Dirección', 'Ctra. Sierra Nevada Km 4, Granada'],
                 ]}
               />
 
               <InfoCard
                 title="Datos del parque"
                 rows={[
-                  ['Fundacion', '2019'],
-                  ['Aforo maximo', '2.500 personas'],
+                  ['Fundación', '2019'],
+                  ['Aforo máximo', '2.500 personas'],
                   ['Temporada', 'Sept - Dic'],
-                  ['Idioma', 'Espanol / Ingles'],
+                  ['Idioma', 'Español / Inglés'],
                 ]}
               />
             </aside>
@@ -522,13 +522,13 @@ function HomePage() {
       <section className="bg-black px-4 py-10 sm:px-8 sm:py-12 md:px-10 lg:px-12">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-3xl border border-red-900/70 bg-[radial-gradient(circle_at_center,rgba(185,28,28,0.35),rgba(23,23,23,0.92)_48%,rgba(0,0,0,1)_100%)] px-5 py-12 text-center shadow-2xl shadow-black/60 sm:px-10 sm:py-14">
           <p className="text-sm font-extrabold tracking-[0.24em] text-red-400 uppercase">
-            La Ultima Puerta
+            La Última Puerta
           </p>
           <h2 className="mx-auto mt-4 max-w-4xl text-3xl font-black tracking-normal text-white uppercase drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)] sm:text-5xl lg:text-6xl">
-            Listo para cruzar La Ultima Puerta?
+            ¿Listo para cruzar La Última Puerta?
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-neutral-200/85 sm:text-lg">
-            La experiencia comienza antes de entrar. Atrevete a cruzarla.
+            La experiencia comienza antes de entrar. Atrévete a cruzarla.
           </p>
         </div>
       </section>
@@ -613,7 +613,7 @@ function renderLoadingOrError(isLoading, errorMessage) {
     return (
       <StatusMessage
         title="Cargando datos"
-        message="Estamos recuperando informacion del parque."
+        message="Estamos recuperando información del parque."
         variant="info"
       />
     )

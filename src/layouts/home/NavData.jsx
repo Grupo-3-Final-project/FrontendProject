@@ -20,5 +20,5 @@ export const navItems = [
   { id: 'hoteles', name: 'Hoteles', icon: HiOutlineSparkles, activeIcon: HiSparkles },
   { id: 'experiencia', name: 'Experiencia', icon: HiOutlineSparkles, activeIcon: HiSparkles },
   { id: 'visita', name: 'Planifica tu visita', icon: HiOutlineCalendar, activeIcon: HiCalendar },
-  { id: 'info', name: 'Informacion', icon: HiOutlineInformationCircle, activeIcon: HiInformationCircle },
+  { id: 'info', name: 'Información', icon: HiOutlineInformationCircle, activeIcon: HiInformationCircle },
 ]
