@@ -402,20 +402,20 @@ function HomePage() {
                 <img
                   src={heroImage}
                   alt="Entrada nocturna de La Última Puerta"
-                  className="h-[19rem] w-full object-cover object-center opacity-85 brightness-90 contrast-110 sm:h-[23rem] lg:h-[25rem]"
+                  className="h-[22rem] w-full object-cover object-center opacity-85 brightness-90 contrast-110 sm:h-[23rem] lg:h-[25rem]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.68)_42%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(127,29,29,0.28)_0%,rgba(0,0,0,0)_36%,rgba(0,0,0,0.78)_100%)]" />
-                <div className="absolute top-4 right-4 rounded-full border border-red-500/60 bg-red-950/70 px-3 py-1 text-[0.68rem] font-extrabold tracking-[0.16em] text-red-100 uppercase shadow-[0_0_24px_rgba(220,38,38,0.28)] backdrop-blur sm:top-6 sm:right-6">
+                <div className="absolute top-4 left-5 rounded-full border border-red-500/60 bg-red-950/70 px-3 py-1 text-[0.62rem] font-extrabold tracking-[0.16em] text-red-100 uppercase shadow-[0_0_24px_rgba(220,38,38,0.28)] backdrop-blur sm:top-6 sm:right-6 sm:left-auto sm:text-[0.68rem]">
                   Próximamente
                 </div>
-                <div className="absolute inset-y-0 left-0 flex max-w-2xl flex-col justify-end px-5 py-5 sm:px-7 sm:py-7 lg:px-8">
-                  <p className="text-sm font-extrabold tracking-[0.18em] text-red-300 uppercase">
+                <div className="absolute inset-y-0 left-0 flex max-w-2xl flex-col justify-end px-5 py-6 sm:px-7 sm:py-7 lg:px-8">
+                  <p className="text-xs font-extrabold tracking-[0.18em] text-red-300 uppercase sm:text-sm">
                     Tráiler oficial
                   </p>
-                  <h3 className="mt-3 max-w-xl text-2xl leading-tight font-black tracking-normal text-white sm:text-4xl">
+                  <h3 className="mt-2 max-w-xl text-[1.45rem] leading-[1.08] font-black tracking-normal text-white sm:mt-3 sm:text-4xl sm:leading-tight">
                     La experiencia comienza antes de cruzar la puerta
                   </h3>
-                  <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-200/85 sm:text-base">
+                  <p className="mt-3 max-w-xl text-[0.82rem] leading-5 text-neutral-200/85 sm:text-base sm:leading-6">
                     Muy pronto podrás ver el recorrido completo del parque antes de tu visita. Compra tu entrada en taquilla, recibe tu QR y prepara tu recorrido desde el móvil.
                   </p>
                   <div className="mt-5 flex flex-col gap-3 sm:flex-row">
@@ -599,9 +599,9 @@ function HomePage() {
 
       <footer className="border-t border-red-950/70 bg-black px-4 py-8 sm:px-8 sm:py-10 md:px-10 lg:px-12">
         <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-red-950/80 bg-[radial-gradient(circle_at_14%_18%,rgba(185,28,28,0.28),rgba(23,23,23,0.96)_34%,rgba(0,0,0,1)_100%)] shadow-[0_0_42px_rgba(127,29,29,0.16)]">
-          <div className="grid gap-8 px-5 py-7 sm:px-8 sm:py-8 lg:grid-cols-[minmax(28rem,1.7fr)_repeat(3,minmax(0,0.62fr))] lg:px-10">
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 shadow-inner shadow-black/30 sm:gap-5">
+          <div className="grid gap-8 px-5 py-7 sm:px-8 sm:py-8 md:grid-cols-2 lg:px-10 xl:grid-cols-[minmax(0,1.45fr)_repeat(3,minmax(9rem,0.55fr))]">
+            <div className="max-w-2xl md:col-span-2 xl:col-span-1">
+              <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/20 p-3 shadow-inner shadow-black/30 sm:flex-row sm:items-center sm:gap-5">
                 <div className="relative flex h-24 w-24 shrink-0 items-center justify-center sm:h-28 sm:w-28">
                   <div className="absolute inset-1 rounded-full bg-red-700/10 blur-xl" />
                   <img
@@ -611,7 +611,7 @@ function HomePage() {
                   />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-2xl leading-tight font-black tracking-normal text-white sm:text-3xl lg:whitespace-nowrap xl:text-[2.35rem]">
+                  <p className="text-2xl leading-tight font-black tracking-normal text-white sm:text-3xl xl:whitespace-nowrap xl:text-[2.35rem]">
                     La Última Puerta
                   </p>
                   <p className="mt-2 text-sm font-extrabold tracking-[0.16em] text-red-300 uppercase">
@@ -644,11 +644,11 @@ function HomePage() {
               </div>
             </div>
 
-            <nav aria-label="Descubre La Última Puerta">
+            <nav className="min-w-0" aria-label="Descubre La Última Puerta">
               <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
                 Descubre
               </h2>
-              <ul className="mt-4 space-y-3 text-sm">
+              <ul className="mt-4 space-y-3 text-sm leading-6">
                 {footerDiscoverLinks.map((item) => (
                   <li key={item.href}>
                     <a
@@ -662,11 +662,11 @@ function HomePage() {
               </ul>
             </nav>
 
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
                 Visita
               </h2>
-              <ul className="mt-4 space-y-3 text-sm text-neutral-300">
+              <ul className="mt-4 space-y-3 text-sm leading-6 text-neutral-300">
                 {footerVisitLinks.map((item) => (
                   <li key={item.href}>
                     <a
@@ -682,11 +682,11 @@ function HomePage() {
               </ul>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <h2 className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
                 Servicios
               </h2>
-              <ul className="mt-4 space-y-3 text-sm text-neutral-300">
+              <ul className="mt-4 space-y-3 text-sm leading-6 text-neutral-300">
                 <li>Accesibilidad</li>
                 <li>Horarios y servicios</li>
                 <li>Mapa visual orientativo</li>
