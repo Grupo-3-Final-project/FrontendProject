@@ -426,10 +426,10 @@ function HomePage() {
                       Ver atracciones
                     </a>
                     <a
-                      href="#visita"
+                      href="#info"
                       className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-black/35 px-5 py-2.5 text-xs font-extrabold tracking-wide text-neutral-100 uppercase transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
                     >
-                      Planificar visita
+                      Resolver dudas
                     </a>
                   </div>
                 </div>
