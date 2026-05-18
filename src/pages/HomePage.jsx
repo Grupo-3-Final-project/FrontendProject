@@ -114,7 +114,7 @@ function HomePage() {
 
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
+    <div className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
       <section
         id="inicio"
         className="relative isolate min-h-[calc(100svh-5rem)] overflow-hidden border-b border-white/10 bg-[radial-gradient(circle_at_58%_42%,#220606_0%,#050505_48%,#000_100%)] px-4 py-6 sm:px-6 md:px-8 lg:min-h-[600px] lg:px-6 lg:py-3 xl:px-8"
@@ -615,7 +615,7 @@ function HomePage() {
           </p>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
 
