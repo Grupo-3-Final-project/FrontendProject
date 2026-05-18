@@ -118,7 +118,7 @@ function BookingDesk({
         title: 'Compra registrada',
         message: booking.emailSent
           ? 'La compra en taquilla se ha guardado y el correo se ha enviado correctamente.'
-          : 'La compra se ha registrado, pero no se ha podido enviar el correo al cliente.',
+          : 'La reserva se ha creado correctamente, pero el email con los QR no se ha podido enviar. Revisa el backend o la configuración de correo.',
         variant: booking.emailSent ? 'success' : 'warning',
       })
     } finally {
@@ -320,7 +320,7 @@ function BookingDesk({
                   </p>
                 </div>
                 <Button onClick={() => setCompanions((current) => [...current, { ...emptyCompanion }])} variant="secondary">
-                  Anadir acompanante
+                  Añadir acompañante
                 </Button>
               </div>
 
@@ -349,7 +349,7 @@ function BookingDesk({
                 {companions.map((companion, index) => (
                   <div key={`companion-${index}`} className="rounded-lg border border-stone-800 bg-black/20 p-4">
                     <div className="mb-4 flex items-center justify-between gap-3">
-                      <h4 className="text-sm font-black text-stone-100">Acompanante {index + 1}</h4>
+                      <h4 className="text-sm font-black text-stone-100">Acompañante {index + 1}</h4>
                       <Button onClick={() => removeCompanion(index)} variant="danger">
                         Eliminar
                       </Button>
@@ -399,7 +399,7 @@ function BookingDesk({
       </Card>
 
       <div className="space-y-5">
-        <Card title="Resumen de la compra" subtitle="Comprobacion previa antes de cerrar la venta.">
+        <Card title="Resumen de la compra" subtitle="Comprobación previa antes de cerrar la venta.">
           {bookingSummary ? (
             <div className="space-y-3 text-sm text-stone-300">
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
@@ -428,7 +428,7 @@ function BookingDesk({
           )}
         </Card>
 
-        <Card title="Ultima compra registrada" subtitle="Detalle de la ultima compra guardada.">
+        <Card title="Última compra registrada" subtitle="Detalle de la última compra guardada.">
           {bookingResult ? (
             <div className="space-y-3 text-sm text-stone-300">
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
@@ -454,8 +454,8 @@ function BookingDesk({
                 </div>
                 <div className="mt-1 text-xs text-stone-500">
                   {bookingResult.emailSent
-                    ? 'El cliente deberia recibir sus QR por correo.'
-                    : 'La reserva existe, pero hay que revisar o reenviar el correo.'}
+                    ? 'El cliente debería recibir sus QR por correo.'
+                    : 'La reserva existe; revisa el backend o la configuración de correo.'}
                 </div>
               </div>
               <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
@@ -475,7 +475,7 @@ function BookingDesk({
           ) : (
             <StatusMessage
               title="Sin reserva reciente"
-              message="Cuando registres una compra, veras aqui el detalle de la reserva."
+              message="Cuando registres una compra, verás aquí el detalle de la reserva."
               variant="empty"
             />
           )}
