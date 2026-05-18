@@ -436,18 +436,38 @@ function HomePage() {
             <div className="space-y-5">
               <div className="relative overflow-hidden rounded-3xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/60">
                 <img
-                  src={parkMapImage}
-                  alt="Mapa visual para planificar la visita"
-                  className="h-[18rem] w-full object-cover opacity-90 brightness-105 contrast-110 sm:h-[24rem] lg:h-[26rem]"
+                  src={heroImage}
+                  alt="Entrada nocturna de La Última Puerta"
+                  className="h-[19rem] w-full object-cover object-center opacity-85 brightness-90 contrast-110 sm:h-[23rem] lg:h-[25rem]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20" />
-                <div className="absolute right-4 bottom-4 left-4 rounded-2xl border border-white/10 bg-black/55 p-4 backdrop-blur sm:right-6 sm:bottom-6 sm:left-6">
+                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.68)_42%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(127,29,29,0.28)_0%,rgba(0,0,0,0)_36%,rgba(0,0,0,0.78)_100%)]" />
+                <div className="absolute top-4 right-4 rounded-full border border-red-500/60 bg-red-950/70 px-3 py-1 text-[0.68rem] font-extrabold tracking-[0.16em] text-red-100 uppercase shadow-[0_0_24px_rgba(220,38,38,0.28)] backdrop-blur sm:top-6 sm:right-6">
+                  Próximamente
+                </div>
+                <div className="absolute inset-y-0 left-0 flex max-w-2xl flex-col justify-end px-5 py-5 sm:px-7 sm:py-7 lg:px-8">
                   <p className="text-sm font-extrabold tracking-[0.18em] text-red-300 uppercase">
-                    Mapa visual del parque
+                    Tráiler oficial
                   </p>
-                  <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-200/85">
-                    Una referencia para ubicar accesos, zonas principales y puntos de interés del parque.
+                  <h3 className="mt-3 max-w-xl text-2xl leading-tight font-black tracking-normal text-white sm:text-4xl">
+                    La experiencia comienza antes de cruzar la puerta
+                  </h3>
+                  <p className="mt-3 max-w-xl text-sm leading-6 text-neutral-200/85 sm:text-base">
+                    Muy pronto podrás ver el recorrido completo del parque antes de tu visita. Compra tu entrada en taquilla, recibe tu QR y prepara tu recorrido desde el móvil.
                   </p>
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <a
+                      href="#atracciones"
+                      className="inline-flex min-h-11 items-center justify-center rounded-lg border border-red-500 bg-red-700 px-5 py-2.5 text-xs font-extrabold tracking-wide text-white uppercase shadow-[0_0_24px_rgba(220,38,38,0.25)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+                    >
+                      Ver atracciones
+                    </a>
+                    <a
+                      href="#visita"
+                      className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-black/35 px-5 py-2.5 text-xs font-extrabold tracking-wide text-neutral-100 uppercase transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+                    >
+                      Planificar visita
+                    </a>
+                  </div>
                 </div>
               </div>
 
