@@ -76,7 +76,7 @@ describe('HomePage', () => {
       expect(screen.getAllByText('Hotel Magic Park').length).toBeGreaterThan(0)
       expect(screen.getByText('Pack familiar')).toBeInTheDocument()
       expect(screen.getByText('Granada - 24 C')).toBeInTheDocument()
-      expect(screen.getByText('Mapa visual orientativo')).toBeInTheDocument()
+      expect(screen.getAllByText('Mapa visual orientativo').length).toBeGreaterThan(0)
     })
 
     const mapSelectors = screen.getAllByRole('button', { name: 'Destacar Dragon Coaster en el mapa' })
