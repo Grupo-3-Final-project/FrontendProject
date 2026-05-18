@@ -57,4 +57,81 @@ describe('BookingDesk', () => {
       screen.getByText('La compra se ha registrado, pero no se ha podido enviar el correo al cliente.'),
     ).toBeInTheDocument()
   })
+
+  it('builds a custom booking for a new customer and includes companions', async () => {
+    const onCreateUser = vi.fn().mockResolvedValue({
+      id: 4,
+      firstName: 'Ana',
+      lastName: 'Garcia',
+      birthDate: '1990-05-18',
+    })
+    const onCreateBooking = vi.fn().mockResolvedValue({
+      id: 10,
+      userFullName: 'Ana Garcia',
+      visitDate: '2026-05-30',
+      totalPrice: 240,
+      emailSent: true,
+      tickets: [
+        {
+          holderFullName: 'Ana Garcia',
+          ageRange: 'ADULT',
+          price: 120,
+        },
+        {
+          holderFullName: 'Luis Garcia',
+          ageRange: 'CHILD',
+          price: 60,
+        },
+      ],
+    })
+
+    render(
+      <BookingDesk
+        users={[]}
+        hotels={[
+          {
+            id: 1,
+            name: 'Hotel Umbral Nocturno',
+            availablePlaces: 120,
+            fullBoardPrice: 120,
+            halfBoardPrice: 90,
+          },
+        ]}
+        offers={[]}
+        onCreateUser={onCreateUser}
+        onCreateBooking={onCreateBooking}
+        statusMessage={null}
+      />,
+    )
+
+    fireEvent.click(screen.getByRole('radio', { name: /Nuevo cliente/i }))
+    fireEvent.click(screen.getByRole('radio', { name: /Reserva propia/i }))
+    fireEvent.change(screen.getByLabelText('Nombre'), { target: { value: 'Ana' } })
+    fireEvent.change(screen.getByLabelText('Apellidos'), { target: { value: 'Garcia' } })
+    fireEvent.change(screen.getByLabelText('DNI'), { target: { value: '12345678A' } })
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'ana@example.com' } })
+    fireEvent.change(screen.getByLabelText('Teléfono'), { target: { value: '666123123' } })
+    fireEvent.change(screen.getByLabelText('Fecha de nacimiento'), { target: { value: '1990-05-18' } })
+    fireEvent.click(screen.getByRole('button', { name: /Anadir acompanante/i }))
+    fireEvent.change(screen.getAllByLabelText('Nombre')[1], { target: { value: 'Luis' } })
+    fireEvent.change(screen.getAllByLabelText('Apellidos')[1], { target: { value: 'Garcia' } })
+    fireEvent.change(screen.getAllByLabelText('Nacimiento')[0], { target: { value: '2016-05-18' } })
+    fireEvent.change(screen.getByLabelText('Fecha de visita'), { target: { value: '2026-05-30' } })
+    fireEvent.click(screen.getByRole('button', { name: /Registrar compra/i }))
+
+    await waitFor(() => {
+      expect(onCreateUser).toHaveBeenCalledTimes(1)
+      expect(onCreateBooking).toHaveBeenCalledTimes(1)
+    })
+
+    expect(onCreateBooking.mock.calls[0][0]).toMatchObject({
+      userId: 4,
+      hotelId: 1,
+      offerId: null,
+      boardType: 'HALF_BOARD',
+      visitDate: '2026-05-30',
+    })
+    expect(onCreateBooking.mock.calls[0][0].companions).toHaveLength(2)
+    expect(screen.getByText('Enviado')).toBeInTheDocument()
+  })
 })

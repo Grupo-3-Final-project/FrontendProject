@@ -1,5 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
+import { getAttractions } from '../api/attractionApi'
+import { getGranadaWeather } from '../api/weatherApi'
 import HomePage from './HomePage'
 
 vi.mock('../api/attractionApi', () => ({
@@ -62,6 +64,10 @@ vi.mock('../api/weatherApi', () => ({
 }))
 
 describe('HomePage', () => {
+  beforeEach(() => {
+    vi.restoreAllMocks()
+  })
+
   it('renders live catalog data from backend services', async () => {
     render(
       <MemoryRouter>
@@ -77,5 +83,61 @@ describe('HomePage', () => {
       expect(screen.getByText('Pack familiar')).toBeInTheDocument()
       expect(screen.getByText('Granada - 24 C')).toBeInTheDocument()
     })
+  })
+
+  it('shows a controlled error and fallback weather when the public catalog cannot be loaded', async () => {
+    getAttractions.mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'Catalog unavailable',
+        },
+      },
+    })
+    getGranadaWeather.mockRejectedValueOnce(new Error('Weather offline'))
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByText('Catalogo no disponible')).toBeInTheDocument()
+    expect(screen.getAllByText('Catalog unavailable').length).toBeGreaterThan(0)
+    expect(screen.getByText('Granada - Sin datos')).toBeInTheDocument()
+  })
+
+  it('scrolls to the requested sections from the primary public CTAs', async () => {
+    const attractionsSection = document.createElement('section')
+    attractionsSection.id = 'atracciones'
+    attractionsSection.scrollIntoView = vi.fn()
+    document.body.appendChild(attractionsSection)
+
+    const visitSection = document.createElement('section')
+    visitSection.id = 'visita'
+    visitSection.scrollIntoView = vi.fn()
+    document.body.appendChild(visitSection)
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
+
+    screen.getByRole('button', { name: 'Ver atracciones' }).click()
+    screen.getByRole('button', { name: 'Planificar visita' }).click()
+
+    expect(attractionsSection.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    })
+    expect(visitSection.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    })
+
+    attractionsSection.remove()
+    visitSection.remove()
   })
 })
