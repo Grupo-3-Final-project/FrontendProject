@@ -84,4 +84,31 @@ describe('OverviewPanel', () => {
     expect(screen.getByText('Genera la agenda desde Operaciones.')).toBeInTheDocument()
     expect(screen.getByText('Genera turnos para ver la cobertura.')).toBeInTheDocument()
   })
+
+  it('keeps unknown shift labels unchanged in the general status summary', () => {
+    render(
+      <OverviewPanel
+        summary={{
+          year: 2026,
+          totalRevenue: 0,
+          ticketsByAgeRange: [],
+          topHotels: [],
+        }}
+        bookings={[]}
+        maintenance={[]}
+        shifts={[
+          {
+            id: 9,
+            employeeFullName: 'Ana Cruz',
+            shift: 'NIGHT',
+            startDate: '2026-05-16',
+            endDate: '2026-05-31',
+          },
+        ]}
+      />,
+    )
+
+    expect(screen.getAllByText('Ana Cruz').length).toBeGreaterThan(0)
+    expect(screen.getByText(/NIGHT hasta/)).toBeInTheDocument()
+  })
 })

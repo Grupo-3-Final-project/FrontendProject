@@ -74,6 +74,7 @@ vi.mock('../api/userApi', () => ({
 
 describe('DashboardPage', () => {
   afterEach(() => {
+    vi.clearAllMocks()
     vi.mocked(getOffers).mockResolvedValue([])
     vi.mocked(getDashboardSummary).mockResolvedValue({
       year: 2026,
@@ -94,6 +95,16 @@ describe('DashboardPage', () => {
     await waitFor(() => {
       expect(screen.getByRole('button', { name: /Actualizar/i })).toBeInTheDocument()
     })
+  })
+
+  it('falls back to the overview tab when the query string contains an invalid tab', async () => {
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=invalid']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByRole('heading', { name: 'Resumen' })).toBeInTheDocument()
   })
 
   it('shows edit and delete actions for offers', async () => {
@@ -137,6 +148,33 @@ describe('DashboardPage', () => {
         <DashboardPage />
       </MemoryRouter>,
     )
+
+    expect(await screen.findByText('Se ha producido un error inesperado.')).toBeInTheDocument()
+  })
+
+  it('shows a controlled page error when the manual refresh fails', async () => {
+    vi.mocked(getDashboardSummary)
+      .mockResolvedValueOnce({
+        year: 2026,
+        totalRevenue: 0,
+        ticketsByAgeRange: [],
+        topHotels: [],
+      })
+      .mockRejectedValueOnce({
+        response: {
+          data: {
+            message: 'Unexpected error',
+          },
+        },
+      })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=overview']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(await screen.findByRole('button', { name: /Actualizar/i }))
 
     expect(await screen.findByText('Se ha producido un error inesperado.')).toBeInTheDocument()
   })
@@ -233,6 +271,46 @@ describe('DashboardPage', () => {
     expect(await screen.findByText('La agenda de mantenimiento se ha actualizado.')).toBeInTheDocument()
   })
 
+  it('shows the translated shift generation error when the operation fails', async () => {
+    vi.mocked(generateShifts).mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'Not enough employees to cover required shifts',
+        },
+      },
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=operations']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(await screen.findByRole('button', { name: /^Generar turnos$/i }))
+
+    expect(await screen.findByText('No hay suficientes empleados activos para cubrir los turnos.')).toBeInTheDocument()
+  })
+
+  it('shows the translated maintenance generation error when the operation fails', async () => {
+    vi.mocked(generateMaintenanceTasks).mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'Not enough technicians available',
+        },
+      },
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=operations']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(await screen.findByRole('button', { name: /^Generar mantenimiento$/i }))
+
+    expect(await screen.findByText('No hay suficientes tecnicos disponibles para generar mantenimiento.')).toBeInTheDocument()
+  })
+
   it('edits and deletes users from the entity manager', async () => {
     vi.spyOn(window, 'confirm').mockReturnValue(true)
     vi.mocked(getUsers).mockResolvedValue([
@@ -287,6 +365,71 @@ describe('DashboardPage', () => {
     })
 
     expect(await screen.findByText('El elemento se ha borrado correctamente.')).toBeInTheDocument()
+    window.confirm.mockRestore()
+  })
+
+  it('shows the translated update error when the entity save fails', async () => {
+    vi.mocked(getUsers).mockResolvedValue([
+      {
+        id: 9,
+        firstName: 'Clara',
+        lastName: 'Lopez',
+        dni: '87654321B',
+        email: 'clara@example.com',
+        phone: '600111222',
+        birthDate: '1992-03-14',
+      },
+    ])
+    vi.mocked(updateUser).mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'Invalid user data',
+        },
+      },
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=users']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Editar' }))
+    fireEvent.click(screen.getByRole('button', { name: /Guardar cambios/i }))
+
+    expect(await screen.findByText('Los datos del usuario no son validos.')).toBeInTheDocument()
+  })
+
+  it('shows the translated delete error when the entity removal fails', async () => {
+    vi.spyOn(window, 'confirm').mockReturnValue(true)
+    vi.mocked(getUsers).mockResolvedValue([
+      {
+        id: 9,
+        firstName: 'Clara',
+        lastName: 'Lopez',
+        dni: '87654321B',
+        email: 'clara@example.com',
+        phone: '600111222',
+        birthDate: '1992-03-14',
+      },
+    ])
+    vi.mocked(deleteUser).mockRejectedValueOnce({
+      response: {
+        data: {
+          message: 'Unexpected error',
+        },
+      },
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=users']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    fireEvent.click(await screen.findByRole('button', { name: 'Eliminar' }))
+
+    expect(await screen.findByText('Se ha producido un error inesperado.')).toBeInTheDocument()
     window.confirm.mockRestore()
   })
 })

@@ -142,4 +142,98 @@ describe('MobilePage', () => {
     expect(screen.getByText('No se ha podido consultar el tiempo de Granada.')).toBeInTheDocument()
     expect(screen.getAllByText('Dragon Coaster').length).toBeGreaterThan(0)
   })
+
+  it('shows a controlled page error when mobile access cannot be loaded', async () => {
+    getMobileAccess.mockRejectedValue({
+      response: {
+        data: {
+          message: 'Acceso no disponible',
+        },
+      },
+    })
+    getGranadaWeather.mockResolvedValue({
+      city: 'Granada',
+      temperatureCelsius: 24.5,
+      apparentTemperatureCelsius: 26.0,
+      condition: 'Poco nuboso',
+      day: true,
+      updatedAt: '2026-05-12T12:00:00',
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/mobile/token-3']}>
+        <Routes>
+          <Route path="/mobile/:mobileAccessToken" element={<MobilePage />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByText('No se ha podido abrir la experiencia movil')).toBeInTheDocument()
+    expect(screen.getByText('Acceso no disponible')).toBeInTheDocument()
+  })
+
+  it('shows the access pending message when the QR token is missing', async () => {
+    render(
+      <MemoryRouter initialEntries={['/mobile']}>
+        <Routes>
+          <Route path="/mobile" element={<MobilePage />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    expect(await screen.findByText('Acceso movil pendiente')).toBeInTheDocument()
+  })
+
+  it('allows resetting the visited attractions when there are no pending items', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.2)
+
+    localStorage.setItem('visitor-mobile-visited:token-4', '[1]')
+
+    getMobileAccess.mockResolvedValue({
+      ticketId: 7,
+      bookingId: 3,
+      holderFullName: 'Ana Garcia',
+      ticketStatus: 'VALID',
+      visitDate: '2026-05-22',
+      attractions: [
+        {
+          id: 1,
+          name: 'Dragon Coaster',
+          description: 'Montana rusa principal del parque.',
+          size: 'LARGE',
+          status: 'OPEN',
+          totalSeats: 32,
+          availableSeats: 28,
+          maintenanceFrequencyDays: 7,
+          imageUrl: 'https://example.com/dragon.jpg',
+        },
+      ],
+    })
+
+    getGranadaWeather.mockResolvedValue({
+      city: 'Granada',
+      temperatureCelsius: 24.5,
+      apparentTemperatureCelsius: 26.0,
+      condition: 'Poco nuboso',
+      day: true,
+      updatedAt: '2026-05-12T12:00:00',
+    })
+
+    render(
+      <MemoryRouter initialEntries={['/mobile/token-4']}>
+        <Routes>
+          <Route path="/mobile/:mobileAccessToken" element={<MobilePage />} />
+        </Routes>
+      </MemoryRouter>,
+    )
+
+    await screen.findByText('Jornada completada')
+    fireEvent.click(screen.getByRole('button', { name: 'Reiniciar' }))
+
+    await waitFor(() => {
+      expect(localStorage.getItem('visitor-mobile-visited:token-4')).toBeNull()
+    })
+
+    expect(screen.getAllByText('Dragon Coaster').length).toBeGreaterThan(0)
+  })
 })
