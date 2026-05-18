@@ -230,7 +230,7 @@ function HomePage() {
 
       <section
         id="hoteles"
-        className="scroll-mt-32 border-b border-white/10 bg-neutral-950 px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <SectionHeader
@@ -241,7 +241,7 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.hotels.length ? (
-              <HotelEditorialCarousel hotels={catalog.hotels} />
+              <HotelCoverflowCarousel hotels={catalog.hotels} />
             ) : (
               <StatusMessage
                 title="Sin hoteles"
@@ -255,7 +255,7 @@ function HomePage() {
 
       <section
         id="ofertas"
-        className="scroll-mt-32 border-b border-white/10 bg-neutral-950 px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
+        className="scroll-mt-32 border-b border-white/10 bg-black px-4 py-10 sm:px-8 sm:py-12 md:scroll-mt-0 md:px-10 lg:px-12"
       >
         <div className="mx-auto max-w-7xl">
           <SectionHeader
@@ -266,43 +266,7 @@ function HomePage() {
 
           {renderLoadingOrError(isLoading, errorMessage) || (
             catalog.offers.length ? (
-              <div className="grid items-stretch gap-5 md:grid-cols-2 xl:grid-cols-3">
-                {catalog.offers.map((offer) => (
-                  <article
-                    key={offer.id}
-                    className="group relative min-h-[19rem] overflow-hidden rounded-2xl border border-red-900/60 bg-black shadow-2xl shadow-black/45"
-                  >
-                    <img
-                      src={offer.imageUrl}
-                      alt={offer.title}
-                      className="absolute inset-0 h-full w-full object-cover opacity-70 transition duration-500 group-hover:scale-105 group-hover:opacity-85"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-red-950/15" />
-                    <div className="relative flex min-h-[19rem] flex-col justify-end p-5 sm:p-6">
-                      <h3 className="line-clamp-2 text-2xl leading-tight font-black tracking-normal text-white">
-                        {offer.title}
-                      </h3>
-                      <p className="mt-3 line-clamp-2 max-w-[28rem] text-sm leading-6 text-neutral-200/85">
-                        {offer.description}
-                      </p>
-                      <div className="mt-4 flex flex-wrap gap-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-red-100">
-                        <span className="max-w-full truncate rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
-                          {offer.hotelName}
-                        </span>
-                        <span className="rounded-md border border-red-900/60 bg-red-950/35 px-2.5 py-1">
-                          {formatBoardType(offer.boardType)}
-                        </span>
-                        <span className="rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
-                          {offer.includedTickets} entradas
-                        </span>
-                      </div>
-                      <p className="mt-4 text-3xl font-black tracking-normal text-red-500">
-                        {formatCurrency(offer.totalPrice)}
-                      </p>
-                    </div>
-                  </article>
-                ))}
-              </div>
+              <OfferCoverflowCarousel offers={catalog.offers} />
             ) : (
               <StatusMessage
                 title="Sin ofertas"
@@ -838,146 +802,76 @@ function renderLoadingOrError(isLoading, errorMessage) {
 }
 
 function AttractionCoverflowCarousel({ attractions }) {
+  return (
+    <HomeCoverflowCarousel
+      items={attractions}
+      getItemKey={(attraction) => attraction.id}
+      renderCard={(attraction, position) => (
+        <AttractionCoverflowCard attraction={attraction} position={position} />
+      )}
+    />
+  )
+}
+
+function HotelCoverflowCarousel({ hotels }) {
+  return (
+    <HomeCoverflowCarousel
+      items={hotels}
+      getItemKey={(hotel) => hotel.id}
+      renderCard={(hotel, position) => (
+        <HotelCoverflowCard hotel={hotel} position={position} />
+      )}
+    />
+  )
+}
+
+function OfferCoverflowCarousel({ offers }) {
+  return (
+    <HomeCoverflowCarousel
+      items={offers}
+      getItemKey={(offer) => offer.id}
+      renderCard={(offer, position) => (
+        <OfferCoverflowCard offer={offer} position={position} />
+      )}
+    />
+  )
+}
+
+function HomeCoverflowCarousel({ items, getItemKey, renderCard }) {
   const [activeIndex, setActiveIndex] = useState(0)
 
   useEffect(() => {
     setActiveIndex(0)
-  }, [attractions.length])
+  }, [items.length])
 
   useEffect(() => {
-    if (attractions.length <= 1) {
+    if (items.length <= 1) {
       return undefined
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveIndex((currentIndex) => (currentIndex + 1) % attractions.length)
+      setActiveIndex((currentIndex) => (currentIndex + 1) % items.length)
     }, 4000)
 
     return () => {
       window.clearInterval(intervalId)
     }
-  }, [attractions.length])
+  }, [items.length])
 
-  const slides = getCoverflowSlides(attractions, activeIndex)
+  const slides = getHomeCoverflowSlides(items, activeIndex)
 
   return (
     <div className="relative mx-auto h-[34rem] max-w-7xl overflow-hidden py-5 sm:h-[38rem] lg:h-[42rem]">
       <div className="absolute inset-x-12 top-1/2 h-48 -translate-y-1/2 rounded-full bg-red-950/10 blur-3xl" />
       <div className="absolute inset-y-0 left-0 z-20 w-16 bg-gradient-to-r from-black via-black/80 to-transparent sm:w-24" />
       <div className="absolute inset-y-0 right-0 z-20 w-16 bg-gradient-to-l from-black via-black/80 to-transparent sm:w-24" />
-      {slides.map(({ attraction, position }) => (
-        <AttractionCoverflowCard
-          key={attraction.id}
-          attraction={attraction}
-          position={position}
-        />
+      {slides.map(({ item, position }) => (
+        <div key={getItemKey(item)}>
+          {renderCard(item, position)}
+        </div>
       ))}
     </div>
   )
-}
-
-function HotelEditorialCarousel({ hotels }) {
-  const [activeHotelIndex, setActiveHotelIndex] = useState(0)
-
-  useEffect(() => {
-    setActiveHotelIndex(0)
-  }, [hotels.length])
-
-  useEffect(() => {
-    if (hotels.length <= 1) {
-      return undefined
-    }
-
-    const intervalId = window.setInterval(() => {
-      setActiveHotelIndex((currentIndex) => (currentIndex + 1) % hotels.length)
-    }, 4000)
-
-    return () => {
-      window.clearInterval(intervalId)
-    }
-  }, [hotels.length])
-
-  const slides = getHotelSpotlightSlides(hotels, activeHotelIndex)
-  const currentHotel = slides[0]?.hotel
-  const previewHotels = slides.slice(1)
-
-  return (
-    <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-white/10 bg-black/50 shadow-2xl shadow-black/50">
-      <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-red-950/20 to-transparent" />
-      <div className="relative grid gap-5 p-4 sm:p-6 lg:grid-cols-[1.8fr_minmax(18rem,28rem)] lg:gap-6 xl:p-8">
-        <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-neutral-950/80 shadow-[0_0_28px_rgba(0,0,0,0.35)]">
-          <img
-            src={currentHotel.imageUrl}
-            alt={currentHotel.name}
-            className="h-72 w-full object-cover sm:h-[28rem]"
-          />
-          <div className="p-6 sm:p-7">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-400">Hotel destacado</p>
-            <h3 className="mt-4 text-3xl font-black tracking-tight text-white">{currentHotel.name}</h3>
-            <p className="mt-4 line-clamp-3 text-sm leading-6 text-neutral-300">{currentHotel.description}</p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <SpotlightChip label="Habitaciones libres" value={`${currentHotel.availableRooms}/${currentHotel.totalRooms}`} />
-              <SpotlightChip label="Plazas libres" value={`${currentHotel.availablePlaces}/${currentHotel.totalPlaces}`} />
-              <SpotlightChip label="Media pensión" value={formatCurrency(currentHotel.halfBoardPrice)} />
-              <SpotlightChip label="Pensión completa" value={formatCurrency(currentHotel.fullBoardPrice)} />
-            </div>
-          </div>
-        </div>
-
-        <div className="grid gap-4">
-          {previewHotels.map(({ hotel }) => (
-            <div key={hotel.id} className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-neutral-950/75 shadow-[0_0_20px_rgba(0,0,0,0.3)]">
-              <div className="relative h-36 overflow-hidden">
-                <img
-                  src={hotel.imageUrl}
-                  alt={hotel.name}
-                  className="h-full w-full object-cover grayscale contrast-90 opacity-80"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
-              </div>
-              <div className="p-4 sm:p-5">
-                <h4 className="text-lg font-black text-white line-clamp-2">{hotel.name}</h4>
-                <p className="mt-2 line-clamp-2 text-sm leading-6 text-neutral-400">{hotel.description}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-neutral-200">
-                    Desde {formatCurrency(hotel.halfBoardPrice)}
-                  </span>
-                  <span className="rounded-full border border-white/10 bg-black/30 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-neutral-200">
-                    {hotel.availablePlaces} libres
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-function getHotelSpotlightSlides(hotels, activeIndex) {
-  if (hotels.length === 1) {
-    return [{ hotel: hotels[0] }]
-  }
-
-  if (hotels.length === 2) {
-    return [
-      { hotel: hotels[activeIndex] },
-      { hotel: hotels[(activeIndex + 1) % hotels.length] },
-    ]
-  }
-
-  return [
-    {
-      hotel: hotels[activeIndex],
-    },
-    {
-      hotel: hotels[(activeIndex + 1) % hotels.length],
-    },
-    {
-      hotel: hotels[(activeIndex + 2) % hotels.length],
-    },
-  ]
 }
 
 function SpotlightChip({ label, value }) {
@@ -989,35 +883,35 @@ function SpotlightChip({ label, value }) {
   )
 }
 
-function getCoverflowSlides(attractions, activeIndex) {
-  if (attractions.length === 1) {
-    return [{ attraction: attractions[0], position: 'current' }]
+function getHomeCoverflowSlides(items, activeIndex) {
+  if (items.length === 1) {
+    return [{ item: items[0], position: 'current' }]
   }
 
-  if (attractions.length === 2) {
+  if (items.length === 2) {
     return [
-      { attraction: attractions[activeIndex], position: 'current' },
-      { attraction: attractions[(activeIndex + 1) % attractions.length], position: 'next' },
+      { item: items[activeIndex], position: 'current' },
+      { item: items[(activeIndex + 1) % items.length], position: 'next' },
     ]
   }
 
   return [
     {
-      attraction: attractions[(activeIndex - 1 + attractions.length) % attractions.length],
+      item: items[(activeIndex - 1 + items.length) % items.length],
       position: 'previous',
     },
     {
-      attraction: attractions[activeIndex],
+      item: items[activeIndex],
       position: 'current',
     },
     {
-      attraction: attractions[(activeIndex + 1) % attractions.length],
+      item: items[(activeIndex + 1) % items.length],
       position: 'next',
     },
   ]
 }
 
-function AttractionCoverflowCard({ attraction, position }) {
+function HomeCoverflowCard({ position, imageUrl, imageAlt, children }) {
   const isCurrent = position === 'current'
   const positionClassName = {
     previous:
@@ -1029,15 +923,15 @@ function AttractionCoverflowCard({ attraction, position }) {
   }[position]
 
   const cardClassName = isCurrent
-    ? 'group relative flex h-[31rem] flex-col overflow-hidden rounded-[1.75rem] border border-red-950/60 bg-neutral-950 shadow-[0_0_34px_rgba(127,29,29,0.18)] transition-all duration-500 hover:scale-[1.015] hover:border-red-800/75 hover:shadow-[0_0_48px_rgba(185,28,28,0.28)] sm:h-[35rem] lg:h-[39rem]'
-    : 'relative flex h-[26rem] flex-col overflow-hidden rounded-2xl border border-white/15 bg-neutral-950 shadow-[0_0_24px_rgba(0,0,0,0.65)] transition-all duration-700 sm:h-[30rem]'
+    ? 'group relative flex h-[31rem] flex-col overflow-hidden rounded-[1.75rem] border border-red-950/60 bg-black shadow-[0_0_34px_rgba(127,29,29,0.18)] transition-all duration-500 hover:scale-[1.015] hover:border-red-800/75 hover:shadow-[0_0_48px_rgba(185,28,28,0.28)] sm:h-[35rem] lg:h-[39rem]'
+    : 'relative flex h-[26rem] flex-col overflow-hidden rounded-2xl border border-red-950/45 bg-black shadow-[0_0_24px_rgba(0,0,0,0.65)] transition-all duration-700 sm:h-[30rem]'
 
   return (
     <div className={`absolute top-1/2 left-1/2 transition-all duration-700 ease-in-out ${positionClassName}`}>
       <article className={cardClassName}>
         <img
-          src={attraction.imageUrl}
-          alt={attraction.name}
+          src={imageUrl}
+          alt={imageAlt}
           className={`h-full w-full object-cover transition duration-700 ${isCurrent ? 'opacity-90 group-hover:scale-[1.03] group-hover:opacity-95' : 'opacity-70 grayscale contrast-90'}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
@@ -1049,21 +943,103 @@ function AttractionCoverflowCard({ attraction, position }) {
         )}
 
         <div className={`absolute right-0 bottom-0 left-0 ${isCurrent ? 'p-6 sm:p-7' : 'p-5'}`}>
-          <h3 className={`${isCurrent ? 'text-3xl sm:text-4xl' : 'text-2xl'} line-clamp-2 leading-tight font-black tracking-normal ${isCurrent ? 'text-white' : 'text-neutral-100 drop-shadow-[0_0_18px_rgba(0,0,0,0.8)]'}`}>
-            {attraction.name}
-          </h3>
-          {isCurrent && (
-            <p className="mt-3 line-clamp-3 max-w-xl text-sm leading-6 text-neutral-300 sm:text-base">
-              {attraction.description}
-            </p>
-          )}
-          <div className={`${isCurrent ? 'mt-5' : 'mt-4'} flex flex-wrap items-center gap-2`}>
-            <StatusPill status={attraction.status} />
-            <InfoTag>{formatAttractionSize(attraction.size)}</InfoTag>
-          </div>
+          {children}
         </div>
       </article>
     </div>
+  )
+}
+
+function AttractionCoverflowCard({ attraction, position }) {
+  const isCurrent = position === 'current'
+
+  return (
+    <HomeCoverflowCard
+      position={position}
+      imageUrl={attraction.imageUrl}
+      imageAlt={attraction.name}
+    >
+      <h3 className={`${isCurrent ? 'text-3xl sm:text-4xl' : 'text-2xl'} line-clamp-2 leading-tight font-black tracking-normal ${isCurrent ? 'text-white' : 'text-neutral-100 drop-shadow-[0_0_18px_rgba(0,0,0,0.8)]'}`}>
+        {attraction.name}
+      </h3>
+      {isCurrent && (
+        <p className="mt-3 line-clamp-3 max-w-xl text-sm leading-6 text-neutral-300 sm:text-base">
+          {attraction.description}
+        </p>
+      )}
+      <div className={`${isCurrent ? 'mt-5' : 'mt-4'} flex flex-wrap items-center gap-2`}>
+        <StatusPill status={attraction.status} />
+        <InfoTag>{formatAttractionSize(attraction.size)}</InfoTag>
+      </div>
+    </HomeCoverflowCard>
+  )
+}
+
+function HotelCoverflowCard({ hotel, position }) {
+  const isCurrent = position === 'current'
+
+  return (
+    <HomeCoverflowCard
+      position={position}
+      imageUrl={hotel.imageUrl}
+      imageAlt={hotel.name}
+    >
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-400">Hotel destacado</p>
+      <h3 className={`${isCurrent ? 'mt-4 text-3xl sm:text-4xl' : 'mt-3 text-2xl'} line-clamp-2 leading-tight font-black tracking-normal text-white`}>
+        {hotel.name}
+      </h3>
+      {isCurrent && (
+        <p className="mt-3 line-clamp-3 max-w-xl text-sm leading-6 text-neutral-300 sm:text-base">
+          {hotel.description}
+        </p>
+      )}
+      <div className={`${isCurrent ? 'mt-5 grid gap-3 sm:grid-cols-2' : 'mt-4 flex flex-wrap gap-2'}`}>
+        <SpotlightChip label="Habitaciones libres" value={`${hotel.availableRooms}/${hotel.totalRooms}`} />
+        <SpotlightChip label="Plazas libres" value={`${hotel.availablePlaces}/${hotel.totalPlaces}`} />
+        {isCurrent && (
+          <>
+            <SpotlightChip label="Media pensión" value={formatCurrency(hotel.halfBoardPrice)} />
+            <SpotlightChip label="Pensión completa" value={formatCurrency(hotel.fullBoardPrice)} />
+          </>
+        )}
+      </div>
+    </HomeCoverflowCard>
+  )
+}
+
+function OfferCoverflowCard({ offer, position }) {
+  const isCurrent = position === 'current'
+
+  return (
+    <HomeCoverflowCard
+      position={position}
+      imageUrl={offer.imageUrl}
+      imageAlt={offer.title}
+    >
+      <p className="text-sm font-bold uppercase tracking-[0.2em] text-red-400">Oferta especial</p>
+      <h3 className={`${isCurrent ? 'mt-4 text-3xl sm:text-4xl' : 'mt-3 text-2xl'} line-clamp-2 leading-tight font-black tracking-normal text-white`}>
+        {offer.title}
+      </h3>
+      {isCurrent && (
+        <p className="mt-3 line-clamp-3 max-w-xl text-sm leading-6 text-neutral-300 sm:text-base">
+          {offer.description}
+        </p>
+      )}
+      <div className={`${isCurrent ? 'mt-5' : 'mt-4'} flex flex-wrap gap-2 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-red-100`}>
+        <span className="max-w-full truncate rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
+          {offer.hotelName}
+        </span>
+        <span className="rounded-md border border-red-900/60 bg-red-950/35 px-2.5 py-1">
+          {formatBoardType(offer.boardType)}
+        </span>
+        <span className="rounded-md border border-white/10 bg-black/35 px-2.5 py-1">
+          {offer.includedTickets} entradas
+        </span>
+      </div>
+      <p className={`${isCurrent ? 'mt-5 text-3xl sm:text-4xl' : 'mt-4 text-2xl'} font-black tracking-normal text-red-500`}>
+        {formatCurrency(offer.totalPrice)}
+      </p>
+    </HomeCoverflowCard>
   )
 }
 
