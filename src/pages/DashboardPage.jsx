@@ -396,12 +396,12 @@ function DashboardPage() {
 
   return (
     <main className="min-w-0 space-y-4">
-      <header className="flex flex-col gap-3 border-b border-red-900/35 bg-black/5 pb-4 md:flex-row md:items-center md:justify-between">
+      <header className="flex flex-col gap-2 border-b border-red-900/35 bg-black/5 pb-3 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
           <p className="text-[0.68rem] font-semibold tracking-[0.22em] text-red-400/80 uppercase">
             Panel interno
           </p>
-          <h1 className="text-2xl leading-tight font-black text-neutral-100 md:text-3xl">
+          <h1 className="!max-w-none !text-lg !leading-tight font-extrabold text-neutral-100 md:!text-xl">
             {activeTabLabel}
           </h1>
           <p className="max-w-2xl text-sm leading-5 text-neutral-400">
