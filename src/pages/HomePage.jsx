@@ -110,15 +110,15 @@ function HomePage() {
   const liveOverview = useMemo(
     () => [
       {
-        label: 'Atracciones activas',
+        label: 'Atracciones destacadas',
         value: String(catalog.attractions.filter((attraction) => attraction.status === 'OPEN').length),
       },
       {
-        label: 'Hoteles disponibles',
+        label: 'Hoteles tematizados',
         value: String(catalog.hotels.filter((hotel) => hotel.availablePlaces > 0).length),
       },
       {
-        label: 'Ofertas especiales',
+        label: 'Ofertas en taquilla',
         value: String(catalog.offers.length),
       },
     ],
@@ -154,7 +154,7 @@ function HomePage() {
               <span className="block text-red-600">si te atreves</span>
             </h1>
             <p className="mt-4 max-w-xl text-base font-semibold text-neutral-100 sm:text-lg">
-              ¿Te atreves a cruzarla?
+              Explora atracciones, hoteles y ofertas para preparar tu visita nocturna en Granada.
             </p>
             <p className="mt-2 max-w-md text-base leading-7 text-neutral-200/80 sm:max-w-[31rem]">
               El parque de atracciones de terror más intenso te espera en Granada con experiencias nocturnas, hoteles disponibles y ofertas listas para la visita.
@@ -514,23 +514,23 @@ function HomePage() {
                 </div>
                 <ul className="divide-y divide-white/10 text-sm text-neutral-300">
                   <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">OK</span>
+                    <span className="text-green-400">Disponible</span>
                     Aparcamiento gratuito
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">OK</span>
+                    <span className="text-green-400">Disponible</span>
                     Cafetería y restaurante
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">OK</span>
+                    <span className="text-green-400">Disponible</span>
                     Tienda de souvenirs
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">OK</span>
+                    <span className="text-green-400">Disponible</span>
                     Consigna de equipaje
                   </li>
                   <li className="flex items-center gap-3 px-5 py-4">
-                    <span className="text-green-400">OK</span>
+                    <span className="text-green-400">Disponible</span>
                     Servicio médico
                   </li>
                 </ul>
