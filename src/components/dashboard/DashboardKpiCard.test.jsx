@@ -60,4 +60,20 @@ describe('DashboardKpiCard', () => {
     expect(container.querySelector('.border-red-700\\/60')).toBeTruthy()
     expect(container.querySelector('.border-red-600\\/75')).toBeTruthy()
   })
+
+  it('renders the warning palette and keeps optional text nodes empty when values are blank', () => {
+    const { container } = render(
+      <DashboardKpiCard
+        title=""
+        value="0"
+        note=""
+        tag=""
+        variant="warning"
+      />,
+    )
+
+    expect(container.querySelector('.border-amber-500\\/65')).toBeTruthy()
+    expect(container.querySelector('.border-amber-500\\/75')).toBeTruthy()
+    expect(screen.getByText('0')).toBeInTheDocument()
+  })
 })

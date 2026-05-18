@@ -100,4 +100,29 @@ describe('AttractionModal', () => {
     expect(screen.getByText('No apta para cardiacos')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /AÑADIR A MI RUTA/i })).toBeInTheDocument()
   })
+  it('renders only the populated feature and info rows when the attraction data is partial', () => {
+    render(
+      <AttractionModal
+        attraction={{
+          name: 'Bosque de la Niebla',
+          category: 'Suave',
+          description: 'Recorrido atmosferico.',
+          minHeight: '110 cm',
+          waitTime: 12,
+          info: {
+            duration: '4 min',
+          },
+        }}
+        onClose={vi.fn()}
+      />,
+    )
+
+    expect(screen.getByText('110 cm')).toBeInTheDocument()
+    expect(screen.queryByText(/^Tipo$/)).not.toBeInTheDocument()
+    expect(screen.queryByText('Intensidad')).not.toBeInTheDocument()
+    expect(screen.getByText('Duracion')).toBeInTheDocument()
+    expect(screen.getByText('4 min')).toBeInTheDocument()
+    expect(screen.queryByText('Accesibilidad')).not.toBeInTheDocument()
+    expect(screen.queryByText('Restricciones')).not.toBeInTheDocument()
+  })
 })

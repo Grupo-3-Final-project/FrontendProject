@@ -48,6 +48,22 @@ describe('internalAuth', () => {
     expect(localStorage.getItem('parque-internal-session')).toBeNull()
   })
 
+  it('returns null when there is no session or the stored session has no token', () => {
+    expect(readInternalSession()).toBeNull()
+    expect(getInternalToken()).toBeNull()
+
+    localStorage.setItem(
+      'parque-internal-session',
+      JSON.stringify({
+        username: 'admin',
+        expiresAt: new Date(Date.now() + 60_000).toISOString(),
+      }),
+    )
+
+    expect(readInternalSession()).toBeNull()
+    expect(localStorage.getItem('parque-internal-session')).toBeNull()
+  })
+
   it('clears the session and emits the auth event', () => {
     const listener = vi.fn()
     window.addEventListener(internalAuthEventName, listener)

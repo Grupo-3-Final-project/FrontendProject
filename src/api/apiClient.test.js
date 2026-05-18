@@ -41,6 +41,16 @@ describe('apiClient', () => {
     expect(clearInternalSession).toHaveBeenCalledTimes(1)
   })
 
+  it('passes through successful responses and keeps the session on non-401 errors', async () => {
+    const response = { data: { ok: true } }
+    const error = { response: { status: 409 } }
+
+    expect(apiClient.interceptors.response.handlers[0].fulfilled(response)).toBe(response)
+    await expect(apiClient.interceptors.response.handlers[0].rejected(error)).rejects.toBe(error)
+
+    expect(clearInternalSession).not.toHaveBeenCalled()
+  })
+
   it('translates backend error messages and falls back by status code', () => {
     expect(getApiErrorMessage({ response: { data: { message: 'Weather service unavailable' } } }))
       .toBe('No se ha podido consultar el tiempo de Granada.')
@@ -48,6 +58,8 @@ describe('apiClient', () => {
       .toBe('No tienes permiso para realizar esta operacion.')
     expect(getApiErrorMessage({ response: { status: 500 } }))
       .toBe('Se ha producido un error interno. Intentalo de nuevo.')
+    expect(getApiErrorMessage({ response: { data: { message: 'Mensaje directo' } } }))
+      .toBe('Mensaje directo')
     expect(getApiErrorMessage({}, 'Fallo generico'))
       .toBe('Fallo generico')
   })
