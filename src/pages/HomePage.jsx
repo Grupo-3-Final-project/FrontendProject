@@ -9,6 +9,30 @@ import { getApiErrorMessage } from '../api/apiClient'
 import StatusMessage from '../components/ui/StatusMessage'
 import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
 
+const mapMarkerPositionsByName = {
+  'Montaña del Último Grito': 'left-[18%] top-[22%]',
+  'Río de Sangre': 'left-[25%] top-[63%]',
+  'Carrusel Maldito': 'left-[46%] top-[50%]',
+  'Laberinto de las Sombras': 'left-[69%] top-[43%]',
+  'Casa del Eco': 'left-[57%] top-[73%]',
+  'Torre del Terror': 'left-[82%] top-[61%]',
+}
+
+const fallbackMapMarkerPositions = [
+  'left-[18%] top-[30%]',
+  'left-[43%] top-[20%]',
+  'left-[70%] top-[31%]',
+  'left-[31%] top-[50%]',
+  'left-[54%] top-[59%]',
+  'left-[78%] top-[70%]',
+  'left-[24%] top-[77%]',
+  'left-[50%] top-[82%]',
+]
+
+function getMapMarkerPosition(attraction, index) {
+  return mapMarkerPositionsByName[attraction.name] ?? fallbackMapMarkerPositions[index % fallbackMapMarkerPositions.length]
+}
+
 function HomePage() {
   const [catalog, setCatalog] = useState({
     attractions: [],
@@ -18,6 +42,7 @@ function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
   const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
+  const [selectedMapAttractionId, setSelectedMapAttractionId] = useState(null)
 
   useEffect(() => {
     let isMounted = true
@@ -296,18 +321,25 @@ function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/0 to-black/25" />
             <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 
-            <span className="absolute top-[28%] left-[12%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Mansión Maldita
-            </span>
-            <span className="absolute bottom-[18%] left-[24%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Río de Sangre
-            </span>
-            <span className="absolute top-[16%] left-[48%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Torre del Terror
-            </span>
-            <span className="absolute right-[18%] bottom-[38%] hidden rounded-lg border border-white/20 bg-neutral-950/85 px-4 py-2 text-xs font-bold text-white shadow-xl shadow-black/40 backdrop-blur sm:inline-flex">
-              Laberinto Oscuro
-            </span>
+            {catalog.attractions.map((attraction, index) => {
+              const isSelected = selectedMapAttractionId === attraction.id
+              const markerStateClassName = isSelected
+                ? 'scale-105 border-red-400 bg-red-950/85 text-white ring-2 ring-red-500/70 shadow-[0_0_28px_rgba(220,38,38,0.55)]'
+                : 'border-white/25 bg-black/70 text-neutral-100 shadow-xl shadow-black/40 hover:border-red-500/70 hover:bg-red-950/70 hover:text-white'
+
+              return (
+                <button
+                  key={attraction.id}
+                  type="button"
+                  aria-pressed={isSelected}
+                  aria-label={`Destacar ${attraction.name} en el mapa`}
+                  onClick={() => setSelectedMapAttractionId(attraction.id)}
+                  className={`absolute z-20 max-w-[8.5rem] -translate-x-1/2 -translate-y-1/2 rounded-lg border px-2.5 py-1.5 text-[0.62rem] leading-tight font-extrabold backdrop-blur transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:max-w-[11rem] sm:px-3 sm:py-2 sm:text-xs ${getMapMarkerPosition(attraction, index)} ${markerStateClassName}`}
+                >
+                  <span className="line-clamp-2">{attraction.name}</span>
+                </button>
+              )
+            })}
 
             <div className="absolute right-4 bottom-4 left-4 flex flex-col gap-2 sm:right-6 sm:bottom-6 sm:left-auto sm:items-end">
               <button
@@ -321,6 +353,57 @@ function HomePage() {
                 Ubica accesos, zonas principales y puntos de referencia del parque.
               </p>
             </div>
+          </div>
+
+          <div className="mt-4 rounded-2xl border border-white/10 bg-neutral-950 p-4 shadow-xl shadow-black/35 sm:p-5">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h3 className="text-sm font-extrabold tracking-[0.16em] text-red-300 uppercase">
+                  Mapa visual orientativo
+                </h3>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-300">
+                  Consulta la leyenda del catálogo para identificar las atracciones disponibles y su estado actual.
+                </p>
+              </div>
+            </div>
+
+            {catalog.attractions.length ? (
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {catalog.attractions.map((attraction) => {
+                  const isSelected = selectedMapAttractionId === attraction.id
+                  const selectorStateClassName = isSelected
+                    ? 'border-red-500/70 bg-red-950/35 ring-2 ring-red-500/45 shadow-[0_0_24px_rgba(220,38,38,0.24)]'
+                    : 'border-white/10 bg-black/35 hover:border-red-500/55 hover:bg-red-950/20'
+
+                  return (
+                    <button
+                      key={attraction.id}
+                      type="button"
+                      aria-pressed={isSelected}
+                      aria-label={`Destacar ${attraction.name} en el mapa`}
+                      onClick={() => setSelectedMapAttractionId(attraction.id)}
+                      className={`rounded-xl border p-4 text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 ${selectorStateClassName}`}
+                    >
+                      <h4 className="line-clamp-2 text-base font-black text-white">
+                        {attraction.name}
+                      </h4>
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <StatusPill status={attraction.status} />
+                        <InfoTag>{formatAttractionSize(attraction.size)}</InfoTag>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+            ) : !isLoading && !errorMessage ? (
+              <div className="mt-4">
+                <StatusMessage
+                  title="Sin atracciones en el mapa"
+                  message="Todavía no hay atracciones cargadas para mostrar en la leyenda."
+                  variant="empty"
+                />
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
