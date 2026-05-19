@@ -72,14 +72,14 @@ describe('DashboardLayout', () => {
     )
 
     fireEvent.change(screen.getByLabelText('Usuario'), { target: { value: 'admin' } })
-    fireEvent.change(screen.getByLabelText('Contrasena'), { target: { value: 'admin12345' } })
+    fireEvent.change(screen.getByLabelText(/Contrase.a/i), { target: { value: 'admin12345' } })
     fireEvent.click(screen.getByRole('button', { name: /Entrar al panel/i }))
 
     await waitFor(() => {
       expect(screen.getByText(/PANEL DE GESTI.N/i)).toBeInTheDocument()
     })
 
-    fireEvent.click(screen.getByRole('button', { name: /Cerrar sesion/i }))
+    fireEvent.click(screen.getByRole('button', { name: /Cerrar sesi.n/i }))
 
     await waitFor(() => {
       expect(screen.getByText('Acceso interno')).toBeInTheDocument()
@@ -106,9 +106,9 @@ describe('DashboardLayout', () => {
     )
 
     fireEvent.change(screen.getByLabelText('Usuario'), { target: { value: 'admin' } })
-    fireEvent.change(screen.getByLabelText('Contrasena'), { target: { value: 'bad-pass' } })
+    fireEvent.change(screen.getByLabelText(/Contrase.a/i), { target: { value: 'bad-pass' } })
     fireEvent.click(screen.getByRole('button', { name: /Entrar al panel/i }))
 
-    expect(await screen.findByText('Credenciales invalidas.')).toBeInTheDocument()
+    expect(await screen.findByText(/Credenciales inv.lidas\./i)).toBeInTheDocument()
   })
 })

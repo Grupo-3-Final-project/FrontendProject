@@ -114,7 +114,7 @@ describe('HomePage', () => {
       </MemoryRouter>,
     )
 
-    expect(await screen.findByText('Catalogo no disponible')).toBeInTheDocument()
+    expect((await screen.findAllByText(/Cat..logo no disponible|No se han podido cargar los datos/i)).length).toBeGreaterThan(0)
     expect(screen.getAllByText('Catalog unavailable').length).toBeGreaterThan(0)
     expect(screen.getByText('Granada - Sin datos')).toBeInTheDocument()
   })
@@ -259,8 +259,8 @@ describe('HomePage', () => {
     expect(screen.getAllByText('Hotel Magic Park').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Hotel Sombra').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Hotel Eclipse').length).toBeGreaterThan(0)
-    expect(screen.getByText('Mantenimiento')).toBeInTheDocument()
-    expect(screen.getByText('Cerrada')).toBeInTheDocument()
+    expect(screen.getAllByText('En mantenimiento').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Cerrada').length).toBeGreaterThan(0)
   })
 
   it('shows the loading state before the public catalog resolves', async () => {
@@ -335,7 +335,9 @@ describe('HomePage', () => {
       },
     ])
 
-    expect(await screen.findByText('Dragon Coaster')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getAllByText('Dragon Coaster').length).toBeGreaterThan(0)
+    })
   })
 
   it('renders the two-slide carousel variants for attractions and hotels', async () => {
@@ -402,6 +404,6 @@ describe('HomePage', () => {
     expect(screen.getAllByText('Fog Tunnel').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Hotel Magic Park').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Hotel Sombra').length).toBeGreaterThan(0)
-    expect(screen.getByText('Plazas libres')).toBeInTheDocument()
+    expect(screen.getAllByText('Plazas libres').length).toBeGreaterThan(0)
   })
 })

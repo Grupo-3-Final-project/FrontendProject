@@ -114,7 +114,7 @@ describe('BookingDesk', () => {
     fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'ana@example.com' } })
     fireEvent.change(screen.getByLabelText('Teléfono'), { target: { value: '666123123' } })
     fireEvent.change(screen.getByLabelText('Fecha de nacimiento'), { target: { value: '1990-05-18' } })
-    fireEvent.click(screen.getByRole('button', { name: /Anadir acompanante/i }))
+    fireEvent.click(screen.getByRole('button', { name: /A.a?dir acompa.ante/i }))
     fireEvent.change(screen.getAllByLabelText('Nombre')[1], { target: { value: 'Luis' } })
     fireEvent.change(screen.getAllByLabelText('Apellidos')[1], { target: { value: 'Garcia' } })
     fireEvent.change(screen.getAllByLabelText('Nacimiento')[0], { target: { value: '2016-05-18' } })
@@ -266,10 +266,10 @@ describe('BookingDesk', () => {
     fireEvent.change(screen.getByLabelText(/^Hotel$/), { target: { value: '2' } })
     fireEvent.change(screen.getByLabelText(/R.gimen/), { target: { value: 'FULL_BOARD' } })
 
-    fireEvent.click(screen.getByRole('button', { name: /Anadir acompanante/i }))
-    expect(screen.getByText('Acompanante 1')).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: /A.a?dir acompa.ante/i }))
+    expect(screen.getByText(/Acompa.ante 1/i)).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /Eliminar/i }))
-    expect(screen.queryByText('Acompanante 1')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Acompa.ante 1/i)).not.toBeInTheDocument()
 
     expect(screen.getAllByText('Pensión completa').length).toBeGreaterThan(0)
   })

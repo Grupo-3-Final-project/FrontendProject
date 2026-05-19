@@ -47,7 +47,7 @@ describe('OverviewPanel', () => {
       />,
     )
 
-    expect(screen.getByText('Recaudacion anual')).toBeInTheDocument()
+    expect(screen.getByText(/Recaudaci.n anual/i)).toBeInTheDocument()
     expect(screen.getByText('12.450,00 €')).toBeInTheDocument()
     expect(screen.getByText('Entradas por rango de edad')).toBeInTheDocument()
     expect(screen.getByText('Adulto: 30')).toBeInTheDocument()

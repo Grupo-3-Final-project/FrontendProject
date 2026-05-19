@@ -341,7 +341,7 @@ describe('DashboardPage', () => {
       </MemoryRouter>,
     )
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Editar' }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Editar registro' }))
     fireEvent.change(screen.getByLabelText('Email'), {
       target: { value: 'clara+editada@example.com' },
     })
@@ -358,7 +358,7 @@ describe('DashboardPage', () => {
 
     expect(await screen.findByText('Los cambios se han guardado correctamente.')).toBeInTheDocument()
 
-    fireEvent.click(screen.getByRole('button', { name: 'Eliminar' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Eliminar registro' }))
 
     await waitFor(() => {
       expect(deleteUser).toHaveBeenCalledWith(9)
@@ -394,7 +394,7 @@ describe('DashboardPage', () => {
       </MemoryRouter>,
     )
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Editar' }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Editar registro' }))
     fireEvent.click(screen.getByRole('button', { name: /Guardar cambios/i }))
 
     expect(await screen.findByText('Los datos del usuario no son validos.')).toBeInTheDocument()
@@ -427,7 +427,7 @@ describe('DashboardPage', () => {
       </MemoryRouter>,
     )
 
-    fireEvent.click(await screen.findByRole('button', { name: 'Eliminar' }))
+    fireEvent.click(await screen.findByRole('button', { name: 'Eliminar registro' }))
 
     expect(await screen.findByText('Se ha producido un error inesperado.')).toBeInTheDocument()
     window.confirm.mockRestore()

@@ -88,10 +88,10 @@ describe('EntityManager', () => {
     fireEvent.click(screen.getByRole('button', { name: /Cancelar edición/i }))
     expect(onCancel).toHaveBeenCalledWith('demo')
 
-    fireEvent.click(screen.getByRole('button', { name: /^Editar$/i }))
+    fireEvent.click(screen.getByRole('button', { name: /^Editar registro$/i }))
     expect(onEdit).toHaveBeenCalledWith('demo', { id: 7, name: 'Elemento demo', status: 'OPEN' })
 
-    fireEvent.click(screen.getByRole('button', { name: /^Eliminar$/i }))
+    fireEvent.click(screen.getByRole('button', { name: /^Eliminar registro$/i }))
     await waitFor(() => {
       expect(onDelete).toHaveBeenCalledWith('demo', 7)
     })

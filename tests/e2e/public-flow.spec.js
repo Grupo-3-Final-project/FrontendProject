@@ -82,7 +82,7 @@ test('renders the public home with live catalog data', async ({ page }) => {
 
   await expect(page.getByRole('heading', { level: 1, name: /Cruza la puerta si te atreves/i })).toBeVisible()
   await expect(page.getByText('Granada - 25 C')).toBeVisible()
-  await expect(page.getByText('Dragon Coaster')).toBeVisible()
+  await expect(page.getByLabel('Carrusel de atracciones').getByRole('heading', { name: 'Dragon Coaster' }).first()).toBeVisible()
   await expect(page.getByText('Hotel Magic Park')).toHaveCount(2)
   await expect(page.getByText('Pack familiar')).toBeVisible()
 })
