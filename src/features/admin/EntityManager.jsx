@@ -9,6 +9,9 @@ const inputClasses =
 
 const textareaClasses = `${inputClasses} min-h-28 resize-y`
 
+const panelBlockClasses =
+  'rounded-lg border border-stone-800 bg-[linear-gradient(180deg,rgba(28,25,23,0.72),rgba(3,3,4,0.32))] shadow-[0_14px_34px_rgba(0,0,0,0.18)]'
+
 const actionButtonBaseClasses =
   'inline-flex h-8 min-h-8 w-8 items-center justify-center rounded-md border p-0 text-stone-100 shadow-none transition duration-150 ease-out focus-visible:outline-[3px] focus-visible:outline-offset-[3px] focus-visible:outline-yellow-500/80 enabled:cursor-pointer enabled:hover:-translate-y-px enabled:active:translate-y-0'
 
@@ -86,12 +89,15 @@ function EntityManager({
       <Card title={definition.title} subtitle={definition.description}>
         <div className="space-y-4">
           {statusMessage ? (
-            <StatusMessage title={statusMessage.title} message={statusMessage.message} variant={statusMessage.variant} />
+            <div className="rounded-xl border border-red-950/35 bg-black/20 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_18px_42px_rgba(0,0,0,0.22)]">
+              <StatusMessage title={statusMessage.title} message={statusMessage.message} variant={statusMessage.variant} />
+            </div>
           ) : null}
 
           <form className="space-y-4" onSubmit={handleSubmit}>
-            <div className="rounded-lg border border-red-900/40 bg-black/20 px-4 py-3">
-              <h3 className="text-base font-black text-stone-100">{formTitle}</h3>
+            <div className="rounded-lg border border-red-900/60 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(3,3,4,0.46))] px-4 py-3 shadow-[0_14px_34px_rgba(0,0,0,0.18)]">
+              <div className="text-xs font-bold uppercase text-stone-500">Formulario</div>
+              <h3 className="mt-1 text-base font-black text-stone-100">{formTitle}</h3>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
@@ -135,7 +141,7 @@ function EntityManager({
                   return (
                     <label
                       key={field.name}
-                      className="flex min-h-11 items-center justify-between rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 md:col-span-2"
+                        className="flex min-h-11 items-center justify-between rounded-md border border-stone-700 bg-[linear-gradient(180deg,rgba(28,25,23,0.72),rgba(3,3,4,0.32))] px-3 py-2 md:col-span-2"
                     >
                       <span className="text-sm font-bold text-stone-200">{field.label}</span>
                       <input
@@ -185,7 +191,7 @@ function EntityManager({
                         <img
                           src={fieldValue}
                           alt="Vista previa"
-                          className="h-40 w-full rounded-md border border-stone-800 object-cover"
+                          className="h-40 w-full rounded-md border border-stone-800 bg-black/30 object-cover shadow-[0_14px_34px_rgba(0,0,0,0.18)]"
                         />
                       ) : null}
                     </div>
@@ -231,23 +237,24 @@ function EntityManager({
             variant="empty"
           />
         ) : (
-          <div className="overflow-x-auto">
+          <div className={`${panelBlockClasses} overflow-hidden`}>
+            <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-stone-800 text-left text-sm">
-              <thead>
+              <thead className="bg-[linear-gradient(90deg,rgba(127,29,29,0.2),rgba(28,25,23,0.2))]">
                 <tr className="text-stone-400">
                   {definition.columns.map((column) => (
-                    <th key={column.key} className="px-3 py-3 font-extrabold uppercase">
+                    <th key={column.key} className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">
                       {column.label}
                     </th>
                   ))}
                   {hasActions ? (
-                    <th className="w-20 px-2 py-3 text-center font-extrabold uppercase">Acciones</th>
+                    <th className="w-20 px-2 py-3 text-center text-[0.72rem] font-extrabold uppercase">Acciones</th>
                   ) : null}
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-900">
                 {sortedItems.map((item) => (
-                  <tr key={item.id} className="align-top">
+                  <tr key={item.id} className="align-top transition hover:bg-white/[0.03]">
                     {definition.columns.map((column) => (
                       <td key={column.key} className="px-3 py-3 text-stone-300">
                         {column.render ? column.render(item) : item[column.key]}
@@ -285,6 +292,7 @@ function EntityManager({
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
         )}
       </Card>

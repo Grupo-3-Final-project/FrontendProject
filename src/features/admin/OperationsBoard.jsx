@@ -7,6 +7,9 @@ import { formatDate, formatEmployeeType, formatMaintenanceStatus, formatShiftLab
 const inputClasses =
   'min-h-11 w-full rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 text-sm text-stone-100 outline-none transition focus:border-red-500'
 
+const panelBlockClasses =
+  'rounded-lg border border-stone-800 bg-[linear-gradient(180deg,rgba(28,25,23,0.72),rgba(3,3,4,0.32))] shadow-[0_14px_34px_rgba(0,0,0,0.18)]'
+
 function getDefaultRange() {
   const now = new Date()
   const startDate = new Date(now.getFullYear(), now.getMonth(), 1)
@@ -58,12 +61,14 @@ function OperationsBoard({
   return (
     <section className="space-y-5">
       {statusMessage ? (
-        <StatusMessage title={statusMessage.title} message={statusMessage.message} variant={statusMessage.variant} />
+        <div className="rounded-xl border border-red-950/35 bg-black/20 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_18px_42px_rgba(0,0,0,0.22)]">
+          <StatusMessage title={statusMessage.title} message={statusMessage.message} variant={statusMessage.variant} />
+        </div>
       ) : null}
 
       <div className="grid gap-5 xl:grid-cols-2">
         <Card title="Generar turnos" subtitle="Crea la planificación de turnos para el período indicado.">
-          <form className="space-y-4" onSubmit={handleGenerateShifts}>
+          <form className={`${panelBlockClasses} space-y-4 p-4`} onSubmit={handleGenerateShifts}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
                 <span className="text-sm font-bold text-stone-200">Fecha inicio</span>
@@ -103,7 +108,7 @@ function OperationsBoard({
         </Card>
 
         <Card title="Generar mantenimiento" subtitle="Genera las revisiones según el tamaño de las atracciones.">
-          <form className="space-y-4" onSubmit={handleGenerateMaintenance}>
+          <form className={`${panelBlockClasses} space-y-4 p-4`} onSubmit={handleGenerateMaintenance}>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="block space-y-2">
                 <span className="text-sm font-bold text-stone-200">Fecha inicio</span>
@@ -152,18 +157,19 @@ function OperationsBoard({
               variant="empty"
             />
           ) : (
-            <div className="overflow-x-auto">
+            <div className={`${panelBlockClasses} overflow-hidden`}>
+              <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-stone-800 text-left text-sm">
-                <thead>
+                <thead className="bg-[linear-gradient(90deg,rgba(127,29,29,0.2),rgba(28,25,23,0.2))]">
                   <tr className="text-stone-400">
-                    <th className="px-3 py-3 font-extrabold uppercase">Empleado</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Turno</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Período</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Empleado</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Turno</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Período</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-900">
                   {shiftPreview.map((shift) => (
-                    <tr key={shift.id}>
+                    <tr key={shift.id} className="transition hover:bg-white/[0.03]">
                       <td className="px-3 py-3 text-stone-300">
                         <div className="font-bold text-stone-100">{shift.employeeFullName}</div>
                         <div className="text-xs text-stone-500">{formatEmployeeType(shift.employeeType)}</div>
@@ -176,6 +182,7 @@ function OperationsBoard({
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </Card>
@@ -188,18 +195,19 @@ function OperationsBoard({
               variant="empty"
             />
           ) : (
-            <div className="overflow-x-auto">
+            <div className={`${panelBlockClasses} overflow-hidden`}>
+              <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-stone-800 text-left text-sm">
-                <thead>
+                <thead className="bg-[linear-gradient(90deg,rgba(127,29,29,0.2),rgba(28,25,23,0.2))]">
                   <tr className="text-stone-400">
-                    <th className="px-3 py-3 font-extrabold uppercase">Atracción</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Fecha</th>
-                    <th className="px-3 py-3 font-extrabold uppercase">Técnicos</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Atracción</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Fecha</th>
+                    <th className="px-3 py-3 text-[0.72rem] font-extrabold uppercase">Técnicos</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-stone-900">
                   {maintenancePreview.map((task) => (
-                    <tr key={task.id}>
+                    <tr key={task.id} className="transition hover:bg-white/[0.03]">
                       <td className="px-3 py-3 text-stone-300">
                         <div className="font-bold text-stone-100">{task.attractionName}</div>
                         <div className="text-xs text-stone-500">{formatMaintenanceStatus(task.status)}</div>
@@ -214,6 +222,7 @@ function OperationsBoard({
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </Card>
