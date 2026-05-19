@@ -1,3 +1,4 @@
+import { Euro, Ticket, Users, Wrench } from 'lucide-react'
 import DashboardKpiCard from '../../components/dashboard/DashboardKpiCard'
 import Badge from '../../components/ui/Badge'
 import Card from '../../components/ui/Card'
@@ -49,6 +50,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
     <section className="space-y-5">
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <DashboardKpiCard
+          icon={Euro}
           title="Recaudación anual"
           value={formatCurrency(summary.totalRevenue)}
           note={`Año ${summary.year}`}
@@ -56,6 +58,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           tag="Dashboard"
         />
         <DashboardKpiCard
+          icon={Ticket}
           title="Reservas registradas"
           value={String(bookings.length)}
           note="Compras registradas"
@@ -63,6 +66,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           tag="Taquilla"
         />
         <DashboardKpiCard
+          icon={Wrench}
           title="Mantenimientos"
           value={String(maintenance.length)}
           note="Revisiones planificadas"
@@ -70,6 +74,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
           tag="Operaciones"
         />
         <DashboardKpiCard
+          icon={Users}
           title="Turnos activos"
           value={String(shifts.length)}
           note="Asignaciones activas"
