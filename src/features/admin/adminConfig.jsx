@@ -30,6 +30,9 @@ const numberField = (name, label, options = {}) => ({
   step: options.step ?? 1,
 })
 
+const thumbnailClasses =
+  'h-14 w-20 rounded-lg border border-red-950/40 bg-black/30 object-cover shadow-[0_12px_28px_rgba(0,0,0,0.24)]'
+
 export const entityDefinitions = {
   users: {
     key: 'users',
@@ -108,7 +111,7 @@ export const entityDefinitions = {
             <img
               src={item.imageUrl}
               alt={item.name}
-              className="h-12 w-16 rounded-md border border-stone-800 object-cover"
+              className={thumbnailClasses}
             />
             <div className="min-w-0">
               <div className="font-bold text-stone-100">{item.name}</div>
@@ -203,7 +206,7 @@ export const entityDefinitions = {
             <img
               src={item.imageUrl}
               alt={item.name}
-              className="h-12 w-16 rounded-md border border-stone-800 object-cover"
+              className={thumbnailClasses}
             />
             <div className="min-w-0">
               <div className="font-bold text-stone-100">{item.name}</div>
@@ -282,7 +285,7 @@ export const entityDefinitions = {
             <img
               src={item.imageUrl}
               alt={item.title}
-              className="h-12 w-16 rounded-md border border-stone-800 object-cover"
+              className={thumbnailClasses}
             />
             <div className="min-w-0">
               <div className="font-bold text-stone-100">{item.title}</div>
@@ -342,8 +345,8 @@ export const entityDefinitions = {
         label: 'Tipo',
         type: 'select',
         options: [
-          { value: 'CLEANER', label: 'Limpiador' },
-          { value: 'ANIMATOR', label: 'Animador' },
+          { value: 'CLEANER', label: 'Limpieza' },
+          { value: 'ANIMATOR', label: 'Animación' },
           { value: 'TECHNICIAN', label: 'Técnico' },
         ],
       },
