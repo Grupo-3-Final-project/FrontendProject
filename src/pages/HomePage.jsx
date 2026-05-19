@@ -1,4 +1,4 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useRef, useState } from 'react'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
 import trailerVideo from '../assets/home/Trailer_Ultima_Puerta.mp4'
@@ -57,7 +57,7 @@ function HomePage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
   const [selectedMapAttractionId, setSelectedMapAttractionId] = useState(null)
-  const [isTrailerModalOpen, setIsTrailerModalOpen] = useState(false)
+  const trailerVideoRef = useRef(null)
 
   useEffect(() => {
     let isMounted = true
@@ -127,6 +127,20 @@ function HomePage() {
     [catalog.attractions, catalog.hotels, catalog.offers],
   )
 
+  const playTrailerSection = () => {
+    scrollToSection('visita')
+
+    const videoElement = trailerVideoRef.current
+
+    if (!videoElement) {
+      return
+    }
+
+    videoElement.currentTime = 0
+
+    void videoElement.play().catch(() => undefined)
+  }
+
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
@@ -166,7 +180,7 @@ function HomePage() {
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
-                onClick={() => setIsTrailerModalOpen(true)}
+                onClick={playTrailerSection}
               >
                 Ver tráiler
               </button>
@@ -409,6 +423,7 @@ function HomePage() {
             <div className="space-y-5">
               <div className="relative overflow-hidden rounded-3xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/60">
                 <video
+                  ref={trailerVideoRef}
                   className="aspect-video w-full bg-black object-cover"
                   src={trailerVideo}
                   controls
@@ -684,44 +699,6 @@ function HomePage() {
           </div>
         </div>
       </footer>
-
-      {isTrailerModalOpen && (
-        <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="trailer-modal-title"
-          onClick={() => setIsTrailerModalOpen(false)}
-        >
-          <div
-            className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/70"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
-              <h2 id="trailer-modal-title" className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
-                Tráiler oficial
-              </h2>
-              <button
-                type="button"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/45 text-2xl leading-none font-black text-white transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                aria-label="Cerrar tráiler"
-                onClick={() => setIsTrailerModalOpen(false)}
-              >
-                ×
-              </button>
-            </div>
-            <video
-              className="aspect-video w-full bg-black"
-              src={trailerVideo}
-              controls
-              autoPlay
-              playsInline
-            >
-              Tu navegador no puede reproducir este vídeo.
-            </video>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
