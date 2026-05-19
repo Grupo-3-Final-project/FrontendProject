@@ -54,7 +54,9 @@ describe('BookingDesk', () => {
 
     expect(screen.getByText('No enviado')).toBeInTheDocument()
     expect(
-      screen.getByText('La compra se ha registrado, pero no se ha podido enviar el correo al cliente.'),
+      screen.getByText(
+        'La reserva se ha creado correctamente, pero el email con los QR no se ha podido enviar. Revisa el backend o la configuración de correo.',
+      ),
     ).toBeInTheDocument()
   })
 
