@@ -146,7 +146,7 @@ function BookingDesk({
   const activeMessage = localMessage ?? statusMessage
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
+    <section className="grid gap-5 2xl:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)]">
       <Card title="Venta en taquilla" subtitle="Registra una compra con oferta existente o crea una reserva a medida.">
         <div className="space-y-4">
           {activeMessage ? (
