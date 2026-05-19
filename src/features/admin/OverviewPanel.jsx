@@ -131,7 +131,7 @@ function OverviewPanel({ summary, bookings, maintenance, shifts }) {
         </Card>
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-3">
+      <div className="grid gap-5 2xl:grid-cols-3">
         <PreviewTable
           title="Reservas recientes"
           subtitle="Últimas reservas registradas."
