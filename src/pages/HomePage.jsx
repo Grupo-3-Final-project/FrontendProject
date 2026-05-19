@@ -1,6 +1,7 @@
-﻿import { useEffect, useMemo, useState } from 'react'
+﻿import { useEffect, useMemo, useRef, useState } from 'react'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
+import trailerVideo from '../assets/home/Trailer_Ultima_Puerta.mp4'
 import logoAmusementPark from '../assets/logoAmusementPark.png'
 import { getAttractions } from '../api/attractionApi'
 import { getHotels } from '../api/hotelApi'
@@ -8,7 +9,7 @@ import { getOffers } from '../api/offerApi'
 import { getGranadaWeather } from '../api/weatherApi'
 import { getApiErrorMessage } from '../api/apiClient'
 import StatusMessage from '../components/ui/StatusMessage'
-import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
+import { formatAttractionSize, formatBoardType, formatCurrency } from '../features/admin/formatters'
 
 const mapMarkerPositionsByName = {
   'Montaña del Último Grito': 'left-[18%] top-[22%]',
@@ -56,6 +57,7 @@ function HomePage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
   const [selectedMapAttractionId, setSelectedMapAttractionId] = useState(null)
+  const trailerVideoRef = useRef(null)
 
   useEffect(() => {
     let isMounted = true
@@ -125,6 +127,20 @@ function HomePage() {
     [catalog.attractions, catalog.hotels, catalog.offers],
   )
 
+  const playTrailerSection = () => {
+    scrollToSection('visita')
+
+    const videoElement = trailerVideoRef.current
+
+    if (!videoElement) {
+      return
+    }
+
+    videoElement.currentTime = 0
+
+    void videoElement.play().catch(() => undefined)
+  }
+
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-black text-neutral-100">
@@ -161,6 +177,13 @@ function HomePage() {
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
+              <button
+                type="button"
+                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={playTrailerSection}
+              >
+                Ver tráiler
+              </button>
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -391,48 +414,23 @@ function HomePage() {
       >
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Planifica tu visita"
-            title="Todo listo antes de cruzar la puerta"
+            eyebrow="Tráiler oficial"
+            title="La Última Puerta"
             description="Consulta accesos, horarios y servicios antes de venir al parque."
           />
 
           <div className="grid gap-5 xl:grid-cols-[minmax(0,1.7fr)_minmax(21rem,0.8fr)]">
             <div className="space-y-5">
               <div className="relative overflow-hidden rounded-3xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/60">
-                <img
-                  src={heroImage}
-                  alt="Entrada nocturna de La Última Puerta"
-                  className="h-[22rem] w-full object-cover object-center opacity-85 brightness-90 contrast-110 sm:h-[23rem] lg:h-[25rem]"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.68)_42%,rgba(0,0,0,0.18)_100%),linear-gradient(180deg,rgba(127,29,29,0.28)_0%,rgba(0,0,0,0)_36%,rgba(0,0,0,0.78)_100%)]" />
-                <div className="absolute top-4 left-5 rounded-full border border-red-500/60 bg-red-950/70 px-3 py-1 text-[0.62rem] font-extrabold tracking-[0.16em] text-red-100 uppercase shadow-[0_0_24px_rgba(220,38,38,0.28)] backdrop-blur sm:top-6 sm:right-6 sm:left-auto sm:text-[0.68rem]">
-                  Próximamente
-                </div>
-                <div className="absolute inset-y-0 left-0 flex max-w-2xl flex-col justify-end px-5 py-6 sm:px-7 sm:py-7 lg:px-8">
-                  <p className="text-xs font-extrabold tracking-[0.18em] text-red-300 uppercase sm:text-sm">
-                    Tráiler oficial
-                  </p>
-                  <h3 className="mt-2 max-w-xl text-[1.45rem] leading-[1.08] font-black tracking-normal text-white sm:mt-3 sm:text-4xl sm:leading-tight">
-                    La experiencia comienza antes de cruzar la puerta
-                  </h3>
-                  <p className="mt-3 max-w-xl text-[0.82rem] leading-5 text-neutral-200/85 sm:text-base sm:leading-6">
-                    Muy pronto podrás ver el recorrido completo del parque antes de tu visita. Compra tu entrada en taquilla, recibe tu QR y prepara tu recorrido desde el móvil.
-                  </p>
-                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <a
-                      href="#atracciones"
-                      className="inline-flex min-h-11 items-center justify-center rounded-lg border border-red-500 bg-red-700 px-5 py-2.5 text-xs font-extrabold tracking-wide text-white uppercase shadow-[0_0_24px_rgba(220,38,38,0.25)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                    >
-                      Ver atracciones
-                    </a>
-                    <a
-                      href="#info"
-                      className="inline-flex min-h-11 items-center justify-center rounded-lg border border-white/15 bg-black/35 px-5 py-2.5 text-xs font-extrabold tracking-wide text-neutral-100 uppercase transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                    >
-                      Resolver dudas
-                    </a>
-                  </div>
-                </div>
+                <video
+                  ref={trailerVideoRef}
+                  className="aspect-video w-full bg-black object-cover"
+                  src={trailerVideo}
+                  controls
+                  playsInline
+                >
+                  Tu navegador no puede reproducir este vídeo.
+                </video>
               </div>
 
               <div className="grid gap-4 md:grid-cols-3">
@@ -741,9 +739,25 @@ function StatusPill({ status }) {
 
   return (
     <span className={`inline-flex h-fit rounded-full border px-3 py-1 text-xs font-bold uppercase ${classes}`}>
-      {formatAttractionStatus(status)}
+      {formatHomeAttractionStatus(status)}
     </span>
   )
+}
+
+function formatHomeAttractionStatus(status) {
+  if (status === 'MAINTENANCE') {
+    return 'En mantenimiento'
+  }
+
+  if (status === 'OPEN') {
+    return 'Abierta'
+  }
+
+  if (status === 'CLOSED') {
+    return 'Cerrada'
+  }
+
+  return status ?? '-'
 }
 
 function FaqItem({ title, description }) {
