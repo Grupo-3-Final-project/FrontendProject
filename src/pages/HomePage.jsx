@@ -1,6 +1,7 @@
 ﻿import { useEffect, useMemo, useState } from 'react'
 import heroImage from '../assets/home/publicHomeHeroGate.png'
 import parkMapImage from '../assets/home/publicHomeParkMap.png'
+import trailerVideo from '../assets/home/Trailer_Ultima_Puerta.mp4'
 import logoAmusementPark from '../assets/logoAmusementPark.png'
 import { getAttractions } from '../api/attractionApi'
 import { getHotels } from '../api/hotelApi'
@@ -8,7 +9,7 @@ import { getOffers } from '../api/offerApi'
 import { getGranadaWeather } from '../api/weatherApi'
 import { getApiErrorMessage } from '../api/apiClient'
 import StatusMessage from '../components/ui/StatusMessage'
-import { formatAttractionSize, formatAttractionStatus, formatBoardType, formatCurrency } from '../features/admin/formatters'
+import { formatAttractionSize, formatBoardType, formatCurrency } from '../features/admin/formatters'
 
 const mapMarkerPositionsByName = {
   'Montaña del Último Grito': 'left-[18%] top-[22%]',
@@ -56,6 +57,7 @@ function HomePage() {
   const [errorMessage, setErrorMessage] = useState('')
   const [weatherLabel, setWeatherLabel] = useState('Granada - Sin datos')
   const [selectedMapAttractionId, setSelectedMapAttractionId] = useState(null)
+  const [isTrailerModalOpen, setIsTrailerModalOpen] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -161,6 +163,13 @@ function HomePage() {
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4">
+              <button
+                type="button"
+                className="min-h-12 w-full rounded-lg border border-red-500 bg-red-700 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_0_32px_rgba(220,38,38,0.35)] transition hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
+                onClick={() => setIsTrailerModalOpen(true)}
+              >
+                Ver tráiler
+              </button>
               <button
                 type="button"
                 className="min-h-12 w-full rounded-lg border border-white/25 bg-black/40 px-6 py-3 text-sm font-extrabold tracking-wide text-white uppercase backdrop-blur transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400 sm:w-auto"
@@ -701,6 +710,44 @@ function HomePage() {
           </div>
         </div>
       </footer>
+
+      {isTrailerModalOpen && (
+        <div
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/85 px-4 py-6 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="trailer-modal-title"
+          onClick={() => setIsTrailerModalOpen(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl overflow-hidden rounded-2xl border border-red-950/70 bg-neutral-950 shadow-2xl shadow-black/70"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 sm:px-5">
+              <h2 id="trailer-modal-title" className="text-sm font-extrabold tracking-[0.16em] text-white uppercase">
+                Tráiler oficial
+              </h2>
+              <button
+                type="button"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-black/45 text-2xl leading-none font-black text-white transition hover:border-red-500 hover:text-red-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+                aria-label="Cerrar tráiler"
+                onClick={() => setIsTrailerModalOpen(false)}
+              >
+                ×
+              </button>
+            </div>
+            <video
+              className="aspect-video w-full bg-black"
+              src={trailerVideo}
+              controls
+              autoPlay
+              playsInline
+            >
+              Tu navegador no puede reproducir este vídeo.
+            </video>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -741,9 +788,25 @@ function StatusPill({ status }) {
 
   return (
     <span className={`inline-flex h-fit rounded-full border px-3 py-1 text-xs font-bold uppercase ${classes}`}>
-      {formatAttractionStatus(status)}
+      {formatHomeAttractionStatus(status)}
     </span>
   )
+}
+
+function formatHomeAttractionStatus(status) {
+  if (status === 'MAINTENANCE') {
+    return 'En mantenimiento'
+  }
+
+  if (status === 'OPEN') {
+    return 'Abierta'
+  }
+
+  if (status === 'CLOSED') {
+    return 'Cerrada'
+  }
+
+  return status ?? '-'
 }
 
 function FaqItem({ title, description }) {
