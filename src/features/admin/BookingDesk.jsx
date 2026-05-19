@@ -7,6 +7,9 @@ import { formatBoardType, formatCurrency, formatDate } from './formatters'
 const inputClasses =
   'min-h-11 w-full rounded-md border border-stone-700 bg-stone-950/90 px-3 py-2 text-sm text-stone-100 outline-none transition focus:border-red-500'
 
+const detailBlockClasses =
+  'rounded-lg border border-stone-800 bg-[linear-gradient(180deg,rgba(28,25,23,0.72),rgba(3,3,4,0.32))] px-4 py-3'
+
 const emptyUserForm = {
   firstName: '',
   lastName: '',
@@ -20,6 +23,46 @@ const emptyCompanion = {
   firstName: '',
   lastName: '',
   birthDate: '',
+}
+
+function ChoiceCard({ title, description, checked, name, value, onChange }) {
+  return (
+    <label className={getChoiceCardClasses(checked)}>
+      <input
+        checked={checked}
+        className="sr-only"
+        type="radio"
+        name={name}
+        value={value}
+        onChange={onChange}
+      />
+      <span className="flex items-start justify-between gap-4">
+        <span className="min-w-0">
+          <span className={`block text-sm font-black ${checked ? 'text-stone-100' : 'text-stone-200'}`}>
+            {title}
+          </span>
+          <span className={`mt-2 block text-sm leading-5 ${checked ? 'text-stone-300' : 'text-stone-500'}`}>
+            {description}
+          </span>
+        </span>
+        <span className={getChoiceIndicatorClasses(checked)} aria-hidden="true">
+          <span className={`h-2.5 w-2.5 rounded-full ${checked ? 'bg-red-400' : 'bg-transparent'}`} />
+        </span>
+      </span>
+    </label>
+  )
+}
+
+function DetailBlock({ label, value, accent = false, valueClassName = '', children }) {
+  return (
+    <div className={`${detailBlockClasses} ${accent ? 'border-red-900/60 bg-[linear-gradient(180deg,rgba(127,29,29,0.22),rgba(3,3,4,0.46))]' : ''}`}>
+      <div className="text-xs font-bold uppercase text-stone-500">{label}</div>
+      <div className={`${accent ? 'text-xl text-stone-50' : 'text-base text-stone-100'} ${valueClassName} mt-1 font-black`}>
+        {value}
+      </div>
+      {children}
+    </div>
+  )
 }
 
 function BookingDesk({
@@ -150,37 +193,29 @@ function BookingDesk({
       <Card title="Venta en taquilla" subtitle="Registra una compra con oferta existente o crea una reserva a medida.">
         <div className="space-y-4">
           {activeMessage ? (
-            <StatusMessage title={activeMessage.title} message={activeMessage.message} variant={activeMessage.variant} />
+            <div className="rounded-xl border border-red-950/35 bg-black/20 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_18px_42px_rgba(0,0,0,0.22)]">
+              <StatusMessage title={activeMessage.title} message={activeMessage.message} variant={activeMessage.variant} />
+            </div>
           ) : null}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div className="grid gap-3 md:grid-cols-2">
-              <label className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-                <span className="text-sm font-bold text-stone-200">Cliente existente</span>
-                <div className="mt-3 flex items-center gap-3">
-                  <input
-                    checked={customerMode === 'existing'}
-                    type="radio"
-                    name="customerMode"
-                    value="existing"
-                    onChange={() => setCustomerMode('existing')}
-                  />
-                  <span className="text-sm text-stone-400">Seleccionar cliente guardado</span>
-                </div>
-              </label>
-              <label className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-                <span className="text-sm font-bold text-stone-200">Nuevo cliente</span>
-                <div className="mt-3 flex items-center gap-3">
-                  <input
-                    checked={customerMode === 'new'}
-                    type="radio"
-                    name="customerMode"
-                    value="new"
-                    onChange={() => setCustomerMode('new')}
-                  />
-                  <span className="text-sm text-stone-400">Dar de alta al cliente y registrar la compra</span>
-                </div>
-              </label>
+              <ChoiceCard
+                checked={customerMode === 'existing'}
+                description="Seleccionar cliente guardado"
+                name="customerMode"
+                onChange={() => setCustomerMode('existing')}
+                title="Cliente existente"
+                value="existing"
+              />
+              <ChoiceCard
+                checked={customerMode === 'new'}
+                description="Dar de alta al cliente y registrar la compra"
+                name="customerMode"
+                onChange={() => setCustomerMode('new')}
+                title="Nuevo cliente"
+                value="new"
+              />
             </div>
 
             {customerMode === 'existing' ? (
@@ -223,32 +258,22 @@ function BookingDesk({
             )}
 
             <div className="grid gap-3 md:grid-cols-2">
-              <label className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-                <span className="text-sm font-bold text-stone-200">Oferta existente</span>
-                <div className="mt-3 flex items-center gap-3">
-                  <input
-                    checked={purchaseMode === 'offer'}
-                    type="radio"
-                    name="purchaseMode"
-                    value="offer"
-                    onChange={() => setPurchaseMode('offer')}
-                  />
-                  <span className="text-sm text-stone-400">Usar una oferta ya configurada</span>
-                </div>
-              </label>
-              <label className="rounded-lg border border-stone-800 bg-stone-950/70 p-4">
-                <span className="text-sm font-bold text-stone-200">Reserva propia</span>
-                <div className="mt-3 flex items-center gap-3">
-                  <input
-                    checked={purchaseMode === 'custom'}
-                    type="radio"
-                    name="purchaseMode"
-                    value="custom"
-                    onChange={() => setPurchaseMode('custom')}
-                  />
-                  <span className="text-sm text-stone-400">Elegir hotel, pensión y viajeros</span>
-                </div>
-              </label>
+              <ChoiceCard
+                checked={purchaseMode === 'offer'}
+                description="Usar una oferta ya configurada"
+                name="purchaseMode"
+                onChange={() => setPurchaseMode('offer')}
+                title="Oferta existente"
+                value="offer"
+              />
+              <ChoiceCard
+                checked={purchaseMode === 'custom'}
+                description="Elegir hotel, pensión y viajeros"
+                name="purchaseMode"
+                onChange={() => setPurchaseMode('custom')}
+                title="Reserva propia"
+                value="custom"
+              />
             </div>
 
             {purchaseMode === 'offer' ? (
@@ -402,22 +427,12 @@ function BookingDesk({
         <Card title="Resumen de la compra" subtitle="Comprobación previa antes de cerrar la venta.">
           {bookingSummary ? (
             <div className="space-y-3 text-sm text-stone-300">
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Hotel</div>
-                <div className="mt-1 text-base font-black text-stone-100">{bookingSummary.hotelName}</div>
+              <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-1">
+                <DetailBlock accent label="Precio base" value={formatCurrency(bookingSummary.referencePrice)} />
+                <DetailBlock accent label="Personas" value={bookingSummary.includedTickets} />
               </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Régimen</div>
-                <div className="mt-1 text-base font-black text-stone-100">{formatBoardType(bookingSummary.boardType)}</div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Personas</div>
-                <div className="mt-1 text-base font-black text-stone-100">{bookingSummary.includedTickets}</div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Precio base</div>
-                <div className="mt-1 text-base font-black text-stone-100">{formatCurrency(bookingSummary.referencePrice)}</div>
-              </div>
+              <DetailBlock label="Hotel" value={bookingSummary.hotelName} />
+              <DetailBlock label="Régimen" value={formatBoardType(bookingSummary.boardType)} />
             </div>
           ) : (
             <StatusMessage
@@ -431,40 +446,30 @@ function BookingDesk({
         <Card title="Última compra registrada" subtitle="Detalle de la última compra guardada.">
           {bookingResult ? (
             <div className="space-y-3 text-sm text-stone-300">
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Reserva</div>
-                <div className="mt-1 text-base font-black text-stone-100">#{bookingResult.id}</div>
+              <div className="grid gap-3 md:grid-cols-2 2xl:grid-cols-1">
+                <DetailBlock accent label="Total" value={formatCurrency(bookingResult.totalPrice)} />
+                <DetailBlock label="Reserva" value={`#${bookingResult.id}`} />
               </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Cliente</div>
-                <div className="mt-1 text-base font-black text-stone-100">{bookingResult.userFullName}</div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Visita</div>
-                <div className="mt-1 text-base font-black text-stone-100">{formatDate(bookingResult.visitDate)}</div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Total</div>
-                <div className="mt-1 text-base font-black text-stone-100">{formatCurrency(bookingResult.totalPrice)}</div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
-                <div className="text-xs font-bold uppercase text-stone-500">Correo</div>
-                <div className={`mt-1 text-base font-black ${bookingResult.emailSent ? 'text-stone-100' : 'text-red-300'}`}>
-                  {bookingResult.emailSent ? 'Enviado' : 'No enviado'}
-                </div>
+              <DetailBlock label="Cliente" value={bookingResult.userFullName} />
+              <DetailBlock label="Visita" value={formatDate(bookingResult.visitDate)} />
+              <DetailBlock
+                label="Correo"
+                value={bookingResult.emailSent ? 'Enviado' : 'No enviado'}
+                valueClassName={bookingResult.emailSent ? '' : 'text-red-300'}
+              >
                 <div className="mt-1 text-xs text-stone-500">
                   {bookingResult.emailSent
                     ? 'El cliente debería recibir sus QR por correo.'
                     : 'La reserva existe; revisa el backend o la configuración de correo.'}
                 </div>
-              </div>
-              <div className="rounded-lg border border-stone-800 bg-stone-950/70 px-4 py-3">
+              </DetailBlock>
+              <div className={detailBlockClasses}>
                 <div className="text-xs font-bold uppercase text-stone-500">Entradas calculadas</div>
                 <ul className="mt-2 space-y-2">
                   {bookingResult.tickets.map((ticket) => (
-                    <li key={`${ticket.holderFullName}-${ticket.ageRange}`} className="rounded-md border border-stone-800 bg-black/20 px-3 py-2">
-                      <div className="font-bold text-stone-100">{ticket.holderFullName}</div>
-                      <div className="mt-1 text-xs text-stone-500">
+                    <li key={`${ticket.holderFullName}-${ticket.ageRange}`} className="rounded-md border border-white/10 bg-black/25 px-3 py-2">
+                      <div className="text-sm font-bold text-stone-100">{ticket.holderFullName}</div>
+                      <div className="mt-1 text-xs leading-4 text-stone-500">
                         {formatBoardType(ticket.ageRange)} - {formatCurrency(ticket.price)}
                       </div>
                     </li>
@@ -483,6 +488,26 @@ function BookingDesk({
       </div>
     </section>
   )
+}
+
+function getChoiceCardClasses(checked) {
+  const baseClasses =
+    'block cursor-pointer rounded-lg border p-4 shadow-[0_14px_34px_rgba(0,0,0,0.2)] transition duration-200'
+  const checkedClasses =
+    'border-red-500/65 bg-[linear-gradient(145deg,rgba(127,29,29,0.34),rgba(12,10,10,0.94))] shadow-[0_0_30px_rgba(127,29,29,0.16),inset_0_1px_0_rgba(255,255,255,0.04)]'
+  const idleClasses =
+    'border-stone-800 bg-stone-950/70 hover:border-red-900/65 hover:bg-[linear-gradient(145deg,rgba(68,64,60,0.34),rgba(12,10,10,0.9))] hover:text-stone-100'
+
+  return `${baseClasses} ${checked ? checkedClasses : idleClasses}`
+}
+
+function getChoiceIndicatorClasses(checked) {
+  const baseClasses =
+    'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border transition duration-200'
+  const checkedClasses = 'border-red-400 bg-red-500/15 shadow-[0_0_18px_rgba(248,113,113,0.22)]'
+  const idleClasses = 'border-stone-600 bg-black/30'
+
+  return `${baseClasses} ${checked ? checkedClasses : idleClasses}`
 }
 
 function getDefaultVisitDate() {
