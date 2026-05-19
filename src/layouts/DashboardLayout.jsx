@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Building2, FerrisWheel, Home, Hotel, LayoutDashboard, LogOut, Ticket, Users, Wrench } from 'lucide-react'
+import { BadgePercent, Building2, FerrisWheel, Home, Hotel, LayoutDashboard, LogOut, Ticket, Users, Wrench } from 'lucide-react'
 import { Link, Outlet, useSearchParams } from 'react-router-dom'
 import logoAmusementPark from '../assets/logoAmusementPark.png'
 import { loginInternal } from '../api/authApi'
@@ -20,6 +20,7 @@ const tabIcons = {
   users: Users,
   hotels: Hotel,
   attractions: FerrisWheel,
+  offers: BadgePercent,
   employees: Users,
   operations: Wrench,
 }
@@ -180,7 +181,7 @@ function DashboardLayout() {
           </p>
         </div>
 
-        <nav className="flex w-full flex-col text-sm text-stone-300">
+        <nav className="flex w-full flex-col gap-1 px-3 text-sm text-stone-300">
           {dashboardTabs.map((tab) => {
             const Icon = tabIcons[tab.key] ?? Building2
             const isActive = activeTab === tab.key
@@ -188,42 +189,54 @@ function DashboardLayout() {
             return (
               <button
                 key={tab.key}
-                className={`relative flex w-full items-center gap-3 border-l-4 px-7 py-3.5 text-left font-bold transition ${
+                className={`group relative flex w-full items-center gap-3 overflow-hidden rounded-md border-l-2 px-4 py-3 text-left font-bold transition duration-200 ${
                   isActive
-                    ? 'border-red-600 bg-red-950/40 text-white'
-                    : 'border-transparent hover:bg-red-950/30 hover:text-white'
+                    ? 'border-red-500 bg-[linear-gradient(90deg,rgba(127,29,29,0.58),rgba(69,10,10,0.24),rgba(0,0,0,0))] text-white shadow-[inset_14px_0_28px_rgba(127,29,29,0.18),0_10px_30px_rgba(0,0,0,0.18)]'
+                    : 'border-transparent text-stone-300 hover:border-red-900/80 hover:bg-red-950/20 hover:text-white'
                 }`}
                 type="button"
                 onClick={() => changeTab(tab.key)}
               >
-                <Icon className={`h-4 w-4 shrink-0 ${isActive ? 'text-red-500' : 'text-stone-400'}`} />
-                <span>{tab.label}</span>
+                <span
+                  className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border transition ${
+                    isActive
+                      ? 'border-red-500/50 bg-red-500/15 text-red-200 shadow-[0_0_22px_rgba(220,38,38,0.18)]'
+                      : 'border-white/10 bg-white/[0.03] text-stone-400 group-hover:border-red-900/60 group-hover:text-red-200'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </span>
+                <span className="relative z-10">{tab.label}</span>
               </button>
             )
           })}
         </nav>
 
-        <div className="mt-auto w-full border-t border-white/10 text-sm text-stone-300">
-          <div className="space-y-1 border-b border-white/10 px-7 py-4">
+        <div className="mt-auto w-full space-y-2 border-t border-white/10 p-3 text-sm text-stone-300">
+          <div className="rounded-lg border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.045),rgba(0,0,0,0.28))] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
             <p className="text-[0.65rem] font-bold tracking-[0.16em] text-stone-500 uppercase">
               Sesión activa
             </p>
             <p className="truncate font-bold text-white">{internalSession.username}</p>
-            <p className="text-xs text-stone-400">{internalSession.role}</p>
+            <p className="mt-0.5 text-xs text-stone-400">{internalSession.role}</p>
           </div>
           <Link
-            className="flex w-full items-center gap-3 px-7 py-4 font-bold transition hover:bg-red-950/30 hover:text-white"
+            className="group flex w-full items-center gap-3 rounded-md border border-transparent px-4 py-3 font-bold transition duration-200 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
             to="/home"
           >
-            <Home className="h-4 w-4 shrink-0 text-stone-400" />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-white/10 bg-white/[0.03] text-stone-400 transition group-hover:text-red-200">
+              <Home className="h-4 w-4" aria-hidden="true" />
+            </span>
             Volver a la home
           </Link>
           <button
-            className="flex w-full items-center gap-3 px-7 py-4 text-left font-bold transition hover:bg-red-950/30 hover:text-white"
+            className="group flex w-full items-center gap-3 rounded-md border border-transparent px-4 py-3 text-left font-bold text-stone-300 transition duration-200 hover:border-red-900/50 hover:bg-red-950/20 hover:text-white"
             type="button"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 shrink-0 text-stone-400" />
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-red-900/40 bg-red-950/15 text-red-300 transition group-hover:border-red-700/60 group-hover:bg-red-950/30">
+              <LogOut className="h-4 w-4" aria-hidden="true" />
+            </span>
             Cerrar sesión
           </button>
         </div>
