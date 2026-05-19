@@ -82,7 +82,7 @@ function EntityManager({
   }
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+    <section className="grid gap-5 2xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
       <Card title={definition.title} subtitle={definition.description}>
         <div className="space-y-4">
           {statusMessage ? (
