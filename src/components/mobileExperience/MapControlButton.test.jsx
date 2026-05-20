@@ -7,5 +7,6 @@ describe('MapControlButton', () => {
     render(<MapControlButton icon={HiOutlineMagnifyingGlass} label="Ampliar mapa" />)
 
     expect(screen.getByRole('button', { name: 'Ampliar mapa' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Ampliar mapa' }).querySelector('svg')).toBeTruthy()
   })
 })

@@ -24,4 +24,12 @@ describe('RouteCard', () => {
 
     expect(screen.getByRole('button', { name: /Sin accion/i })).toBeDisabled()
   })
+
+  it('renders the default copy when no props are provided', () => {
+    render(<RouteCard />)
+
+    expect(screen.getByText('Mi ruta optimizada')).toBeInTheDocument()
+    expect(screen.getByText('4 atracciones - 95 min estimados')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Ver ruta/i })).toBeInTheDocument()
+  })
 })

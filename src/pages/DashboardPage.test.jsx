@@ -368,6 +368,60 @@ describe('DashboardPage', () => {
     window.confirm.mockRestore()
   })
 
+  it('creates a new user from the entity manager', async () => {
+    vi.mocked(createUser).mockResolvedValue({
+      id: 10,
+      firstName: 'Mario',
+      lastName: 'Diaz',
+      dni: '12345678Z',
+      email: 'mario@example.com',
+      phone: '600000000',
+      birthDate: '1991-05-10',
+    })
+    vi.mocked(getUsers)
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([
+        {
+          id: 10,
+          firstName: 'Mario',
+          lastName: 'Diaz',
+          dni: '12345678Z',
+          email: 'mario@example.com',
+          phone: '600000000',
+          birthDate: '1991-05-10',
+        },
+      ])
+
+    render(
+      <MemoryRouter initialEntries={['/dashboard?tab=users']}>
+        <DashboardPage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('button', { name: /Crear registro/i })
+
+    fireEvent.change(screen.getByLabelText('Nombre'), { target: { value: 'Mario' } })
+    fireEvent.change(screen.getByLabelText('Apellidos'), { target: { value: 'Diaz' } })
+    fireEvent.change(screen.getByLabelText('DNI'), { target: { value: '12345678Z' } })
+    fireEvent.change(screen.getByLabelText('Email'), { target: { value: 'mario@example.com' } })
+    fireEvent.change(screen.getByLabelText('Teléfono'), { target: { value: '600000000' } })
+    fireEvent.change(screen.getByLabelText('Fecha de nacimiento'), { target: { value: '1991-05-10' } })
+    fireEvent.click(screen.getByRole('button', { name: /Crear registro/i }))
+
+    await waitFor(() => {
+      expect(createUser).toHaveBeenCalledWith({
+        firstName: 'Mario',
+        lastName: 'Diaz',
+        dni: '12345678Z',
+        email: 'mario@example.com',
+        phone: '600000000',
+        birthDate: '1991-05-10',
+      })
+    })
+
+    expect(await screen.findByText('El nuevo elemento ya está disponible en el listado.')).toBeInTheDocument()
+  })
+
   it('shows the translated update error when the entity save fails', async () => {
     vi.mocked(getUsers).mockResolvedValue([
       {
@@ -432,4 +486,5 @@ describe('DashboardPage', () => {
     expect(await screen.findByText('Se ha producido un error inesperado.')).toBeInTheDocument()
     window.confirm.mockRestore()
   })
+
 })

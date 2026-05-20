@@ -23,6 +23,16 @@ describe('apiClient', () => {
     expect(config.headers.Authorization).toBe('Bearer jwt-token')
   })
 
+  it('creates the headers object before adding authorization when the token exists', async () => {
+    getInternalToken.mockReturnValue('jwt-token')
+
+    const config = await apiClient.interceptors.request.handlers[0].fulfilled({
+      data: new FormData(),
+    })
+
+    expect(config.headers.Authorization).toBe('Bearer jwt-token')
+  })
+
   it('does not override form data or auth when the request skips authentication', async () => {
     const config = await apiClient.interceptors.request.handlers[0].fulfilled({
       skipAuth: true,
@@ -32,6 +42,17 @@ describe('apiClient', () => {
 
     expect(config.headers.Authorization).toBeUndefined()
     expect(config.headers['Content-Type']).toBeUndefined()
+  })
+
+  it('keeps authorization empty when there is no token and creates the headers bag if needed', async () => {
+    getInternalToken.mockReturnValue(null)
+
+    const config = await apiClient.interceptors.request.handlers[0].fulfilled({
+      data: { id: 2 },
+    })
+
+    expect(config.headers['Content-Type']).toBe('application/json')
+    expect(config.headers.Authorization).toBeUndefined()
   })
 
   it('clears the internal session when backend returns 401', async () => {
@@ -46,6 +67,14 @@ describe('apiClient', () => {
     const error = { response: { status: 409 } }
 
     expect(apiClient.interceptors.response.handlers[0].fulfilled(response)).toBe(response)
+    await expect(apiClient.interceptors.response.handlers[0].rejected(error)).rejects.toBe(error)
+
+    expect(clearInternalSession).not.toHaveBeenCalled()
+  })
+
+  it('keeps the session when the response payload is missing', async () => {
+    const error = {}
+
     await expect(apiClient.interceptors.response.handlers[0].rejected(error)).rejects.toBe(error)
 
     expect(clearInternalSession).not.toHaveBeenCalled()

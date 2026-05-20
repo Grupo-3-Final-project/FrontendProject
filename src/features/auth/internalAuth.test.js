@@ -64,6 +64,19 @@ describe('internalAuth', () => {
     expect(localStorage.getItem('parque-internal-session')).toBeNull()
   })
 
+  it('clears sessions with invalid expiration dates', () => {
+    localStorage.setItem(
+      'parque-internal-session',
+      JSON.stringify({
+        token: 'jwt-token',
+        expiresAt: 'not-a-date',
+      }),
+    )
+
+    expect(readInternalSession()).toBeNull()
+    expect(localStorage.getItem('parque-internal-session')).toBeNull()
+  })
+
   it('clears the session and emits the auth event', () => {
     const listener = vi.fn()
     window.addEventListener(internalAuthEventName, listener)
@@ -75,5 +88,35 @@ describe('internalAuth', () => {
     expect(listener).toHaveBeenCalledTimes(1)
 
     window.removeEventListener(internalAuthEventName, listener)
+  })
+
+  it('keeps valid sessions without expiration date', () => {
+    localStorage.setItem(
+      'parque-internal-session',
+      JSON.stringify({
+        token: 'jwt-token',
+        username: 'admin',
+      }),
+    )
+
+    expect(readInternalSession()).toMatchObject({
+      token: 'jwt-token',
+      username: 'admin',
+    })
+  })
+
+  it('returns early when window is not available', () => {
+    const originalWindow = global.window
+
+    Reflect.deleteProperty(global, 'window')
+
+    try {
+      expect(readInternalSession()).toBeNull()
+      expect(getInternalToken()).toBeNull()
+      expect(() => saveInternalSession({ token: 'jwt-token' })).not.toThrow()
+      expect(() => clearInternalSession()).not.toThrow()
+    } finally {
+      global.window = originalWindow
+    }
   })
 })
