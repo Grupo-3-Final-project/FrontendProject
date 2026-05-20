@@ -154,6 +154,60 @@ describe('HomePage', () => {
     visitSection.remove()
   })
 
+  it('plays the trailer and scrolls to the visit section from the primary trailer CTA', async () => {
+    const visitSection = document.createElement('section')
+    visitSection.id = 'visita'
+    visitSection.scrollIntoView = vi.fn()
+    document.body.appendChild(visitSection)
+
+    const playSpy = vi.spyOn(HTMLMediaElement.prototype, 'play').mockResolvedValue()
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ver tráiler' }))
+
+    expect(visitSection.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'smooth',
+      block: 'start',
+    })
+    expect(playSpy).toHaveBeenCalledTimes(1)
+
+    playSpy.mockRestore()
+    visitSection.remove()
+  })
+
+  it('keeps the page stable when trailer playback rejects', async () => {
+    const visitSection = document.createElement('section')
+    visitSection.id = 'visita'
+    visitSection.scrollIntoView = vi.fn()
+    document.body.appendChild(visitSection)
+
+    const playSpy = vi.spyOn(HTMLMediaElement.prototype, 'play').mockRejectedValueOnce(new Error('Playback blocked'))
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
+
+    expect(() => {
+      fireEvent.click(screen.getByRole('button', { name: 'Ver tráiler' }))
+    }).not.toThrow()
+
+    expect(playSpy).toHaveBeenCalledTimes(1)
+
+    playSpy.mockRestore()
+    visitSection.remove()
+  })
+
   it('renders empty catalog messages when the public catalog is available but has no records', async () => {
     getAttractions.mockResolvedValueOnce([])
     getHotels.mockResolvedValueOnce([])
@@ -261,6 +315,73 @@ describe('HomePage', () => {
     expect(screen.getAllByText('Hotel Eclipse').length).toBeGreaterThan(0)
     expect(screen.getAllByText('En mantenimiento').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Cerrada').length).toBeGreaterThan(0)
+  })
+
+  it('renders the offer carousel navigation and rotates through multiple public offers', async () => {
+    getOffers.mockResolvedValueOnce([
+      {
+        id: 1,
+        title: 'Pack familiar',
+        description: 'Hotel y entradas para cuatro personas.',
+        hotelName: 'Hotel Magic Park',
+        boardType: 'FULL_BOARD',
+        includedTickets: 4,
+        totalPrice: 399.99,
+        imageUrl: 'https://example.com/offer.jpg',
+      },
+      {
+        id: 2,
+        title: 'Pack nocturno',
+        description: 'Hotel y entradas para dos personas.',
+        hotelName: 'Hotel Sombra',
+        boardType: 'HALF_BOARD',
+        includedTickets: 2,
+        totalPrice: 199.99,
+        imageUrl: 'https://example.com/offer-2.jpg',
+      },
+    ])
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
+
+    expect(screen.getAllByText(/Pack familiar|Pack nocturno/).length).toBeGreaterThan(1)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Ver elemento siguiente de ofertas' }))
+
+    expect(screen.getByText('Pack nocturno')).toBeInTheDocument()
+    expect(screen.getAllByText('Pensión completa').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Media pensión').length).toBeGreaterThan(0)
+  })
+
+  it('falls back to the raw attraction status when the public catalog returns an unknown state', async () => {
+    getAttractions.mockResolvedValueOnce([
+      {
+        id: 1,
+        name: 'Galeria Zero',
+        description: 'Experiencia experimental.',
+        status: 'PAUSED',
+        size: 'MEDIUM',
+        totalSeats: 20,
+        availableSeats: 10,
+        maintenanceFrequencyDays: 14,
+        imageUrl: 'https://example.com/galeria.jpg',
+      },
+    ])
+
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    )
+
+    await screen.findByRole('heading', { level: 1, name: /Cruza la puerta/i })
+
+    expect(screen.getAllByText('PAUSED').length).toBeGreaterThan(0)
   })
 
   it('shows the loading state before the public catalog resolves', async () => {

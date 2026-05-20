@@ -76,4 +76,21 @@ describe('DashboardKpiCard', () => {
     expect(container.querySelector('.border-amber-500\\/75')).toBeTruthy()
     expect(screen.getByText('0')).toBeInTheDocument()
   })
+
+  it('renders the icon branch when an icon component is provided', () => {
+    const Icon = ({ className }) => <svg data-testid="kpi-icon" className={className} />
+
+    render(
+      <DashboardKpiCard
+        title="Incidencias"
+        value="3"
+        note="Activas"
+        tag="Operaciones"
+        icon={Icon}
+        variant="success"
+      />,
+    )
+
+    expect(screen.getByTestId('kpi-icon')).toBeInTheDocument()
+  })
 })
