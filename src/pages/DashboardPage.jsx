@@ -21,6 +21,12 @@ import OverviewPanel from '../features/admin/OverviewPanel'
 import { dashboardTabs, entityDefinitions } from '../features/admin/adminConfig.jsx'
 
 const currentYear = new Date().getFullYear()
+const initialSummary = {
+  year: currentYear,
+  totalRevenue: 0,
+  ticketsByAgeRange: [],
+  topHotels: [],
+}
 
 const entityServices = {
   users: {
@@ -61,37 +67,11 @@ function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [pageError, setPageError] = useState('')
-  const [resources, setResources] = useState({
-    users: [],
-    hotels: [],
-    attractions: [],
-    employees: [],
-    offers: [],
-    bookings: [],
-    shifts: [],
-    maintenance: [],
-  })
-  const [summary, setSummary] = useState({
-    year: currentYear,
-    totalRevenue: 0,
-    ticketsByAgeRange: [],
-    topHotels: [],
-  })
+  const [resources, setResources] = useState(createInitialResources)
+  const [summary, setSummary] = useState(initialSummary)
   const [forms, setForms] = useState(createInitialForms())
-  const [editingIds, setEditingIds] = useState({
-    users: null,
-    hotels: null,
-    attractions: null,
-    offers: null,
-    employees: null,
-  })
-  const [submittingState, setSubmittingState] = useState({
-    users: false,
-    hotels: false,
-    attractions: false,
-    offers: false,
-    employees: false,
-  })
+  const [editingIds, setEditingIds] = useState(createInitialEditingIds)
+  const [submittingState, setSubmittingState] = useState(createInitialSubmittingState)
   const [sectionMessages, setSectionMessages] = useState({})
 
   useEffect(() => {
@@ -325,7 +305,7 @@ function DashboardPage() {
     }
   }
 
-  const activeEntityDefinition = entityDefinitions[activeTab]
+  const activeEntityDefinition = getActiveEntityDefinition(activeTab)
 
   const renderContent = (() => {
     if (isLoading) {
@@ -392,7 +372,7 @@ function DashboardPage() {
     )
   })()
 
-  const activeTabLabel = dashboardTabs.find((tab) => tab.key === activeTab)?.label ?? 'Panel interno'
+  const activeTabLabel = getActiveTabLabel(activeTab)
 
   return (
     <main className="min-w-0 space-y-4">
@@ -437,6 +417,47 @@ function createInitialForms() {
       { ...definition.emptyForm },
     ]),
   )
+}
+
+function createInitialResources() {
+  return {
+    users: [],
+    hotels: [],
+    attractions: [],
+    employees: [],
+    offers: [],
+    bookings: [],
+    shifts: [],
+    maintenance: [],
+  }
+}
+
+function createInitialEditingIds() {
+  return {
+    users: null,
+    hotels: null,
+    attractions: null,
+    offers: null,
+    employees: null,
+  }
+}
+
+function createInitialSubmittingState() {
+  return {
+    users: false,
+    hotels: false,
+    attractions: false,
+    offers: false,
+    employees: false,
+  }
+}
+
+function getActiveEntityDefinition(activeTab) {
+  return entityDefinitions[activeTab]
+}
+
+function getActiveTabLabel(activeTab) {
+  return dashboardTabs.find((tab) => tab.key === activeTab)?.label ?? 'Panel interno'
 }
 
 export default DashboardPage

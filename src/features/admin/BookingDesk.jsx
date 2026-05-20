@@ -87,41 +87,26 @@ function BookingDesk({
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const selectedUser = useMemo(
-    () => users.find((user) => String(user.id) === selectedUserId) ?? null,
+    () => resolveSelectedItem(users, selectedUserId),
     [selectedUserId, users],
   )
   const selectedOffer = useMemo(
-    () => offers.find((offer) => String(offer.id) === selectedOfferId) ?? null,
+    () => resolveSelectedItem(offers, selectedOfferId),
     [offers, selectedOfferId],
   )
   const selectedHotel = useMemo(
-    () => hotels.find((hotel) => String(hotel.id) === selectedHotelId) ?? null,
+    () => resolveSelectedItem(hotels, selectedHotelId),
     [hotels, selectedHotelId],
   )
 
   const bookingSummary = useMemo(() => {
-    if (purchaseMode === 'offer' && selectedOffer) {
-      return {
-        hotelName: selectedOffer.hotelName,
-        boardType: selectedOffer.boardType,
-        includedTickets: selectedOffer.includedTickets,
-        referencePrice: selectedOffer.totalPrice,
-      }
-    }
-
-    if (selectedHotel) {
-      return {
-        hotelName: selectedHotel.name,
-        boardType,
-        includedTickets: companions.length + 1,
-        referencePrice:
-          boardType === 'FULL_BOARD'
-            ? selectedHotel.fullBoardPrice
-            : selectedHotel.halfBoardPrice,
-      }
-    }
-
-    return null
+    return buildBookingSummary({
+      boardType,
+      companionsCount: companions.length,
+      purchaseMode,
+      selectedHotel,
+      selectedOffer,
+    })
   }, [boardType, companions.length, purchaseMode, selectedHotel, selectedOffer])
 
   const handleSubmit = async (event) => {
@@ -139,20 +124,15 @@ function BookingDesk({
         return
       }
 
-      const holder = {
-        firstName: bookingUser.firstName,
-        lastName: bookingUser.lastName,
-        birthDate: bookingUser.birthDate,
-      }
-
-      const payload = {
-        userId: bookingUser.id,
-        offerId: purchaseMode === 'offer' && selectedOffer ? selectedOffer.id : null,
-        hotelId: purchaseMode === 'custom' && selectedHotel ? selectedHotel.id : null,
-        boardType: purchaseMode === 'offer' && selectedOffer ? selectedOffer.boardType : boardType,
+      const payload = buildBookingPayload({
+        boardType,
+        bookingUser,
+        companions,
+        purchaseMode,
+        selectedHotel,
+        selectedOffer,
         visitDate,
-        companions: [holder, ...companions],
-      }
+      })
 
       const booking = await onCreateBooking(payload)
       setBookingResult(booking)
@@ -514,6 +494,62 @@ function getDefaultVisitDate() {
   const date = new Date()
   date.setDate(date.getDate() + 7)
   return date.toISOString().slice(0, 10)
+}
+
+function resolveSelectedItem(items, selectedId) {
+  return items.find((item) => String(item.id) === selectedId) ?? null
+}
+
+function buildBookingSummary({ boardType, companionsCount, purchaseMode, selectedHotel, selectedOffer }) {
+  if (purchaseMode === 'offer' && selectedOffer) {
+    return {
+      hotelName: selectedOffer.hotelName,
+      boardType: selectedOffer.boardType,
+      includedTickets: selectedOffer.includedTickets,
+      referencePrice: selectedOffer.totalPrice,
+    }
+  }
+
+  if (!selectedHotel) {
+    return null
+  }
+
+  return {
+    hotelName: selectedHotel.name,
+    boardType,
+    includedTickets: companionsCount + 1,
+    referencePrice:
+      boardType === 'FULL_BOARD'
+        ? selectedHotel.fullBoardPrice
+        : selectedHotel.halfBoardPrice,
+  }
+}
+
+function buildBookingPayload({
+  boardType,
+  bookingUser,
+  companions,
+  purchaseMode,
+  selectedHotel,
+  selectedOffer,
+  visitDate,
+}) {
+  return {
+    userId: bookingUser.id,
+    offerId: purchaseMode === 'offer' && selectedOffer ? selectedOffer.id : null,
+    hotelId: purchaseMode === 'custom' && selectedHotel ? selectedHotel.id : null,
+    boardType: purchaseMode === 'offer' && selectedOffer ? selectedOffer.boardType : boardType,
+    visitDate,
+    companions: [buildBookingHolder(bookingUser), ...companions],
+  }
+}
+
+function buildBookingHolder(bookingUser) {
+  return {
+    firstName: bookingUser.firstName,
+    lastName: bookingUser.lastName,
+    birthDate: bookingUser.birthDate,
+  }
 }
 
 function userFieldLabel(fieldName) {
