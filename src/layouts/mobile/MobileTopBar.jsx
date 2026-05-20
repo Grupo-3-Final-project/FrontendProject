@@ -1,34 +1,39 @@
-import { useState } from 'react'
-import {
-  HiOutlineBars3,
-  HiOutlineBell,
-  HiOutlineCalendar,
-  HiOutlineCog6Tooth,
-  HiOutlineHome,
-  HiOutlineInformationCircle,
-  HiOutlineMap,
-  HiOutlineSparkles,
-  HiOutlineTicket,
-  HiOutlineXMark,
-} from 'react-icons/hi2'
 import logoAmusementPark from '../../assets/logoAmusementPark.png'
 
-const mobileMenuItems = [
-  { id: 'home', label: 'Inicio', icon: HiOutlineHome },
-  { id: 'map', label: 'Mapa del parque', icon: HiOutlineMap },
-  { id: 'attractions', label: 'Atracciones', icon: HiOutlineSparkles },
-  { id: 'route', label: 'Mi ruta', icon: HiOutlineCalendar },
-  { id: 'tickets', label: 'Mis entradas', icon: HiOutlineTicket },
-  { id: 'information', label: 'Informacion', icon: HiOutlineInformationCircle },
-  { id: 'settings', label: 'Ajustes', icon: HiOutlineCog6Tooth },
-]
+// TODO: imports pendientes de implementar — menú hamburguesa y notificaciones
+// import { useState } from 'react'
+// import {
+//   HiOutlineBars3,
+//   HiOutlineBell,
+//   HiOutlineCalendar,
+//   HiOutlineCog6Tooth,
+//   HiOutlineHome,
+//   HiOutlineInformationCircle,
+//   HiOutlineMap,
+//   HiOutlineSparkles,
+//   HiOutlineTicket,
+//   HiOutlineXMark,
+// } from 'react-icons/hi2'
+
+// TODO: items del menú hamburguesa — pendientes de implementar rutas y páginas por sección
+// const mobileMenuItems = [
+//   { id: 'home', label: 'Inicio', icon: HiOutlineHome },
+//   { id: 'map', label: 'Mapa del parque', icon: HiOutlineMap },
+//   { id: 'attractions', label: 'Atracciones', icon: HiOutlineSparkles },
+//   { id: 'route', label: 'Mi ruta', icon: HiOutlineCalendar },
+//   { id: 'tickets', label: 'Mis entradas', icon: HiOutlineTicket },
+//   { id: 'information', label: 'Informacion', icon: HiOutlineInformationCircle },
+//   { id: 'settings', label: 'Ajustes', icon: HiOutlineCog6Tooth },
+// ]
 
 function MobileTopBar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  // TODO: estado del drawer — pendiente de implementar menú hamburguesa
+  // const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <>
-      <header className="sticky top-0 z-30 flex min-h-14 items-center justify-between border-b border-red-950/70 bg-neutral-950 px-4 text-neutral-100 shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+      <header className="sticky top-0 z-30 flex min-h-14 items-center justify-center border-b border-red-950/70 bg-neutral-950 px-4 text-neutral-100 shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+        {/* TODO: botón hamburguesa — pendiente de implementar navegación por secciones
         <button
           type="button"
           className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-300 transition hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
@@ -39,6 +44,7 @@ function MobileTopBar() {
         >
           <HiOutlineBars3 className="text-xl" />
         </button>
+        */}
 
         <div className="flex items-center gap-2" aria-label="La Ultima Puerta">
           <img
@@ -52,18 +58,19 @@ function MobileTopBar() {
           </p>
         </div>
 
+        {/* TODO: botón de notificaciones — pendiente de implementar
         <button
           type="button"
           className="relative flex h-9 w-9 items-center justify-center rounded-md text-neutral-300 transition hover:bg-white/5 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
           aria-label="Ver avisos del recorrido"
         >
           <HiOutlineBell className="text-xl" />
-          <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[0.62rem] leading-none font-black text-white ring-2 ring-neutral-950">
-
-          </span>
+          <span className="absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[0.62rem] leading-none font-black text-white ring-2 ring-neutral-950" />
         </button>
+        */}
       </header>
 
+      {/* TODO: overlay y sidebar del menú hamburguesa — pendientes de implementar rutas y páginas
       {isMenuOpen && (
         <button
           type="button"
@@ -106,7 +113,6 @@ function MobileTopBar() {
           <ul className="space-y-1">
             {mobileMenuItems.map((item) => {
               const Icon = item.icon
-
               return (
                 <li key={item.id}>
                   <button
@@ -134,6 +140,7 @@ function MobileTopBar() {
           </button>
         </div>
       </aside>
+      */}
     </>
   )
 }
